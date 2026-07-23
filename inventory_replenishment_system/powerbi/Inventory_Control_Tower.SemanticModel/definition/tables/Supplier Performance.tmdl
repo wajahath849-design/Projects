@@ -1,0 +1,75 @@
+table 'Supplier Performance'
+
+	column supplier_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column supplier_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_code
+
+	column supplier_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_name
+
+	column warehouse_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column warehouse_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: warehouse_code
+
+	column completed_order_lines
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: completed_order_lines
+
+	column on_time_eligible_order_lines
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: on_time_eligible_order_lines
+
+	column avg_actual_lead_time_days
+		dataType: decimal
+		formatString: 0.0
+		summarizeBy: none
+		sourceColumn: avg_actual_lead_time_days
+
+	column lead_time_stddev_days
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: lead_time_stddev_days
+
+	column contractual_lead_time_days
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: contractual_lead_time_days
+
+	column avg_sla_variance_days
+		dataType: decimal
+		formatString: 0.0
+		summarizeBy: none
+		sourceColumn: avg_sla_variance_days
+
+	column on_time_delivery_rate
+		dataType: decimal
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: on_time_delivery_rate
+
+	partition 'Supplier Performance' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="vw_supplier_performance"]}[Data]
+			in
+				Data

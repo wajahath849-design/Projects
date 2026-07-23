@@ -1,0 +1,122 @@
+table 'Fact Replenishment Current'
+
+	column model_run_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: model_run_id
+
+	column recommendation_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: recommendation_id
+
+	column recommendation_date
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: recommendation_date
+
+	column warehouse_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column sku_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column supplier_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column service_level
+		dataType: decimal
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: service_level
+
+	column avg_daily_demand
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: avg_daily_demand
+
+	column demand_stddev
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: demand_stddev
+
+	column avg_lead_time_days
+		dataType: decimal
+		formatString: 0.0
+		summarizeBy: none
+		sourceColumn: avg_lead_time_days
+
+	column lead_time_stddev
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: lead_time_stddev
+
+	column safety_stock_qty
+		dataType: decimal
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: safety_stock_qty
+
+	column reorder_point_qty
+		dataType: decimal
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: reorder_point_qty
+
+	column target_stock_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: target_stock_qty
+
+	column inventory_position_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: inventory_position_qty
+
+	column gross_recommended_order_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: gross_recommended_order_qty
+
+	column recommended_order_qty
+		dataType: decimal
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: recommended_order_qty
+
+	column expected_stockout_date
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: expected_stockout_date
+
+	column risk_band
+		dataType: string
+		summarizeBy: none
+		sourceColumn: risk_band
+
+	column created_at
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: created_at
+
+	partition 'Fact Replenishment Current' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="vw_fact_replenishment_current"]}[Data]
+			in
+				Data

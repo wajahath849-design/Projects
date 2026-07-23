@@ -1,0 +1,42 @@
+table 'Dim Warehouse'
+
+	column warehouse_id
+		dataType: int64
+		isKey
+		isHidden
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column warehouse_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: warehouse_code
+
+	column warehouse_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: warehouse_name
+
+	column region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+
+	column timezone
+		dataType: string
+		summarizeBy: none
+		sourceColumn: timezone
+
+	column active
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: active
+
+	partition 'Dim Warehouse' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="dim_warehouse"]}[Data]
+			in
+				Data

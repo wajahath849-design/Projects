@@ -1,0 +1,40 @@
+table 'Fact Daily Demand'
+
+	column demand_date
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: demand_date
+
+	column warehouse_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column sku_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column demand_qty
+		dataType: decimal
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: demand_qty
+
+	column demand_value
+		dataType: decimal
+		formatString: € #,##0.00
+		summarizeBy: none
+		sourceColumn: demand_value
+
+	partition 'Fact Daily Demand' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="vw_fact_daily_demand"]}[Data]
+			in
+				Data

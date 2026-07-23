@@ -1,0 +1,16 @@
+table 'Scenario Demand Spike'
+
+	column Multiplier
+		dataType: decimal
+		formatString: 0.00x
+		summarizeBy: none
+		sourceColumn: Multiplier
+
+	partition 'Scenario Demand Spike' = m
+		mode: import
+		source =
+			let
+				Values = List.Transform({50..200}, each Number.From(_) / 100),
+				Data = Table.FromList(Values, Splitter.SplitByNothing(), {"Multiplier"})
+			in
+				Data

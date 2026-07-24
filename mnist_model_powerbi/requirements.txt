@@ -1,8 +1,8 @@
 tensorflow
-pandas
 numpy
+pandas
 scikit-learn
 matplotlib
-seaborn
-openpyxl
-jupyter
+Pillow
+pyodbc
+watchdog

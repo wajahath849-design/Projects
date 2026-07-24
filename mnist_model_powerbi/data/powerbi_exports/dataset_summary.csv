@@ -1,0 +1,3 @@
+Dataset,NumberOfImages,ImageHeight,ImageWidth,NumberOfClasses
+Training,60000,28,28,10
+Testing,10000,28,28,10

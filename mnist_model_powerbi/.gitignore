@@ -1,0 +1,41 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Trained models
+models/*.keras
+models/*.h5
+
+# Generated data
+data/processed/*
+data/powerbi_exports/*
+
+# Generated reports
+reports/figures/*
+reports/model_results/*
+
+# Keep folders in Git
+!data/processed/.gitkeep
+!data/powerbi_exports/.gitkeep
+!models/.gitkeep
+!reports/figures/.gitkeep
+!reports/model_results/.gitkeep
+
+# Power BI temporary files
+*.pbit.tmp
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system files
+Thumbs.db
+.DS_Store

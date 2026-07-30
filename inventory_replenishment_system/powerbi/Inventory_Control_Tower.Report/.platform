@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Inventory Replenishment Control Tower"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "dc3dcc40-d40e-4f34-ae0a-90e6e8fffcdc"
+  }
+}

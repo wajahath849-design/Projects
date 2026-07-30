@@ -1,0 +1,7 @@
+Option Explicit
+
+Private Sub Workbook_Open()
+    On Error Resume Next
+    SetNamedValue "outSubmissionStatus", "Ready"
+    SetNamedValue "outPOStatus", "Ready"
+End Sub

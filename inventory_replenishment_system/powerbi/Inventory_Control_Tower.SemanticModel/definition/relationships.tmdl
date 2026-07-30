@@ -1,0 +1,99 @@
+relationship 4b7664e2-6c81-426a-8938-744590d03ac0
+	fromColumn: 'Fact Daily Demand'.demand_date
+	toColumn: 'Dim Date'.date_value
+
+relationship 101f5ef4-a153-4462-a722-a46f0f4f07da
+	fromColumn: 'Fact Inventory Daily'.snapshot_date
+	toColumn: 'Dim Date'.date_value
+
+relationship 12c50cb8-2f2b-4b05-adc5-b3765ade94b6
+	fromColumn: 'Fact Forecast Current'.forecast_date
+	toColumn: 'Dim Date'.date_value
+
+relationship ba02bfe2-acfe-4de0-a527-145a8478c8ce
+	fromColumn: 'Fact Replenishment Current'.recommendation_date
+	toColumn: 'Dim Date'.date_value
+
+relationship bbf7ba18-840a-4224-8983-265a6d8e1e18
+	fromColumn: 'Forecast Accuracy'.metric_date
+	toColumn: 'Dim Date'.date_value
+
+relationship d1d0d6fc-5375-4e4f-beef-489ad3ed38ee
+	fromColumn: 'Fact Daily Demand'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship ab15bdec-9096-4989-b746-be102c1e66aa
+	fromColumn: 'Fact Inventory Current'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship ef368be4-f415-484e-b5d0-d4d94323164f
+	fromColumn: 'Fact Inventory Daily'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 16783c73-8a27-48b2-9a34-3276a7b2f0e1
+	fromColumn: 'Fact Forecast Current'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 3a0713e1-89dd-441b-ba9b-195f68846d56
+	fromColumn: 'Fact Replenishment Current'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 241e0ab1-31d1-40a9-b30a-2bf2bb30efcf
+	fromColumn: 'Forecast Accuracy'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 8cc36f9e-d414-4bfb-acd4-0d7c7b67be5a
+	fromColumn: 'Supplier Performance'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 53cd8502-2d8b-421e-b8f5-250f1ad5d19b
+	fromColumn: 'Operational Overrides'.warehouse_id
+	toColumn: 'Dim Warehouse'.warehouse_id
+
+relationship 50350661-7cc4-4d7f-873c-507d66a8ff14
+	fromColumn: 'Fact Daily Demand'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship 9cbc625a-83a7-46c4-99be-08221c8ea849
+	fromColumn: 'Fact Inventory Current'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship 5e0522cf-7755-4aa4-8983-3bacc158b10f
+	fromColumn: 'Fact Inventory Daily'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship 86edf1ea-8c65-4f51-aa4f-ebf503231bec
+	fromColumn: 'Fact Forecast Current'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship 8634bb47-61cc-47c0-8a8f-a07f1b49470e
+	fromColumn: 'Fact Replenishment Current'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship b3bff8ee-ced4-4b7e-91cb-ae80df933cc8
+	fromColumn: 'Forecast Accuracy'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship eff6c9e6-49b0-4389-800f-2e8f9f562b22
+	fromColumn: 'Operational Overrides'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship f38aede6-11af-4456-b03e-d79bdc9235ad
+	fromColumn: 'Fact Replenishment Current'.supplier_id
+	toColumn: 'Dim Supplier'.supplier_id
+
+relationship 68cfaf91-82ee-4db2-a393-2dd3e27dae2c
+	fromColumn: 'Supplier Performance'.supplier_id
+	toColumn: 'Dim Supplier'.supplier_id
+
+relationship cc678fad-0892-4ed1-87ee-633d603a079b
+	fromColumn: 'Transfer Recommendations Current'.sku_id
+	toColumn: 'Dim SKU'.sku_id
+
+relationship 288d9975-a551-4b2e-807c-63f686fe742c
+	fromColumn: 'Transfer Recommendations Current'.from_warehouse_id
+	toColumn: 'Dim Warehouse From'.warehouse_id
+
+relationship a2e4ce27-e877-4f95-af87-846c3e1b5933
+	fromColumn: 'Transfer Recommendations Current'.to_warehouse_id
+	toColumn: 'Dim Warehouse To'.warehouse_id

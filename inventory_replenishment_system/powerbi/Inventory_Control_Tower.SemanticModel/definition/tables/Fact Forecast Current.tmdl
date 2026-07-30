@@ -1,0 +1,60 @@
+table 'Fact Forecast Current'
+
+	column model_run_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: model_run_id
+
+	column forecast_date
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: forecast_date
+
+	column warehouse_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column sku_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column forecast_qty
+		dataType: decimal
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: forecast_qty
+
+	column lower_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: lower_qty
+
+	column upper_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: upper_qty
+
+	column model_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column created_at
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: created_at
+
+	partition 'Fact Forecast Current' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="vw_fact_forecast_current"]}[Data]
+			in
+				Data

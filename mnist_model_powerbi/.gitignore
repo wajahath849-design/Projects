@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+logs/*
+data/incoming/*
+data/processed/*
+data/archive/*
+data/failed/*
+models/*.keras
+powerbi/*.pbix
+!data/incoming/.gitkeep
+!data/processed/.gitkeep
+!data/archive/.gitkeep
+!data/failed/.gitkeep
+!models/.gitkeep
+!powerbi/.gitkeep

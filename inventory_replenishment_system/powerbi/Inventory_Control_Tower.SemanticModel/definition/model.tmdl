@@ -1,0 +1,6 @@
+model Model
+	culture: en-US
+	sourceQueryCulture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	annotation PBI_QueryOrder = ["Dim Date","Dim Warehouse","Dim Warehouse From","Dim Warehouse To","Dim SKU","Dim Supplier","Fact Daily Demand","Fact Inventory Current","Fact Inventory Daily","Fact Forecast Current","Fact Replenishment Current","Forecast Accuracy","Supplier Performance","Transfer Recommendations Current","Operational Overrides","Scenario Demand Spike","_Measures"]

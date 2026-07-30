@@ -1,0 +1,58 @@
+table 'Dim SKU'
+
+	column sku_id
+		dataType: int64
+		isKey
+		isHidden
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column sku_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku_code
+
+	column sku_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku_name
+
+	column category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: category
+
+	column unit_cost
+		dataType: decimal
+		formatString: € #,##0.00
+		summarizeBy: none
+		sourceColumn: unit_cost
+
+	column minimum_order_qty
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: minimum_order_qty
+
+	column order_multiple
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: order_multiple
+
+	column shelf_life_days
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: shelf_life_days
+
+	column active
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: active
+
+	partition 'Dim SKU' = m
+		mode: import
+		source =
+			let
+				Source = PostgreSQL.Database(PostgreSQLServer, PostgreSQLDatabase, [CreateNavigationProperties=false]),
+				Data = Source{[Schema="inventory", Item="dim_sku"]}[Data]
+			in
+				Data

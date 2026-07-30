@@ -1,2 +1,0 @@
-Model,TestAccuracy,TestLoss,TrainingTimeSeconds,EpochsCompleted,ParameterCount,ModelFile
-CNN,0.9923999905586243,0.024826284497976303,423.01770853996277,10,897290,cnn.keras

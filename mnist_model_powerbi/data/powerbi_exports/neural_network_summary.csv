@@ -1,2 +1,0 @@
-Model,TestAccuracy,TestLoss,TrainingTimeSeconds,EpochsCompleted,ParameterCount,ModelFile
-Neural Network,0.9828000068664551,0.061491478234529495,91.41435027122498,15,235146,neural_network.keras

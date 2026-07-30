@@ -1,8 +1,0 @@
-tensorflow
-numpy
-pandas
-scikit-learn
-matplotlib
-Pillow
-pyodbc
-watchdog

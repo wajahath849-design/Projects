@@ -1,3 +1,0 @@
-expression PostgreSQLServer = "localhost:5432" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-
-expression PostgreSQLDatabase = "inventory" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]

@@ -1,9 +1,0 @@
-{
-    "Model": "Neural Network",
-    "TestAccuracy": 0.9828000068664551,
-    "TestLoss": 0.061491478234529495,
-    "TrainingTimeSeconds": 91.41435027122498,
-    "EpochsCompleted": 15,
-    "ParameterCount": 235146,
-    "ModelFile": "neural_network.keras"
-}

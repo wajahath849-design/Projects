@@ -1,1 +1,0 @@
-"""Inventory replenishment platform package."""

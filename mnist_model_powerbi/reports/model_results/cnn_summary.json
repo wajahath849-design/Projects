@@ -1,9 +1,0 @@
-{
-    "Model": "CNN",
-    "TestAccuracy": 0.9923999905586243,
-    "TestLoss": 0.024826284497976303,
-    "TrainingTimeSeconds": 423.01770853996277,
-    "EpochsCompleted": 10,
-    "ParameterCount": 897290,
-    "ModelFile": "cnn.keras"
-}

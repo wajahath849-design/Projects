@@ -1,0 +1,45 @@
+table ClassProbability
+	lineageTag: 0f8d33cf-c1fd-4b37-aa3c-079dde181901
+
+	column PredictionID
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 97831902-2371-44ac-a73e-761894280312
+		summarizeBy: count
+		sourceColumn: PredictionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassLabel
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(50)
+		lineageTag: 3e659767-a6c7-4696-b514-3d69f2f40375
+		summarizeBy: none
+		sourceColumn: ClassLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Probability
+		dataType: double
+		isNullable: false
+		sourceProviderType: decimal(12, 10)
+		lineageTag: a5652010-f7ff-4c63-9a02-e0024bc0411e
+		summarizeBy: sum
+		sourceColumn: Probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ClassProbability = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_ClassProbability = AIModelAnalytics{[Schema="dbo",Item="ClassProbability"]}[Data]
+				in
+				    dbo_ClassProbability

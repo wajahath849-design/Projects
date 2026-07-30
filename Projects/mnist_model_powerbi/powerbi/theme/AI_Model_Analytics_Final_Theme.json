@@ -1,0 +1,46 @@
+{
+  "name": "AI Model Analytics - Professional Light",
+  "dataColors": [
+    "#2563EB",
+    "#0F766E",
+    "#7C3AED",
+    "#D97706",
+    "#DC2626",
+    "#0891B2",
+    "#4F46E5",
+    "#65A30D",
+    "#9333EA"
+  ],
+  "background": "#F5F7FA",
+  "foreground": "#172033",
+  "tableAccent": "#2563EB",
+  "good": "#15803D",
+  "neutral": "#D97706",
+  "bad": "#DC2626",
+  "maximum": "#2563EB",
+  "center": "#D97706",
+  "minimum": "#DC2626",
+  "null": "#94A3B8",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 26,
+      "color": "#172033"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#172033"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#334155"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#475569"
+    }
+  }
+}

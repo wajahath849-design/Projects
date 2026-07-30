@@ -1,0 +1,306 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 35.428570338657927,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 5383.1273004254726,
+            "y": 351.50041325513683
+          },
+          "nodeIndex": "Latest Image",
+          "nodeLineageTag": "b84b79b9-a51c-4422-9cc2-bb0e017bde3a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 5635.1273004254726,
+            "y": 56.500413255136834
+          },
+          "nodeIndex": "Prediction Detail",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 5117.1273004254726,
+            "y": -9.9219357247854134
+          },
+          "nodeIndex": "ImageBatch",
+          "nodeLineageTag": "47d32116-2080-4700-abd2-0eba7326568f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 4832.9458116039641,
+            "y": 22.922762235059167
+          },
+          "nodeIndex": "ModelPrediction",
+          "nodeLineageTag": "5ad9c4ac-7339-45be-96ea-2389df742102",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 4548.7442504107785,
+            "y": 20.063175054811609
+          },
+          "nodeIndex": "ModelRegistry",
+          "nodeLineageTag": "576dfa46-3c6d-44d0-890d-24fad96cd653",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 5045.7273065289883,
+            "y": 393.211587745098
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "6a7325b4-e25a-41ef-9d1b-1640a864d9dd",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 5869.1273004254726,
+            "y": 236.21158774509797
+          },
+          "nodeIndex": "_Measures",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 221.14148040390066,
+            "y": -50
+          },
+          "nodeIndex": "ClassProbability",
+          "nodeLineageTag": "0f8d33cf-c1fd-4b37-aa3c-079dde181901",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 622.7442504107787,
+            "y": 47.7654699173446
+          },
+          "nodeIndex": "HumanReview",
+          "nodeLineageTag": "eedef3bb-8e58-471d-ba42-a1ec0d6fdcf3",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 856.7442504107787,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_BatchPredictionResults",
+          "nodeLineageTag": "43293d60-7f83-4d80-8725-0bd39bc6af5e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1140.7442504107787,
+            "y": 224.21158774509797
+          },
+          "nodeIndex": "vw_ClassPerformance",
+          "nodeLineageTag": "7d3a1d70-ecff-4f61-be87-931fdb13cc12",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1424.7442504107787,
+            "y": 248.21158774509797
+          },
+          "nodeIndex": "vw_ConfusionMatrix",
+          "nodeLineageTag": "6cdcc56f-340e-4231-a1a7-354e4d9bcac9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1708.7442504107787,
+            "y": 212.21158774509797
+          },
+          "nodeIndex": "vw_DailyProcessingTrend",
+          "nodeLineageTag": "5199e3dc-9a8b-44fb-a771-0d36313ab56f",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1992.7442504107787,
+            "y": 212.21158774509797
+          },
+          "nodeIndex": "vw_FailedPredictions",
+          "nodeLineageTag": "f3f60030-0b0b-4f7b-82ad-df29a5660bc3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2276.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_HumanReviewQueue",
+          "nodeLineageTag": "50552412-3b5c-460e-9ec3-c90946441863",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2560.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_LatestBatchSummary",
+          "nodeLineageTag": "fd90a514-0506-40f9-8cf2-784a25a06b7b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2844.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_LatestCompletedImage",
+          "nodeLineageTag": "983bed1d-0ca4-4964-9edd-234163b1f0c1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3128.7442504107785,
+            "y": 200.21158774509797
+          },
+          "nodeIndex": "vw_ModelAgreement",
+          "nodeLineageTag": "d9d1ddf0-f362-4f36-a227-5d8547087b07",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3412.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_ModelPerformance",
+          "nodeLineageTag": "34fbb2fd-49ba-4f3a-9dac-942e880a27eb",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3696.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_PredictionDetail",
+          "nodeLineageTag": "aad01057-50b8-4f72-aa98-1c678e25e281",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3980.7442504107785,
+            "y": 186.21158774509797
+          },
+          "nodeIndex": "vw_PredictionHistoryAll",
+          "nodeLineageTag": "562fec1d-f4fa-4322-a42c-fd6db2a9bf43",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4264.7442504107785,
+            "y": 212.21158774509797
+          },
+          "nodeIndex": "vw_SystemHealth",
+          "nodeLineageTag": "a91804d5-a799-41e6-89f4-642bb88e01a8",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

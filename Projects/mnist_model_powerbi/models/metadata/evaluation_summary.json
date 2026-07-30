@@ -1,0 +1,149 @@
+{
+  "evaluated_at_utc": "2026-07-26T07:31:40.462286+00:00",
+  "dataset": "MNIST canonical test split",
+  "sample_count": 10000,
+  "input_range": "0..255 (normalization is inside the saved Keras models)",
+  "successful_models": [
+    {
+      "model_key": "cnn",
+      "model_name": "CNN",
+      "samples": 10000,
+      "correct": 9912,
+      "test_accuracy": 0.9912,
+      "average_confidence": 0.9937571282148361,
+      "evaluation_seconds": 4.246,
+      "per_class_accuracy": {
+        "0": 0.9979591836734694,
+        "1": 0.9832599118942731,
+        "2": 0.9932170542635659,
+        "3": 0.998019801980198,
+        "4": 0.9938900203665988,
+        "5": 0.9910313901345291,
+        "6": 0.9874739039665971,
+        "7": 0.9844357976653697,
+        "8": 0.9938398357289527,
+        "9": 0.9900891972249752
+      },
+      "configured_test_accuracy_before_evaluation": 0.988
+    },
+    {
+      "model_key": "vision_transformer",
+      "model_name": "Vision Transformer",
+      "samples": 10000,
+      "correct": 9875,
+      "test_accuracy": 0.9875,
+      "average_confidence": 0.9855071656942368,
+      "evaluation_seconds": 14.646,
+      "per_class_accuracy": {
+        "0": 0.9959183673469387,
+        "1": 0.9938325991189427,
+        "2": 0.9893410852713178,
+        "3": 0.9920792079207921,
+        "4": 0.984725050916497,
+        "5": 0.9887892376681614,
+        "6": 0.9895615866388309,
+        "7": 0.9912451361867705,
+        "8": 0.9753593429158111,
+        "9": 0.9732408325074331
+      },
+      "configured_test_accuracy_before_evaluation": 0.976
+    },
+    {
+      "model_key": "neural_network",
+      "model_name": "Neural Network",
+      "samples": 10000,
+      "correct": 9802,
+      "test_accuracy": 0.9802,
+      "average_confidence": 0.9782540991663933,
+      "evaluation_seconds": 0.981,
+      "per_class_accuracy": {
+        "0": 0.9908163265306122,
+        "1": 0.9938325991189427,
+        "2": 0.9864341085271318,
+        "3": 0.9841584158415841,
+        "4": 0.9765784114052953,
+        "5": 0.9798206278026906,
+        "6": 0.988517745302714,
+        "7": 0.9785992217898832,
+        "8": 0.9579055441478439,
+        "9": 0.9633300297324083
+      },
+      "configured_test_accuracy_before_evaluation": 0.973
+    },
+    {
+      "model_key": "resnet50",
+      "model_name": "ResNet50",
+      "samples": 10000,
+      "correct": 9761,
+      "test_accuracy": 0.9761,
+      "average_confidence": 0.9733030397102237,
+      "evaluation_seconds": 76.881,
+      "per_class_accuracy": {
+        "0": 0.996938775510204,
+        "1": 0.9929515418502203,
+        "2": 0.9476744186046512,
+        "3": 0.9831683168316832,
+        "4": 0.9745417515274949,
+        "5": 0.9630044843049327,
+        "6": 0.9707724425887265,
+        "7": 0.9902723735408561,
+        "8": 0.9856262833675564,
+        "9": 0.9534192269573836
+      },
+      "configured_test_accuracy_before_evaluation": 0.982
+    },
+    {
+      "model_key": "efficientnet_b0",
+      "model_name": "EfficientNetB0",
+      "samples": 10000,
+      "correct": 9618,
+      "test_accuracy": 0.9618,
+      "average_confidence": 0.9524796106606722,
+      "evaluation_seconds": 29.429,
+      "per_class_accuracy": {
+        "0": 0.9918367346938776,
+        "1": 0.9920704845814978,
+        "2": 0.9331395348837209,
+        "3": 0.9554455445544554,
+        "4": 0.984725050916497,
+        "5": 0.9002242152466368,
+        "6": 0.9488517745302714,
+        "7": 0.9834630350194552,
+        "8": 0.9702258726899384,
+        "9": 0.9484638255698712
+      },
+      "configured_test_accuracy_before_evaluation": 0.981
+    },
+    {
+      "model_key": "mobilenet_v2",
+      "model_name": "MobileNetV2",
+      "samples": 10000,
+      "correct": 9148,
+      "test_accuracy": 0.9148,
+      "average_confidence": 0.9249977487966419,
+      "evaluation_seconds": 19.758,
+      "per_class_accuracy": {
+        "0": 0.9704081632653061,
+        "1": 0.9436123348017621,
+        "2": 0.7974806201550387,
+        "3": 0.9683168316831683,
+        "4": 0.9816700610997964,
+        "5": 0.7331838565022422,
+        "6": 0.8674321503131524,
+        "7": 0.938715953307393,
+        "8": 0.9722792607802875,
+        "9": 0.9554013875123885
+      },
+      "configured_test_accuracy_before_evaluation": 0.978
+    }
+  ],
+  "failed_models": [],
+  "ranking": [
+    "CNN",
+    "Vision Transformer",
+    "Neural Network",
+    "ResNet50",
+    "EfficientNetB0",
+    "MobileNetV2"
+  ]
+}

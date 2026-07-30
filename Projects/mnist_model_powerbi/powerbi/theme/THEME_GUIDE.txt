@@ -1,0 +1,11 @@
+AI MODEL ANALYTICS — PROFESSIONAL LIGHT
+Canvas: 16:9
+Background: #F5F7FA
+Cards: #FFFFFF
+Primary text: #172033
+Primary blue: #2563EB
+Success: #15803D
+Warning: #D97706
+Failure: #DC2626
+Font: Segoe UI
+Use colour for meaning, not decoration. Maximum five KPI cards per row.

@@ -1,0 +1,20 @@
+relationship 5a00d67b-3216-460c-8e57-2423c128903c
+	fromColumn: ModelPrediction.ModelID
+	toColumn: ModelRegistry.ModelID
+
+	annotation PBI_IsFromSource = FS
+
+relationship fa8aa38b-7759-4bf7-9d98-1e0e2100d4b0
+	fromColumn: ModelPrediction.BatchID
+	toColumn: ImageBatch.BatchID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 568c8e59-95ea-4bd8-9a3f-29e8281cb2e7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_ea00384d-e273-4261-8292-721a598deb1d.Date
+
+relationship eb12eb2c-740e-c7fb-3100-62f454b4c21f
+	fromColumn: ImageBatch.'Detected Date'
+	toColumn: DimDate.Date

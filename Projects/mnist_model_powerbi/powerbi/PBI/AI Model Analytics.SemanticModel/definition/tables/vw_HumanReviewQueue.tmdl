@@ -1,0 +1,119 @@
+table vw_HumanReviewQueue
+	lineageTag: 50552412-3b5c-460e-9ec3-c90946441863
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: 947cadbf-ff05-4a89-8707-82791b641b00
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: 0a6c6817-8eda-444f-a421-361524c5a736
+		summarizeBy: none
+		sourceColumn: ImageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: ece55fcf-f95c-45ff-996d-028051343243
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: d172bcf4-a893-4dc9-8903-57e7dad42fdf
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsensusPrediction
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 0547d4b9-0556-4141-a11d-6b2e793195b8
+		summarizeBy: none
+		sourceColumn: ConsensusPrediction
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgreementRate
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: b7e29dd7-a675-46ac-814d-de0a4f072782
+		summarizeBy: sum
+		sourceColumn: AgreementRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DetectedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 3734070d-be10-4cb1-8586-5f3b83af24fe
+		summarizeBy: none
+		sourceColumn: DetectedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReviewStatus
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(8)
+		lineageTag: 91f373d1-33aa-4665-98de-8f1fdf157bd6
+		summarizeBy: none
+		sourceColumn: ReviewStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column CorrectedClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: a5555aef-4911-45e6-909f-d9b240de082c
+		summarizeBy: none
+		sourceColumn: CorrectedClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reviewer
+		dataType: string
+		sourceProviderType: nvarchar(150)
+		lineageTag: 85a66ec9-56c4-4671-b270-2dff7d87c9f8
+		summarizeBy: none
+		sourceColumn: Reviewer
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReviewedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 7285c1bd-742f-473e-91e7-b05a2925502d
+		summarizeBy: none
+		sourceColumn: ReviewedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_HumanReviewQueue = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_HumanReviewQueue = AIModelAnalytics{[Schema="dbo",Item="vw_HumanReviewQueue"]}[Data]
+				in
+				    dbo_vw_HumanReviewQueue

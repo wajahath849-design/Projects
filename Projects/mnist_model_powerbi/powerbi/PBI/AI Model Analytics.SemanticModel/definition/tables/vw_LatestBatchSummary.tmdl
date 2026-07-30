@@ -1,0 +1,142 @@
+table vw_LatestBatchSummary
+	lineageTag: fd90a514-0506-40f9-8cf2-784a25a06b7b
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: d808f83c-27b3-4f91-8488-8448d23ed5b3
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: 0d25587c-f64a-4c50-a386-ef4fe3050d04
+		summarizeBy: none
+		sourceColumn: ImageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: bc25d4e6-898d-4609-a781-e0842cfb9fba
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 5a4b91d1-0627-4121-a66d-69019850c6ac
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingStatus
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(30)
+		lineageTag: 661b68e1-eb9b-4ed1-a956-18553142dda5
+		summarizeBy: none
+		sourceColumn: ProcessingStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column DetectedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: a697595a-9d81-481e-84d8-5a688215a6e9
+		summarizeBy: none
+		sourceColumn: DetectedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: dec64502-96a6-4287-b050-433f5f123eb3
+		summarizeBy: none
+		sourceColumn: CompletedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingMilliseconds
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: 80bbdc5b-3e81-4b16-8593-f3a5f146a4e3
+		summarizeBy: sum
+		sourceColumn: ProcessingMilliseconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SuccessfulModelCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 16adb575-bf5f-452d-9f02-4909778b8eaf
+		summarizeBy: sum
+		sourceColumn: SuccessfulModelCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DistinctPredictions
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f7a2d82e-b092-4562-a448-2a1d04bee8d6
+		summarizeBy: sum
+		sourceColumn: DistinctPredictions
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsensusPrediction
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: ce96ff9c-7076-4477-923b-d61656260b41
+		summarizeBy: none
+		sourceColumn: ConsensusPrediction
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsensusVotes
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1b887ab7-eb28-46bf-8813-d5c0e0a7bef6
+		summarizeBy: sum
+		sourceColumn: ConsensusVotes
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgreementRate
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: 7857f4da-cfdb-4838-b609-5383812e68f9
+		summarizeBy: sum
+		sourceColumn: AgreementRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_LatestBatchSummary = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_LatestBatchSummary = AIModelAnalytics{[Schema="dbo",Item="vw_LatestBatchSummary"]}[Data]
+				in
+				    dbo_vw_LatestBatchSummary

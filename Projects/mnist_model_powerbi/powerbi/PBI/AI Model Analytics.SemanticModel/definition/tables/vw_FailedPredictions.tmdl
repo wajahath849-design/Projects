@@ -1,0 +1,82 @@
+table vw_FailedPredictions
+	lineageTag: f3f60030-0b0b-4f7b-82ad-df29a5660bc3
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: a39ffb77-e634-4714-94a0-0c7f94dfcb67
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: ec4ec9d5-e597-49af-bde9-5ba2d7ab9986
+		summarizeBy: none
+		sourceColumn: ImageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelKey
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(100)
+		lineageTag: 314ddc5b-bed6-40c5-b4c2-c45b66b13a42
+		summarizeBy: none
+		sourceColumn: ModelKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(150)
+		lineageTag: c2e73683-354d-48ef-9f25-8ad5247bb3a6
+		summarizeBy: none
+		sourceColumn: ModelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Framework
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(40)
+		lineageTag: 4a39ecf1-0e63-42a3-8d45-25a6cfdd43da
+		summarizeBy: none
+		sourceColumn: Framework
+
+		annotation SummarizationSetBy = Automatic
+
+	column PredictionErrorMessage
+		dataType: string
+		sourceProviderType: nvarchar(4000)
+		lineageTag: d25524f5-5ca4-49b7-9146-0fcaed6fcc7d
+		summarizeBy: none
+		sourceColumn: PredictionErrorMessage
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 090452a5-94ba-49c3-b9ff-c67f7b339a2f
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_FailedPredictions = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_FailedPredictions = AIModelAnalytics{[Schema="dbo",Item="vw_FailedPredictions"]}[Data]
+				in
+				    dbo_vw_FailedPredictions

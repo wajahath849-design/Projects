@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "6c4dcc3600ab05014ec9",
+  "displayName": "Live Prediction",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1600,
+  "pageBinding": {
+    "name": "6a98b5442a878d30712b",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "personalizeVisual": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "190L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

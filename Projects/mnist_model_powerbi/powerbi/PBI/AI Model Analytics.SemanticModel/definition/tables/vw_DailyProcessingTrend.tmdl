@@ -1,0 +1,85 @@
+table vw_DailyProcessingTrend
+	lineageTag: 5199e3dc-9a8b-44fb-a771-0d36313ab56f
+
+	column ProcessingDate
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 6e70de23-326d-46da-9f98-48cc3c4fd944
+		summarizeBy: none
+		sourceColumn: ProcessingDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TotalImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: c711975e-f61a-4bd1-879a-186d695572b7
+		summarizeBy: sum
+		sourceColumn: TotalImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 153b2e40-9fae-4201-b055-33759847c1e8
+		summarizeBy: sum
+		sourceColumn: CompletedImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column PartialImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7d9b2c04-caf3-48e5-a782-1a654ab4af26
+		summarizeBy: sum
+		sourceColumn: PartialImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column FailedImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 274cd3bb-89d2-4091-b8f0-872511578b92
+		summarizeBy: sum
+		sourceColumn: FailedImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuplicateImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 80435967-33d5-4e41-a886-eff79d26442e
+		summarizeBy: sum
+		sourceColumn: DuplicateImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgProcessingMs
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: c062e665-088b-4423-8d41-f8bead3c11ec
+		summarizeBy: sum
+		sourceColumn: AvgProcessingMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_DailyProcessingTrend = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_DailyProcessingTrend = AIModelAnalytics{[Schema="dbo",Item="vw_DailyProcessingTrend"]}[Data]
+				in
+				    dbo_vw_DailyProcessingTrend

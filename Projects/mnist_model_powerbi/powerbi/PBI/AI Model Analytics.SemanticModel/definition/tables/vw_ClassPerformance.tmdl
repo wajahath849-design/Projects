@@ -1,0 +1,73 @@
+table vw_ClassPerformance
+	lineageTag: 7d3a1d70-ecff-4f61-be87-931fdb13cc12
+
+	column ModelName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(150)
+		lineageTag: e3922612-f6cc-4314-a666-89e81d000755
+		summarizeBy: none
+		sourceColumn: ModelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 3987964e-f4a4-41fe-acee-a155a57a6d6b
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column LabelledPredictions
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 24a4949b-8f3f-4264-9863-43503d0bb5ef
+		summarizeBy: sum
+		sourceColumn: LabelledPredictions
+
+		annotation SummarizationSetBy = Automatic
+
+	column CorrectPredictions
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f26d11f9-f6fc-407b-a8ee-909c6804dd6f
+		summarizeBy: sum
+		sourceColumn: CorrectPredictions
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassAccuracy
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: 32d010fc-86bd-4fb9-ac66-207abcf762a6
+		summarizeBy: sum
+		sourceColumn: ClassAccuracy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgConfidence
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: e01d41c3-aded-43e9-9941-464d30f3566d
+		summarizeBy: sum
+		sourceColumn: AvgConfidence
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_ClassPerformance = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_ClassPerformance = AIModelAnalytics{[Schema="dbo",Item="vw_ClassPerformance"]}[Data]
+				in
+				    dbo_vw_ClassPerformance

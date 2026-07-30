@@ -1,0 +1,137 @@
+table vw_LatestCompletedImage
+	lineageTag: 983bed1d-0ca4-4964-9edd-234163b1f0c1
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: 6bce0932-e994-4312-8a54-a1f1308d6270
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: cc05972b-78fc-486d-8854-e53f9f4d826e
+		summarizeBy: none
+		sourceColumn: ImageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoredFileName
+		dataType: string
+		sourceProviderType: nvarchar(300)
+		lineageTag: 40a37550-2b1a-4f93-b951-06a251094b49
+		summarizeBy: none
+		sourceColumn: StoredFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: 84108489-a4d4-4704-804c-0ccfde0f388a
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageRelativePath
+		dataType: string
+		sourceProviderType: nvarchar(600)
+		lineageTag: 504b2ff1-5907-4247-bddf-262e4f4dfa12
+		summarizeBy: none
+		sourceColumn: ImageRelativePath
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedFileName
+		dataType: string
+		sourceProviderType: nvarchar(300)
+		lineageTag: 3b0356b7-bf23-4480-8e12-8fc3c29eb7e8
+		summarizeBy: none
+		sourceColumn: ProcessedFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedImageRelativePath
+		dataType: string
+		sourceProviderType: nvarchar(600)
+		lineageTag: 14e76290-fb40-4974-911e-f6a60443c3b8
+		summarizeBy: none
+		sourceColumn: ProcessedImageRelativePath
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: 92156e1a-f72f-449e-8982-2a765e15ea37
+		summarizeBy: none
+		sourceColumn: ProcessedImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 42570710-e0a4-4e6e-9776-4b71febd4330
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column DetectedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 657a5a04-9230-48b1-971c-3b3474ba8ee9
+		summarizeBy: none
+		sourceColumn: DetectedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: b164e0b7-fb7a-4729-beb0-99e105a196c2
+		summarizeBy: none
+		sourceColumn: CompletedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingStatus
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(30)
+		lineageTag: 570a6b48-8469-43e5-938c-7737136cdd08
+		summarizeBy: none
+		sourceColumn: ProcessingStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingMilliseconds
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: 3e6b72ee-e4fa-4581-87ef-7495f3486105
+		summarizeBy: sum
+		sourceColumn: ProcessingMilliseconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_LatestCompletedImage = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_LatestCompletedImage = AIModelAnalytics{[Schema="dbo",Item="vw_LatestCompletedImage"]}[Data]
+				in
+				    dbo_vw_LatestCompletedImage

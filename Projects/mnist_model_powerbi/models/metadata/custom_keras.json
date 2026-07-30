@@ -1,0 +1,31 @@
+{
+  "model_key": "custom_keras",
+  "model_name": "Custom Keras",
+  "framework": "keras",
+  "architecture": "Custom Residual CNN",
+  "model_file": "models/custom_keras.keras",
+  "input_shape": [
+    28,
+    28,
+    1
+  ],
+  "dataset": "MNIST",
+  "class_labels": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "output_classes": 10,
+  "normalization": "divide_by_255",
+  "validation_accuracy": 0.0,
+  "test_accuracy": 0.0,
+  "trained": true,
+  "verified": false
+}

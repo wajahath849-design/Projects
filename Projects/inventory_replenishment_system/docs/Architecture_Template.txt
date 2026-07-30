@@ -1,0 +1,32 @@
+ARCHITECTURE DIAGRAM (Use this as a template)
+
+                                    USER
+                                      │
+                                      ▼
+                           Excel Inventory Template
+                           (Data Entry + VBA Forms)
+                                      │
+                                      ▼
+                         Python Automation Scripts
+                    (Validation • ETL • Forecast Trigger)
+                                      │
+                                      ▼
+                              FastAPI REST API
+                 (/inventory • /forecast • /suppliers)
+                                      │
+                                      ▼
+                              PostgreSQL Database
+          ┌─────────────────────────────────────────────────┐
+          │ Products │ Suppliers │ Inventory │ Forecasts    │
+          │ Orders   │ Warehouses│ Transactions             │
+          └─────────────────────────────────────────────────┘
+                         │                          │
+                         ▼                          ▼
+                 Forecast Engine              Reporting API
+                 (Python/Pandas)           (JSON Responses)
+                         │
+                         ▼
+                  Power BI Dashboard
+      KPIs • Inventory • Forecast • Warehouse • Suppliers
+
+Create this as Architecture.png in PowerPoint, draw.io, Figma or Canva.

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "eed70cf07c737049c76e",
+  "displayName": "Data Explorer",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1600,
+  "pageBinding": {
+    "name": "a2cf23fc738a07b09e87",
+    "type": "Default",
+    "parameters": []
+  }
+}

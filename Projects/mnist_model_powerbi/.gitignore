@@ -1,0 +1,58 @@
+# Python environments, caches, and build output
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+.service_pids.json
+*.pid
+*.key
+*.pem
+
+# Runtime logs and image data
+logs/
+data/incoming/*
+data/processed/*
+data/failed/*
+!data/incoming/.gitkeep
+!data/processed/.gitkeep
+!data/failed/.gitkeep
+
+# Trained model binaries belong in a GitHub Release or external artifact store
+models/*.keras
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.onnx
+models/*.tflite
+
+# Power BI local state, caches, exports, and temporary copies
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+powerbi/_*/
+powerbi/backups/
+powerbi/*.zip
+*.pbix
+*.pbit
+
+# Database and editor artifacts
+*.bak
+*.mdf
+*.ldf
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+~$*

@@ -1,0 +1,270 @@
+table ImageBatch
+	lineageTag: 47d32116-2080-4700-abd2-0eba7326568f
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: 1e04d6dc-0dba-4695-8ade-048cd692c2f7
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageHash
+		dataType: string
+		isNullable: false
+		sourceProviderType: char
+		lineageTag: 76f9bef0-ac3c-42c2-9ead-06916adede92
+		summarizeBy: none
+		sourceColumn: ImageHash
+
+		annotation SummarizationSetBy = Automatic
+
+	column OriginalFileName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: 4961f025-317f-417c-9e79-670c1f18c02e
+		summarizeBy: none
+		sourceColumn: OriginalFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoredFileName
+		dataType: string
+		sourceProviderType: nvarchar(300)
+		lineageTag: 7d7a0ed3-a354-4cff-a4a8-3f279f6de596
+		summarizeBy: none
+		sourceColumn: StoredFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageRelativePath
+		dataType: string
+		sourceProviderType: nvarchar(600)
+		lineageTag: 5a36cf0a-a1c1-4f74-b6d1-bbbc7c576bbc
+		summarizeBy: none
+		sourceColumn: ImageRelativePath
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: 07aa6acc-07ec-4fac-847f-1e6419e5b90d
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: c2bcd6e2-0768-4fb8-9133-c10ed29a4070
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column OriginalWidth
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 9be41e38-507e-47cf-b547-1716b1d46c77
+		summarizeBy: sum
+		sourceColumn: OriginalWidth
+
+		annotation SummarizationSetBy = Automatic
+
+	column OriginalHeight
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c7a6f41d-6947-4e03-a376-fcce8f10b9a1
+		summarizeBy: sum
+		sourceColumn: OriginalHeight
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brightness
+		dataType: double
+		sourceProviderType: decimal(12, 3)
+		lineageTag: 49527a38-6d79-4d33-806a-48054cf16e6d
+		summarizeBy: sum
+		sourceColumn: Brightness
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Contrast
+		dataType: double
+		sourceProviderType: decimal(12, 3)
+		lineageTag: b2b96ccb-38e8-4251-baa2-9113b2567b06
+		summarizeBy: sum
+		sourceColumn: Contrast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BlurScore
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: 27a90b7a-0b49-4ce7-a825-9d5770ff2b9d
+		summarizeBy: sum
+		sourceColumn: BlurScore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DetectedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: c0cb36d2-2b10-4ba2-8dac-3a4651550937
+		summarizeBy: none
+		sourceColumn: DetectedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: fefd2fb7-a319-4bbc-b236-cd0a29b98b48
+		summarizeBy: none
+		sourceColumn: CompletedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingStatus
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(30)
+		lineageTag: cb6be4d7-cc82-4a76-8a20-e2c9bacbb735
+		summarizeBy: none
+		sourceColumn: ProcessingStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessingMilliseconds
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: a6649aa0-8c71-46d5-a5d5-7dab305c7dd4
+		summarizeBy: sum
+		sourceColumn: ProcessingMilliseconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IsDuplicate
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 6f7ad344-8a86-426f-848f-f16a1e9046db
+		summarizeBy: none
+		sourceColumn: IsDuplicate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuplicateOfBatchID
+		dataType: string
+		sourceProviderType: uniqueidentifier
+		lineageTag: 27d0e151-0350-43a6-a81f-564f1dbb3323
+		summarizeBy: none
+		sourceColumn: DuplicateOfBatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ErrorMessage
+		dataType: string
+		sourceProviderType: nvarchar(4000)
+		lineageTag: 31321324-6c35-4615-8605-2b4b93a4137b
+		summarizeBy: none
+		sourceColumn: ErrorMessage
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedFileName
+		dataType: string
+		sourceProviderType: nvarchar(300)
+		lineageTag: 294bf11c-ddc4-44ee-a0bb-b0c7ec4a3dff
+		summarizeBy: none
+		sourceColumn: ProcessedFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedImageRelativePath
+		dataType: string
+		sourceProviderType: nvarchar(600)
+		lineageTag: 29a61658-e81e-4bda-a091-02cc9c086b5b
+		summarizeBy: none
+		sourceColumn: ProcessedImageRelativePath
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessedImageUrl
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: 934e6754-6840-4cbe-9ae9-fbd8a897bb9b
+		summarizeBy: none
+		sourceColumn: ProcessedImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column PipelineVersion
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(30)
+		lineageTag: 0ac9044c-5f43-4f58-a818-fd244c30a43f
+		summarizeBy: none
+		sourceColumn: PipelineVersion
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetricsEligible
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 9f206e40-8e00-48b2-b143-87b360eddc25
+		summarizeBy: none
+		sourceColumn: MetricsEligible
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Detected Date' =
+
+			DATE(
+			    YEAR(ImageBatch[DetectedAt]),
+			    MONTH(ImageBatch[DetectedAt]),
+			    DAY(ImageBatch[DetectedAt])
+			)
+		formatString: General Date
+		lineageTag: 1000cd7e-db18-4c5f-aa0f-bb2356243908
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Detected Date Hierarchy'
+		lineageTag: 43159d8e-7438-427b-b8a2-b2fc53aa1aa1
+
+		level 'Detected Date'
+			lineageTag: 74695d27-8d56-4c12-91a9-1e35a4d4b78c
+			column: 'Detected Date'
+
+	partition ImageBatch = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhosT,14330"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_ImageBatch = AIModelAnalytics{[Schema="dbo",Item="ImageBatch"]}[Data]
+				in
+				    dbo_ImageBatch

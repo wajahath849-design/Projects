@@ -1,0 +1,223 @@
+table ModelRegistry
+	lineageTag: 576dfa46-3c6d-44d0-890d-24fad96cd653
+
+	column ModelID
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: bb6af21e-158f-4eef-92c1-16d12939bc2c
+		summarizeBy: none
+		sourceColumn: ModelID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelKey
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(100)
+		lineageTag: 28d31203-9aee-4d41-bb0c-cf89d9d0700f
+		summarizeBy: none
+		sourceColumn: ModelKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(150)
+		lineageTag: 3408f052-4503-4643-95bd-f374b0492398
+		summarizeBy: none
+		sourceColumn: ModelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Framework
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(40)
+		lineageTag: a2a69198-f353-4cd2-beb7-e9c56169633b
+		summarizeBy: none
+		sourceColumn: Framework
+
+		annotation SummarizationSetBy = Automatic
+
+	column Architecture
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(120)
+		lineageTag: 497a94b6-02d8-4f75-bc94-f104d1eafaab
+		summarizeBy: none
+		sourceColumn: Architecture
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelVersion
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(50)
+		lineageTag: 079f0e5f-0464-46e7-9bd4-06521a501777
+		summarizeBy: none
+		sourceColumn: ModelVersion
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelPath
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(500)
+		lineageTag: 7a03cd9f-67d4-444e-982a-7d7c9de6a4ec
+		summarizeBy: none
+		sourceColumn: ModelPath
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatasetName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(100)
+		lineageTag: f50b653f-b1d5-4ebb-99cb-e786f2ee70a1
+		summarizeBy: none
+		sourceColumn: DatasetName
+
+		annotation SummarizationSetBy = Automatic
+
+	column InputWidth
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: smallint
+		lineageTag: c3426e80-bfe5-4f9a-acea-a5aea0169f48
+		summarizeBy: none
+		sourceColumn: InputWidth
+
+		annotation SummarizationSetBy = Automatic
+
+	column InputHeight
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: smallint
+		lineageTag: 60c752e3-32b6-4df2-956d-e1515e8fd44e
+		summarizeBy: none
+		sourceColumn: InputHeight
+
+		annotation SummarizationSetBy = Automatic
+
+	column InputChannels
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: tinyint
+		lineageTag: a0717cb0-ccf1-4aed-a3ee-6116c5d3eab2
+		summarizeBy: none
+		sourceColumn: InputChannels
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeploymentStage
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(30)
+		lineageTag: 44ae3220-728f-42f6-9ac3-fe2429d411b7
+		summarizeBy: none
+		sourceColumn: DeploymentStage
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsEnabled
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 2279f87b-e4e4-47fe-b8a4-fdfe9865f195
+		summarizeBy: none
+		sourceColumn: IsEnabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsTrained
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: bc98fc2c-fed3-4263-99c0-63cc7374b4fb
+		summarizeBy: none
+		sourceColumn: IsTrained
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsVerified
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: cc877a43-ac52-4b1a-a92e-bc9280be19fd
+		summarizeBy: none
+		sourceColumn: IsVerified
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValidationAccuracy
+		dataType: double
+		sourceProviderType: decimal(9, 6)
+		lineageTag: e520aa86-2bb9-42de-b834-a2d9b92b054f
+		summarizeBy: none
+		sourceColumn: ValidationAccuracy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TestAccuracy
+		dataType: double
+		sourceProviderType: decimal(9, 6)
+		lineageTag: b6c3c0a4-62cd-4b16-9491-fb781fa8bef6
+		summarizeBy: none
+		sourceColumn: TestAccuracy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TrainingDate
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9b06b3bf-43e7-455e-9271-2f74d8f563ae
+		summarizeBy: none
+		sourceColumn: TrainingDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 598ee6a6-c7d7-4ea3-a41b-b98008a06a57
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 57bc37d9-eae0-4fcb-8055-01fc8ad64329
+		summarizeBy: none
+		sourceColumn: UpdatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ModelRegistry = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhosT,14330"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_ModelRegistry = AIModelAnalytics{[Schema="dbo",Item="ModelRegistry"]}[Data]
+				in
+				    dbo_ModelRegistry

@@ -1,0 +1,216 @@
+table _Measures
+	isHidden
+
+	measure 'Scenario Multiplier' = ```
+			SELECTEDVALUE('Scenario Demand Spike'[Multiplier], 1.0)
+			```
+		formatString: 0.00x
+
+	measure 'Current On Hand' = ```
+			SUM('Fact Inventory Current'[on_hand_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Allocated Quantity' = ```
+			SUM('Fact Inventory Current'[allocated_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'On Order Quantity' = ```
+			SUM('Fact Inventory Current'[on_order_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Backorder Quantity' = ```
+			SUM('Fact Inventory Current'[backorder_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Inventory Position' = ```
+			SUM('Fact Inventory Current'[inventory_position_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Inventory Value' = ```
+			SUMX('Fact Inventory Current', 'Fact Inventory Current'[on_hand_qty] * RELATED('Dim SKU'[unit_cost]))
+			```
+		formatString: € #,##0.00
+
+	measure 'Forecast Demand' = ```
+			SUM('Fact Forecast Current'[forecast_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Adjusted Forecast Demand' = ```
+			[Forecast Demand] * [Scenario Multiplier]
+			```
+		formatString: #,##0.00
+
+	measure 'Forecast Demand Next 30 Days' = ```
+			VAR StartDate = TODAY() RETURN CALCULATE([Adjusted Forecast Demand], DATESBETWEEN('Dim Date'[date_value], StartDate, StartDate + 29))
+			```
+		formatString: #,##0.00
+
+	measure 'Forecast Demand Next 90 Days' = ```
+			VAR StartDate = TODAY() RETURN CALCULATE([Adjusted Forecast Demand], DATESBETWEEN('Dim Date'[date_value], StartDate, StartDate + 89))
+			```
+		formatString: #,##0.00
+
+	measure 'Days of Supply Remaining' = ```
+			VAR Stock=[Inventory Position] VAR StartDate=TODAY() VAR EndDate=StartDate+90 VAR FutureDates=FILTER(ALL('Dim Date'[date_value]),'Dim Date'[date_value]>=StartDate&&'Dim Date'[date_value]<=EndDate) VAR StockoutDate=MINX(FILTER(FutureDates,VAR CurrentDate='Dim Date'[date_value] VAR CumulativeDemand=CALCULATE([Adjusted Forecast Demand],FILTER(ALL('Dim Date'[date_value]),'Dim Date'[date_value]>=StartDate&&'Dim Date'[date_value]<=CurrentDate)) RETURN CumulativeDemand>=Stock),'Dim Date'[date_value]) RETURN SWITCH(TRUE(),Stock<=0,0,ISBLANK(StockoutDate),90,DATEDIFF(StartDate,StockoutDate,DAY))
+			```
+		formatString: 0
+
+	measure 'Recommended Order Quantity' = ```
+			SUM('Fact Replenishment Current'[recommended_order_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Gross Purchase Requirement' = ```
+			SUM('Fact Replenishment Current'[gross_recommended_order_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Internal Transfer Quantity' = ```
+			SUM('Transfer Recommendations Current'[transfer_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Net External Purchase Quantity' = ```
+			[Recommended Order Quantity]
+			```
+		formatString: #,##0.00
+
+	measure 'Reorder Point' = ```
+			SUM('Fact Replenishment Current'[reorder_point_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Safety Stock' = ```
+			SUM('Fact Replenishment Current'[safety_stock_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Average Lead Time Days' = ```
+			AVERAGE('Fact Replenishment Current'[avg_lead_time_days])
+			```
+		formatString: 0.0
+
+	measure 'Critical SKU Count' = ```
+			CALCULATE(DISTINCTCOUNT('Fact Replenishment Current'[sku_id]), 'Fact Replenishment Current'[risk_band] = "CRITICAL")
+			```
+		formatString: 0
+
+	measure 'High Risk SKU Count' = ```
+			CALCULATE(DISTINCTCOUNT('Fact Replenishment Current'[sku_id]), 'Fact Replenishment Current'[risk_band] IN {"CRITICAL","HIGH"})
+			```
+		formatString: 0
+
+	measure 'Risk Record Count' = ```
+			COUNTROWS('Fact Replenishment Current')
+			```
+		formatString: 0
+
+	measure 'Actual Demand' = ```
+			SUM('Fact Daily Demand'[demand_qty])
+			```
+		formatString: #,##0.00
+
+	measure 'Actual Demand Value' = ```
+			SUM('Fact Daily Demand'[demand_value])
+			```
+		formatString: € #,##0.00
+
+	measure 'Forecast WAPE' = ```
+			DIVIDE(SUM('Forecast Accuracy'[absolute_error_sum]), SUM('Forecast Accuracy'[actual_sum]))
+			```
+		formatString: 0.0%
+
+	measure 'Forecast Bias' = ```
+			DIVIDE(SUM('Forecast Accuracy'[forecast_sum]) - SUM('Forecast Accuracy'[actual_sum]), SUM('Forecast Accuracy'[actual_sum]))
+			```
+		formatString: 0.0%
+
+	measure 'Forecast MAE' = ```
+			DIVIDE(SUMX('Forecast Accuracy','Forecast Accuracy'[mae]*'Forecast Accuracy'[sample_count]),SUM('Forecast Accuracy'[sample_count]))
+			```
+		formatString: 0.00
+
+	measure 'Forecast RMSE' = ```
+			DIVIDE(SUMX('Forecast Accuracy','Forecast Accuracy'[rmse]*'Forecast Accuracy'[sample_count]),SUM('Forecast Accuracy'[sample_count]))
+			```
+		formatString: 0.00
+
+	measure 'On-Time Delivery Rate' = ```
+			DIVIDE(SUMX('Supplier Performance','Supplier Performance'[on_time_delivery_rate]*'Supplier Performance'[on_time_eligible_order_lines]),SUM('Supplier Performance'[on_time_eligible_order_lines]))
+			```
+		formatString: 0.0%
+
+	measure 'Average SLA Variance Days' = ```
+			DIVIDE(SUMX('Supplier Performance','Supplier Performance'[avg_sla_variance_days]*'Supplier Performance'[completed_order_lines]),SUM('Supplier Performance'[completed_order_lines]))
+			```
+		formatString: 0.0
+
+	measure 'Completed Order Lines' = ```
+			SUM('Supplier Performance'[completed_order_lines])
+			```
+		formatString: 0
+
+	measure 'Historical Inventory Value' = ```
+			SUMX('Fact Inventory Daily','Fact Inventory Daily'[on_hand_qty]*RELATED('Dim SKU'[unit_cost]))
+			```
+		formatString: € #,##0.00
+
+	measure 'Average Inventory Value 365D' = ```
+			VAR EndDate=MAX('Dim Date'[date_value]) RETURN AVERAGEX(DATESINPERIOD('Dim Date'[date_value],EndDate,-365,DAY),CALCULATE([Historical Inventory Value]))
+			```
+		formatString: € #,##0.00
+
+	measure 'Inventory Turns 365D' = ```
+			VAR EndDate=MAX('Dim Date'[date_value]) VAR DemandValue365=CALCULATE([Actual Demand Value],DATESINPERIOD('Dim Date'[date_value],EndDate,-365,DAY)) RETURN DIVIDE(DemandValue365,[Average Inventory Value 365D])
+			```
+		formatString: 0.00
+
+	measure 'Transfer Recommendation Count' = ```
+			COUNTROWS('Transfer Recommendations Current')
+			```
+		formatString: 0
+
+	measure 'Override Count' = ```
+			COUNTROWS('Operational Overrides')
+			```
+		formatString: 0
+
+	measure 'Pending Overrides' = ```
+			CALCULATE([Override Count],'Operational Overrides'[status]="PENDING")
+			```
+		formatString: 0
+
+	measure 'Approved Overrides' = ```
+			CALCULATE([Override Count],'Operational Overrides'[status]="APPROVED")
+			```
+		formatString: 0
+
+	measure 'Rejected Overrides' = ```
+			CALCULATE([Override Count],'Operational Overrides'[status]="REJECTED")
+			```
+		formatString: 0
+
+	measure 'Active Approved Overrides' = ```
+			CALCULATE([Override Count],'Operational Overrides'[status]="APPROVED",'Operational Overrides'[effective_from]<=NOW(),OR(ISBLANK('Operational Overrides'[effective_to]),'Operational Overrides'[effective_to]>NOW()))
+			```
+		formatString: 0
+
+	column Dummy
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: Dummy
+
+	partition _Measures = m
+		mode: import
+		source =
+			let
+				Data = #table(type table [Dummy = Int64.Type], {})
+			in
+				Data

@@ -1,0 +1,75 @@
+table DimDate
+	lineageTag: 6a7325b4-e25a-41ef-9d1b-1640a864d9dd
+
+	column Date
+		formatString: General Date
+		lineageTag: b4ced96f-66c3-4d95-b951-5bc622fb2d01
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 568c8e59-95ea-4bd8-9a3f-29e8281cb2e7
+			defaultHierarchy: LocalDateTable_ea00384d-e273-4261-8292-721a598deb1d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 937519c1-7d3c-43c6-9628-0b553b256906
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: d64b658e-0aa9-4f6b-97fa-4bd027b6340d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 3423a415-4d1e-41bf-8198-0177b2cd06e5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Label'
+		lineageTag: 2eb22b9e-3fb8-4191-afd6-ccc14ab63fc8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = calculated
+		mode: import
+		source =
+
+				VAR MinimumDate =
+				    MINX(
+				        ALL(ImageBatch),
+				        ImageBatch[Detected Date]
+				    )
+				VAR MaximumDate =
+				    MAXX(
+				        ALL(ImageBatch),
+				        ImageBatch[Detected Date]
+				    )
+				RETURN
+				    ADDCOLUMNS(
+				        CALENDAR(MinimumDate, MaximumDate),
+				        "Year", YEAR([Date]),
+				        "Month Number", MONTH([Date]),
+				        "Month", FORMAT([Date], "MMM"),
+				        "Date Label", FORMAT([Date], "dd MMM yyyy")
+				    )
+
+	annotation PBI_Id = 24c81431a14948d6b4ac3b2e1fc5c815

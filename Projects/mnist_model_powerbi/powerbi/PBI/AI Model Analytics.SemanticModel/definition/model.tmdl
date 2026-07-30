@@ -1,0 +1,38 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Prediction Detail","Latest Image","ModelRegistry","ImageBatch","ModelPrediction","vw_BatchPredictionResults","vw_ClassPerformance","vw_ConfusionMatrix","vw_DailyProcessingTrend","vw_FailedPredictions","vw_HumanReviewQueue","vw_LatestBatchSummary","vw_ModelAgreement","vw_LatestCompletedImage","vw_ModelPerformance","vw_PredictionDetail","vw_PredictionHistoryAll","vw_SystemHealth","ClassProbability","HumanReview"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Prediction Detail'
+ref table 'Latest Image'
+ref table ModelRegistry
+ref table ImageBatch
+ref table ModelPrediction
+ref table DimDate
+ref table DateTableTemplate_8343edea-756d-46ef-bc1a-0d4b8b169270
+ref table LocalDateTable_ea00384d-e273-4261-8292-721a598deb1d
+ref table _Measures
+ref table vw_BatchPredictionResults
+ref table vw_ClassPerformance
+ref table vw_ConfusionMatrix
+ref table vw_DailyProcessingTrend
+ref table vw_FailedPredictions
+ref table vw_HumanReviewQueue
+ref table vw_LatestBatchSummary
+ref table vw_ModelAgreement
+ref table vw_LatestCompletedImage
+ref table vw_ModelPerformance
+ref table vw_PredictionDetail
+ref table vw_PredictionHistoryAll
+ref table vw_SystemHealth
+ref table ClassProbability
+ref table HumanReview

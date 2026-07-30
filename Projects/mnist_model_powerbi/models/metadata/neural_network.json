@@ -1,0 +1,31 @@
+{
+  "model_key": "neural_network",
+  "model_name": "Neural Network",
+  "framework": "keras",
+  "architecture": "Fully Connected Neural Network",
+  "model_file": "models/neural_network.keras",
+  "input_shape": [
+    28,
+    28,
+    1
+  ],
+  "dataset": "MNIST",
+  "class_labels": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "output_classes": 10,
+  "normalization": "model_internal_preprocessing_raw_0_255",
+  "validation_accuracy": 0.975,
+  "test_accuracy": 0.9802,
+  "trained": true,
+  "verified": true
+}

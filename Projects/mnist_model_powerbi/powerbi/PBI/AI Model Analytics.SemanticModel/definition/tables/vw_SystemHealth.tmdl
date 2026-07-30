@@ -1,0 +1,83 @@
+table vw_SystemHealth
+	lineageTag: a91804d5-a799-41e6-89f4-642bb88e01a8
+
+	column TotalImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 5d5ea5db-1d44-4669-956b-ab8440519a39
+		summarizeBy: sum
+		sourceColumn: TotalImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 65f6d719-0f78-483c-b7c0-78099b267a86
+		summarizeBy: sum
+		sourceColumn: CompletedImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column PartialImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 42af51a5-53ef-47be-953b-77b614f3f1e6
+		summarizeBy: sum
+		sourceColumn: PartialImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column FailedImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2cd442bf-e595-41cb-b347-e3e378f86ed5
+		summarizeBy: sum
+		sourceColumn: FailedImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuplicateImages
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: bdf7b3b7-1c32-483e-ae4d-b08168240972
+		summarizeBy: sum
+		sourceColumn: DuplicateImages
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgProcessingMs
+		dataType: double
+		sourceProviderType: decimal(18, 3)
+		lineageTag: edc270f2-5551-4fab-bfbc-9860a5384c54
+		summarizeBy: sum
+		sourceColumn: AvgProcessingMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LastDetectionAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 435a7aab-3229-4764-b0d8-0e607c35bc65
+		summarizeBy: none
+		sourceColumn: LastDetectionAt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_SystemHealth = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_SystemHealth = AIModelAnalytics{[Schema="dbo",Item="vw_SystemHealth"]}[Data]
+				in
+				    dbo_vw_SystemHealth

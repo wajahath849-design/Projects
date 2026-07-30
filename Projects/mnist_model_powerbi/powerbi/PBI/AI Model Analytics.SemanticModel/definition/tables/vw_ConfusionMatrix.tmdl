@@ -1,0 +1,50 @@
+table vw_ConfusionMatrix
+	lineageTag: 6cdcc56f-340e-4231-a1a7-354e4d9bcac9
+
+	column ModelName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(150)
+		lineageTag: 05bce74f-775a-455a-b10a-48bc1745130a
+		summarizeBy: none
+		sourceColumn: ModelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 9bc79a31-1a70-40ac-848e-8f3d0d81681f
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column PredictedClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 28ca4cd0-46f9-4d81-87b9-889d4fa40836
+		summarizeBy: none
+		sourceColumn: PredictedClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column PredictionCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 07b60bf4-9102-4444-8801-2e12fe97ce22
+		summarizeBy: sum
+		sourceColumn: PredictionCount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_ConfusionMatrix = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_ConfusionMatrix = AIModelAnalytics{[Schema="dbo",Item="vw_ConfusionMatrix"]}[Data]
+				in
+				    dbo_vw_ConfusionMatrix

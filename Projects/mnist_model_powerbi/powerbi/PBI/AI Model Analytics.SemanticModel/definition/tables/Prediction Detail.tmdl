@@ -1,0 +1,477 @@
+table 'Prediction Detail'
+	lineageTag: 7449bf01-2867-4f50-8b49-e078e52d0221
+
+	measure 'Total Images' = DISTINCTCOUNT('Prediction Detail'[BatchID])
+		formatString: #,0
+		lineageTag: 6740c8e1-de10-49c9-99e3-23d33ffb2c98
+
+	measure 'Total Predictions' = COUNTROWS('Prediction Detail')
+		formatString: #,0
+		lineageTag: 35401dcc-edcb-4824-97ce-01b4d5de6000
+
+	measure 'Successful Predictions' = CALCULATE(COUNTROWS('Prediction Detail'), 'Prediction Detail'[PredictionStatus] = "Succeeded")
+		formatString: #,0
+		lineageTag: ec725531-db42-43fc-80e8-cec06048791a
+
+	measure 'Failed Predictions' = COALESCE(CALCULATE(COUNTROWS('Prediction Detail'), 'Prediction Detail'[PredictionStatus] = "Failed"), 0)
+		formatString: #,0
+		lineageTag: 87adb74e-230d-4231-950a-050e29a39eb6
+
+	measure 'Prediction Success Rate' = DIVIDE([Successful Predictions], [Total Predictions], 0)
+		formatString: 0.0%
+		lineageTag: 7d2ed2a3-e32b-4955-8be7-39195f2b1fe4
+
+	measure 'Correct Predictions' = COALESCE(CALCULATE(COUNTROWS('Prediction Detail'), 'Prediction Detail'[IsCorrect] = TRUE()), 0)
+		formatString: #,0
+		lineageTag: 47b9a78a-b60f-4068-84ab-0db68a3a5084
+
+	measure 'Labelled Predictions' = CALCULATE(COUNTROWS('Prediction Detail'), NOT ISBLANK('Prediction Detail'[IsCorrect]))
+		formatString: #,0
+		lineageTag: 22341e07-b8bd-467f-9ace-875493720ea1
+
+	measure 'Observed Accuracy' = COALESCE(DIVIDE([Correct Predictions], [Labelled Predictions], 0), 0)
+		formatString: 0.0%
+		lineageTag: 4008fbf4-6353-450e-a6a6-f76d8df3c58e
+
+	measure 'Verified Validation Accuracy' = MAX('Prediction Detail'[ValidationAccuracy])
+		formatString: 0.0%
+		lineageTag: 77a9954d-9cf7-49c0-8b87-3e0decf3aaf9
+
+	measure 'Model Test Accuracy' = MAX('Prediction Detail'[TestAccuracy])
+		formatString: 0.0%
+		lineageTag: d95f1cad-0d4c-4bda-976b-6f283ec0bb9f
+
+	measure 'Verified Test Accuracy' = AVERAGEX(VALUES('Prediction Detail'[ModelName]), CALCULATE([Model Test Accuracy]))
+		formatString: 0.0%
+		lineageTag: 2a57e38c-62c7-4784-ab40-075b0cd03793
+
+	measure 'Average Confidence' = AVERAGE('Prediction Detail'[Confidence])
+		formatString: 0.0%
+		lineageTag: 810b45c4-56c1-47dc-94ee-0dc529aa343c
+
+	measure 'Average Processing Time' = AVERAGE('Prediction Detail'[ProcessingMilliseconds])
+		formatString: #,0.0
+		lineageTag: e7d58b2b-495e-4801-87ad-d1f9f004f24f
+
+	measure 'Average Processing Time Display' = FORMAT([Average Processing Time], "#,0.0") & " ms"
+		lineageTag: 04f3a4a0-763e-4b20-85cd-b66edf19baa7
+
+	measure 'Average Inference Time' = AVERAGE('Prediction Detail'[InferenceMilliseconds])
+		formatString: #,0.0
+		lineageTag: acf89f48-b68c-48cf-b7fa-10b428ef8745
+
+	measure 'Prediction-wise Accuracy' =
+
+			VAR CurrentPrediction = MAX('Prediction Detail'[PredictionID])
+			RETURN
+			    DIVIDE(
+			        CALCULATE(
+			            [Correct Predictions],
+			            FILTER(
+			                ALLSELECTED('Prediction Detail'[PredictionID]),
+			                'Prediction Detail'[PredictionID] <= CurrentPrediction
+			            )
+			        ),
+			        CALCULATE(
+			            [Labelled Predictions],
+			            FILTER(
+			                ALLSELECTED('Prediction Detail'[PredictionID]),
+			                'Prediction Detail'[PredictionID] <= CurrentPrediction
+			            )
+			        ),
+			        0
+			    )
+		formatString: 0.0%
+		lineageTag: fe7ad32e-76bd-436d-942c-1f56263f323a
+
+	measure 'Best Model Name' =
+
+			VAR RankedModels =
+			    ADDCOLUMNS(
+			        ALL('Prediction Detail'[ModelName]),
+			        "__Accuracy", CALCULATE([Model Test Accuracy])
+			    )
+			RETURN
+			    CONCATENATEX(
+			        TOPN(1, RankedModels, [__Accuracy], DESC, 'Prediction Detail'[ModelName], ASC),
+			        'Prediction Detail'[ModelName],
+			        ""
+			    )
+		lineageTag: 85deec3e-9f09-458d-adc5-f5bc71267f04
+
+	measure 'Best Model Accuracy' =
+
+			VAR RankedModels =
+			    ADDCOLUMNS(
+			        ALL('Prediction Detail'[ModelName]),
+			        "__Accuracy", CALCULATE([Model Test Accuracy])
+			    )
+			RETURN
+			    MAXX(
+			        TOPN(1, RankedModels, [__Accuracy], DESC, 'Prediction Detail'[ModelName], ASC),
+			        [__Accuracy]
+			    )
+		formatString: 0.0%
+		lineageTag: ff93b190-5ebc-4b40-b23c-640ddf011d46
+
+	measure 'Best Model Prediction' =
+
+			VAR SelectedModel = [Best Model Name]
+			VAR LatestPrediction =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL('Prediction Detail'),
+			            'Prediction Detail'[ModelName] = SelectedModel
+			                && 'Prediction Detail'[PredictionStatus] = "Succeeded"
+			        ),
+			        'Prediction Detail'[CreatedAt], DESC,
+			        'Prediction Detail'[PredictionID], DESC
+			    )
+			RETURN
+			    CONCATENATEX(LatestPrediction, 'Prediction Detail'[PredictedClass], "")
+		lineageTag: 4123e63a-a68c-4bbc-92ef-75f7cc87f7f8
+
+	measure 'Best Model Confidence' =
+
+			VAR SelectedModel = [Best Model Name]
+			VAR LatestPrediction =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL('Prediction Detail'),
+			            'Prediction Detail'[ModelName] = SelectedModel
+			                && 'Prediction Detail'[PredictionStatus] = "Succeeded"
+			        ),
+			        'Prediction Detail'[CreatedAt], DESC,
+			        'Prediction Detail'[PredictionID], DESC
+			    )
+			RETURN
+			    MAXX(LatestPrediction, 'Prediction Detail'[Confidence])
+		formatString: 0.0%
+		lineageTag: 4d363514-2f67-4475-934e-3ae1a17edc6e
+
+	measure 'Worst Model Name' =
+
+			VAR RankedModels =
+			    ADDCOLUMNS(
+			        ALL('Prediction Detail'[ModelName]),
+			        "__Accuracy", CALCULATE([Model Test Accuracy])
+			    )
+			RETURN
+			    CONCATENATEX(
+			        TOPN(1, RankedModels, [__Accuracy], ASC, 'Prediction Detail'[ModelName], ASC),
+			        'Prediction Detail'[ModelName],
+			        ""
+			    )
+		lineageTag: 14ae221d-0746-48ae-933f-db7bf9bc9a22
+
+	measure 'Worst Model Accuracy' =
+
+			VAR RankedModels =
+			    ADDCOLUMNS(
+			        ALL('Prediction Detail'[ModelName]),
+			        "__Accuracy", CALCULATE([Model Test Accuracy])
+			    )
+			RETURN
+			    MAXX(
+			        TOPN(1, RankedModels, [__Accuracy], ASC, 'Prediction Detail'[ModelName], ASC),
+			        [__Accuracy]
+			    )
+		formatString: 0.0%
+		lineageTag: ebd28e27-aa83-4b88-b0ae-cce99c46fabb
+
+	measure 'Worst Model Prediction' =
+
+			VAR SelectedModel = [Worst Model Name]
+			VAR LatestPrediction =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL('Prediction Detail'),
+			            'Prediction Detail'[ModelName] = SelectedModel
+			                && 'Prediction Detail'[PredictionStatus] = "Succeeded"
+			        ),
+			        'Prediction Detail'[CreatedAt], DESC,
+			        'Prediction Detail'[PredictionID], DESC
+			    )
+			RETURN
+			    CONCATENATEX(LatestPrediction, 'Prediction Detail'[PredictedClass], "")
+		lineageTag: 8280031a-c586-4e6a-9826-fd786240ba1e
+
+	measure 'Worst Model Confidence' =
+
+			VAR SelectedModel = [Worst Model Name]
+			VAR LatestPrediction =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL('Prediction Detail'),
+			            'Prediction Detail'[ModelName] = SelectedModel
+			                && 'Prediction Detail'[PredictionStatus] = "Succeeded"
+			        ),
+			        'Prediction Detail'[CreatedAt], DESC,
+			        'Prediction Detail'[PredictionID], DESC
+			    )
+			RETURN
+			    MAXX(LatestPrediction, 'Prediction Detail'[Confidence])
+		formatString: 0.0%
+		lineageTag: 81efd49a-6fb1-4aa9-81c8-d90b5d3c2f70
+
+	column BatchID
+		dataType: string
+		lineageTag: ff307e1c-88a2-4a43-a1d3-8fab854cd549
+		summarizeBy: none
+		sourceColumn: BatchID
+
+	column ImageName
+		dataType: string
+		lineageTag: 3263a8e8-ee67-465d-a35e-8f0f8ca265c8
+		summarizeBy: none
+		sourceColumn: ImageName
+
+	column ImageUrl
+		dataType: string
+		lineageTag: 99340966-d329-488e-a216-340119c18051
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+	column ProcessedFileName
+		dataType: string
+		lineageTag: ee52374d-6054-4e08-b474-73a5deafc6e3
+		summarizeBy: none
+		sourceColumn: ProcessedFileName
+
+	column ProcessedImageRelativePath
+		dataType: string
+		lineageTag: 19f93434-43ad-4cca-9469-1270e55d08d4
+		summarizeBy: none
+		sourceColumn: ProcessedImageRelativePath
+
+	column ProcessedImageUrl
+		dataType: string
+		lineageTag: 98aaeaff-ab20-4e5e-a74f-6940093f3cb2
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: ProcessedImageUrl
+
+	column ActualClass
+		dataType: string
+		lineageTag: 2f2e46a8-7bec-4695-86e6-b92f3b241508
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+	column DetectedAt
+		dataType: dateTime
+		lineageTag: d914340a-baa9-4bd7-8509-1d234117397b
+		summarizeBy: none
+		sourceColumn: DetectedAt
+
+	column CompletedAt
+		dataType: dateTime
+		lineageTag: 7ba7f0f6-0974-4e23-ba5e-5c63fb7c81d9
+		summarizeBy: none
+		sourceColumn: CompletedAt
+
+	column ProcessingStatus
+		dataType: string
+		lineageTag: a1afd493-91bc-4660-be6a-585dad93c627
+		summarizeBy: none
+		sourceColumn: ProcessingStatus
+
+	column ProcessingMilliseconds
+		dataType: double
+		lineageTag: 0f977cde-6d58-4869-bbd9-aab04a15f0ed
+		summarizeBy: sum
+		sourceColumn: ProcessingMilliseconds
+
+	column IsDuplicate
+		dataType: boolean
+		lineageTag: 3ad62afc-eeb4-423d-8071-87922c886308
+		summarizeBy: none
+		sourceColumn: IsDuplicate
+
+	column BatchErrorMessage
+		dataType: string
+		lineageTag: 35ed37fd-ef4a-4969-b0e8-4ee7d74ecffc
+		summarizeBy: none
+		sourceColumn: BatchErrorMessage
+
+	column PredictionID
+		dataType: int64
+		lineageTag: 566817bb-7e00-4d70-87a1-f2345d690152
+		summarizeBy: sum
+		sourceColumn: PredictionID
+
+	column ModelID
+		dataType: int64
+		lineageTag: fcb0c921-adaf-4147-9f62-2f4cdaca19c7
+		summarizeBy: sum
+		sourceColumn: ModelID
+
+	column ModelKey
+		dataType: string
+		lineageTag: 0a35ee0e-8c69-49d0-9318-6b8405fd3c14
+		summarizeBy: none
+		sourceColumn: ModelKey
+
+	column ModelName
+		dataType: string
+		lineageTag: f17fa492-5399-4a3b-8add-2fe4ee7f4147
+		summarizeBy: none
+		sourceColumn: ModelName
+
+	column Framework
+		dataType: string
+		lineageTag: efc86e8e-412d-4ea8-8dd0-6a5ddf2f5e23
+		summarizeBy: none
+		sourceColumn: Framework
+
+	column Architecture
+		dataType: string
+		lineageTag: 8b05b60d-f6d6-40f2-b27c-efca66a33914
+		summarizeBy: none
+		sourceColumn: Architecture
+
+	column ModelVersion
+		dataType: string
+		lineageTag: 1e95fcc1-a52c-4c38-b4d2-dae9f1488673
+		summarizeBy: none
+		sourceColumn: ModelVersion
+
+	column PipelineVersion
+		dataType: string
+		lineageTag: 4a7fb983-1027-422a-8976-6c5aee8d9365
+		summarizeBy: none
+		sourceColumn: PipelineVersion
+
+	column ValidationAccuracy
+		dataType: double
+		lineageTag: 54e1b6be-0bfb-4692-a431-889361b0443c
+		summarizeBy: sum
+		sourceColumn: ValidationAccuracy
+
+	column TestAccuracy
+		dataType: double
+		lineageTag: 9416ad8d-f584-4075-9aea-a3ad56be022d
+		summarizeBy: sum
+		sourceColumn: TestAccuracy
+
+	column PredictedClass
+		dataType: string
+		lineageTag: ff4d264e-ee0e-48c8-8cd6-a91dd673d0e8
+		summarizeBy: none
+		sourceColumn: PredictedClass
+
+	column Confidence
+		dataType: double
+		formatString: 0.00
+		lineageTag: d501df0a-cbf1-4ff8-a0e9-58469d1788f5
+		summarizeBy: sum
+		sourceColumn: Confidence
+
+	column SecondClass
+		dataType: string
+		lineageTag: 4ed0edcb-7aef-4e82-ab46-a8f785742926
+		summarizeBy: none
+		sourceColumn: SecondClass
+
+	column SecondConfidence
+		dataType: double
+		lineageTag: ccba7c4a-215e-4f96-9805-09e938514f50
+		summarizeBy: sum
+		sourceColumn: SecondConfidence
+
+	column ThirdClass
+		dataType: string
+		lineageTag: 1f5d935c-f167-46b4-9449-d12cb72b9f05
+		summarizeBy: none
+		sourceColumn: ThirdClass
+
+	column ThirdConfidence
+		dataType: double
+		lineageTag: f7cbf85f-9423-474f-861a-c9bc65f17350
+		summarizeBy: sum
+		sourceColumn: ThirdConfidence
+
+	column ConfidenceMargin
+		dataType: double
+		lineageTag: ab8600f2-c73f-4188-9696-aa09d6d2ae81
+		summarizeBy: sum
+		sourceColumn: ConfidenceMargin
+
+	column IsCorrect
+		dataType: boolean
+		lineageTag: fe06245c-e5e7-4f46-a538-898443296f12
+		summarizeBy: none
+		sourceColumn: IsCorrect
+
+	column IsUncertain
+		dataType: boolean
+		lineageTag: 69cf3945-eadd-4843-b582-bba56be9f2d8
+		summarizeBy: none
+		sourceColumn: IsUncertain
+
+	column InferenceMilliseconds
+		dataType: double
+		lineageTag: dc1efeab-27e3-4a34-84fb-5453619768d9
+		summarizeBy: sum
+		sourceColumn: InferenceMilliseconds
+
+	column PredictionStatus
+		dataType: string
+		lineageTag: c99d54e0-c680-454b-8aa4-b10f8a6d19ca
+		summarizeBy: none
+		sourceColumn: PredictionStatus
+
+	column PredictionErrorMessage
+		dataType: string
+		lineageTag: 01461cf0-9e30-4d31-86c4-e3d7402e9112
+		summarizeBy: none
+		sourceColumn: PredictionErrorMessage
+
+	column CreatedAt
+		dataType: dateTime
+		lineageTag: 19afd46d-d111-45d6-8efd-212119ed8026
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+	column ResultStatus
+		dataType: string
+		lineageTag: f8632512-9913-4e54-98bd-4a2c484bf51d
+		summarizeBy: none
+		sourceColumn: ResultStatus
+
+	column 'Is Latest Batch' =
+
+			VAR LatestCompletedTime =
+			    CALCULATE(
+			        MAX('Prediction Detail'[CompletedAt]),
+			        ALL('Prediction Detail')
+			    )
+			RETURN
+			    IF(
+			        'Prediction Detail'[CompletedAt] = LatestCompletedTime,
+			        1,
+			        0
+			    )
+		formatString: 0
+		lineageTag: 153049e1-fa14-48e6-b036-86e9f4df3abe
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Prediction Detail' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("localhost,14330", "AIModelAnalytics"),
+				    View = Source{[Schema="dbo",Item="vw_PredictionDetail"]}[Data],
+				    Selected = Table.SelectColumns(View,{"BatchID","ImageName","ImageUrl","ProcessedFileName","ProcessedImageRelativePath","ProcessedImageUrl","ActualClass","DetectedAt","CompletedAt","ProcessingStatus","ProcessingMilliseconds","IsDuplicate","BatchErrorMessage","PredictionID","ModelID","ModelKey","ModelName","Framework","Architecture","ModelVersion","PipelineVersion","ValidationAccuracy","TestAccuracy","PredictedClass","Confidence","SecondClass","SecondConfidence","ThirdClass","ThirdConfidence","ConfidenceMargin","IsCorrect","IsUncertain","InferenceMilliseconds","PredictionStatus","PredictionErrorMessage","CreatedAt","ResultStatus"})
+				in
+				    Selected
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception

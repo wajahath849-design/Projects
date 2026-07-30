@@ -1,0 +1,56 @@
+table 'Latest Image'
+	lineageTag: b84b79b9-a51c-4422-9cc2-bb0e017bde3a
+
+	column BatchID
+		dataType: string
+		lineageTag: 6fa1f039-0335-460f-877f-7651f9924494
+		summarizeBy: none
+		sourceColumn: BatchID
+
+	column ImageName
+		dataType: string
+		lineageTag: 79fbe0df-2bfb-4b5f-9c78-8313e680be0b
+		summarizeBy: none
+		sourceColumn: ImageName
+
+	column ImageUrl
+		dataType: string
+		lineageTag: fbcdb393-08ae-4e9c-b46f-23a23e0a6991
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: ImageUrl
+
+	column ProcessedImageUrl
+		dataType: string
+		lineageTag: de869fe5-e97a-4627-ae2f-13e96f546d97
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: ProcessedImageUrl
+
+	column CompletedAt
+		dataType: dateTime
+		lineageTag: 3355e802-f73a-49a9-89fb-54afa3fa70db
+		summarizeBy: none
+		sourceColumn: CompletedAt
+
+	column ProcessingMilliseconds
+		dataType: double
+		lineageTag: 3e95e692-8579-4a56-907d-a0547e7b8d37
+		summarizeBy: sum
+		sourceColumn: ProcessingMilliseconds
+
+	column ActualClass
+		dataType: string
+		lineageTag: f3aa7dfb-5cfe-48c5-a68b-135f399b11f0
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+	partition 'Latest Image' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("localhost,14330", "AIModelAnalytics"),
+				    View = Source{[Schema="dbo",Item="vw_LatestCompletedImage"]}[Data],
+				    Selected = Table.SelectColumns(View,{"BatchID","ImageName","ImageUrl","ProcessedImageUrl","CompletedAt","ProcessingMilliseconds","ActualClass"})
+				in
+				    Selected

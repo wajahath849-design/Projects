@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "fdb9027ab2455a327cc3",
+  "displayName": "Model Performance",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1600,
+  "pageBinding": {
+    "name": "50abb8a6a0c2cb48002a",
+    "type": "Default",
+    "parameters": []
+  }
+}

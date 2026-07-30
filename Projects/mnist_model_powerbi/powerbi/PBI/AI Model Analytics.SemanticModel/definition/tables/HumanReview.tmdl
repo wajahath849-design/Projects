@@ -1,0 +1,72 @@
+table HumanReview
+	lineageTag: eedef3bb-8e58-471d-ba42-a1ec0d6fdcf3
+
+	column ReviewID
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 975f9fb7-3a38-4f2c-9fe1-ec18b1e5840f
+		summarizeBy: count
+		sourceColumn: ReviewID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: 4c65cef6-7fe2-4ae3-ad7a-992f9a9735c3
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CorrectedClass
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(50)
+		lineageTag: 28a28cc2-d239-4dd0-b5f2-1705588313f9
+		summarizeBy: none
+		sourceColumn: CorrectedClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reviewer
+		dataType: string
+		sourceProviderType: nvarchar(150)
+		lineageTag: 399d06e0-c98b-4b6b-8544-03d91d36fb76
+		summarizeBy: none
+		sourceColumn: Reviewer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		sourceProviderType: nvarchar(1000)
+		lineageTag: ed778d17-bf86-4ee6-adac-4a47070ad592
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReviewedAt
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: c22a5e56-da40-430b-8207-a2e4dc8bd6fd
+		summarizeBy: none
+		sourceColumn: ReviewedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HumanReview = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_HumanReview = AIModelAnalytics{[Schema="dbo",Item="HumanReview"]}[Data]
+				in
+				    dbo_HumanReview

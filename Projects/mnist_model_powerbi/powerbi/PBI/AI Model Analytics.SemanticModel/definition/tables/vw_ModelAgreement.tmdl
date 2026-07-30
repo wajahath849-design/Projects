@@ -1,0 +1,91 @@
+table vw_ModelAgreement
+	lineageTag: d9d1ddf0-f362-4f36-a227-5d8547087b07
+
+	column BatchID
+		dataType: string
+		isNullable: false
+		sourceProviderType: uniqueidentifier
+		lineageTag: 5b25a71c-2de1-4b83-abe7-490afe248f7d
+		summarizeBy: none
+		sourceColumn: BatchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImageName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: dc150314-16cc-4c50-9518-0b1cfa3a5090
+		summarizeBy: none
+		sourceColumn: ImageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualClass
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: ca9d6cf1-8229-4d78-b6f2-88430a20b205
+		summarizeBy: none
+		sourceColumn: ActualClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column SuccessfulModelCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: bb5d7ae0-51b7-40c5-aead-639b08ed4677
+		summarizeBy: sum
+		sourceColumn: SuccessfulModelCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DistinctPredictions
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: d89dc7d8-b5c6-49af-8ec7-f9c87729b7cd
+		summarizeBy: sum
+		sourceColumn: DistinctPredictions
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsensusPrediction
+		dataType: string
+		sourceProviderType: nvarchar(50)
+		lineageTag: 45543fa1-5974-42e8-846c-1e58e3741fe2
+		summarizeBy: none
+		sourceColumn: ConsensusPrediction
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsensusVotes
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d4daa06f-e145-4559-8e50-d4fa2e61fd66
+		summarizeBy: sum
+		sourceColumn: ConsensusVotes
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgreementRate
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: f9819116-82aa-4a06-9fe4-87b2c0c5bda3
+		summarizeBy: sum
+		sourceColumn: AgreementRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_ModelAgreement = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Databases("localhost\SQLEXPRESS"),
+				    AIModelAnalytics = Source{[Name="AIModelAnalytics"]}[Data],
+				    dbo_vw_ModelAgreement = AIModelAnalytics{[Schema="dbo",Item="vw_ModelAgreement"]}[Data]
+				in
+				    dbo_vw_ModelAgreement

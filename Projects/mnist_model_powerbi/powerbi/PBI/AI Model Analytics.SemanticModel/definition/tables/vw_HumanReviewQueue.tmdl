@@ -117,3 +117,4 @@ table vw_HumanReviewQueue
 				    dbo_vw_HumanReviewQueue = AIModelAnalytics{[Schema="dbo",Item="vw_HumanReviewQueue"]}[Data]
 				in
 				    dbo_vw_HumanReviewQueue
+

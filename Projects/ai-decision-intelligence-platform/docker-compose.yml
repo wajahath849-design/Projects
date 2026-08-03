@@ -1,0 +1,68 @@
+name: ai-decision-intelligence
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP_ENV: container
+      DB_SERVER: ${DB_SERVER:-host.docker.internal,1433}
+      DB_DATABASE: ${DB_DATABASE:-AIDecisionIntelligence}
+      DB_DRIVER: ODBC Driver 18 for SQL Server
+      DB_TRUSTED_CONNECTION: "no"
+      DB_TRUST_SERVER_CERTIFICATE: "yes"
+      DB_USERNAME: ${DB_USERNAME:-decision_api}
+      DB_PASSWORD: ${DB_PASSWORD:-}
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - api_exports:/app/data/exports
+      - api_reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    profiles: ["container-sql"]
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${SQL_PASSWORD:-}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  sql-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    profiles: ["container-sql"]
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${SQL_PASSWORD:-}
+    volumes:
+      - ./database:/workspace/database:ro
+    working_dir: /workspace/database
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P "$$MSSQL_SA_PASSWORD" -C -b -i docker_initialize.sql
+
+volumes:
+  sql_data:
+  api_exports:
+  api_reports:

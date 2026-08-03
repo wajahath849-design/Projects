@@ -1,0 +1,2 @@
+check_id,check_name,table_name,category,severity,status,records_checked,failed_records,failure_percentage,description
+00000000-0000-0000-0000-000000000001,example,Example,VALIDITY,CRITICAL,PASS,10,0,0.0,Example check

@@ -140,3 +140,4 @@ table vw_LatestBatchSummary
 				    dbo_vw_LatestBatchSummary = AIModelAnalytics{[Schema="dbo",Item="vw_LatestBatchSummary"]}[Data]
 				in
 				    dbo_vw_LatestBatchSummary
+

@@ -48,3 +48,4 @@ table vw_ConfusionMatrix
 				    dbo_vw_ConfusionMatrix = AIModelAnalytics{[Schema="dbo",Item="vw_ConfusionMatrix"]}[Data]
 				in
 				    dbo_vw_ConfusionMatrix
+

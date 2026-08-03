@@ -518,3 +518,4 @@ table vw_BatchPredictionResults
 				    dbo_vw_BatchPredictionResults = AIModelAnalytics{[Schema="dbo",Item="vw_BatchPredictionResults"]}[Data]
 				in
 				    dbo_vw_BatchPredictionResults
+

@@ -89,3 +89,4 @@ table vw_ModelAgreement
 				    dbo_vw_ModelAgreement = AIModelAnalytics{[Schema="dbo",Item="vw_ModelAgreement"]}[Data]
 				in
 				    dbo_vw_ModelAgreement
+

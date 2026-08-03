@@ -518,3 +518,4 @@ table vw_PredictionDetail
 				    dbo_vw_PredictionDetail = AIModelAnalytics{[Schema="dbo",Item="vw_PredictionDetail"]}[Data]
 				in
 				    dbo_vw_PredictionDetail
+

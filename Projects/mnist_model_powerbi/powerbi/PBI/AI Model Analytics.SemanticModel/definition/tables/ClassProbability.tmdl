@@ -43,3 +43,4 @@ table ClassProbability
 				    dbo_ClassProbability = AIModelAnalytics{[Schema="dbo",Item="ClassProbability"]}[Data]
 				in
 				    dbo_ClassProbability
+

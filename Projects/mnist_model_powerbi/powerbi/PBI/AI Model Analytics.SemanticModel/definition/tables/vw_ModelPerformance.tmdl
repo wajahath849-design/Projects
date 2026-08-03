@@ -219,3 +219,4 @@ table vw_ModelPerformance
 				    dbo_vw_ModelPerformance = AIModelAnalytics{[Schema="dbo",Item="vw_ModelPerformance"]}[Data]
 				in
 				    dbo_vw_ModelPerformance
+

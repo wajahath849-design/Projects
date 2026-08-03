@@ -81,3 +81,4 @@ table vw_SystemHealth
 				    dbo_vw_SystemHealth = AIModelAnalytics{[Schema="dbo",Item="vw_SystemHealth"]}[Data]
 				in
 				    dbo_vw_SystemHealth
+

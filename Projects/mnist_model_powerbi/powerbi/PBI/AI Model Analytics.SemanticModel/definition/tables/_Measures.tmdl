@@ -2,7 +2,7 @@ table _Measures
 	lineageTag: 56cada75-0f8f-4876-a554-ef22b2503fa6
 
 	measure 'Total Prediction Runs' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelPrediction),
 			    ImageBatch[MetricsEligible] = TRUE()
@@ -11,7 +11,7 @@ table _Measures
 		lineageTag: e9eda185-3b2a-4ab8-901d-6aa47a23de1f
 
 	measure 'Enabled Models' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelRegistry),
 			    ModelRegistry[IsEnabled] = TRUE()
@@ -20,7 +20,7 @@ table _Measures
 		lineageTag: 14b3b07c-fc88-4311-a4ae-bfa358b24f78
 
 	measure 'KPI Total Images' =
-
+			
 			CALCULATE(
 			    DISTINCTCOUNT(ImageBatch[BatchID]),
 			    ImageBatch[MetricsEligible] = TRUE()
@@ -29,7 +29,7 @@ table _Measures
 		lineageTag: ad5d8b67-0dc9-4aaa-b9c4-abb95d5f99cd
 
 	measure 'KPI Prediction Runs' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelPrediction),
 			    ImageBatch[MetricsEligible] = TRUE()
@@ -38,7 +38,7 @@ table _Measures
 		lineageTag: f2d46ca6-8ac6-4191-8bcf-6b2b0f3d61b9
 
 	measure 'KPI Successful Predictions' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelPrediction),
 			    ImageBatch[MetricsEligible] = TRUE(),
@@ -48,7 +48,7 @@ table _Measures
 		lineageTag: 26308324-a635-48ad-a2df-7826cad36f3a
 
 	measure 'KPI Success Rate' =
-
+			
 			DIVIDE(
 			    [KPI Successful Predictions],
 			    [KPI Prediction Runs],
@@ -58,7 +58,7 @@ table _Measures
 		lineageTag: 48d419b5-8abe-463a-abcb-2144694be1f0
 
 	measure 'KPI Average Confidence' =
-
+			
 			CALCULATE(
 			    AVERAGE(ModelPrediction[Confidence]),
 			    ImageBatch[MetricsEligible] = TRUE(),
@@ -68,7 +68,7 @@ table _Measures
 		lineageTag: 52213d0e-a702-4be4-8f89-e3f6190ba480
 
 	measure 'Latest Batch ID' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -90,7 +90,7 @@ table _Measures
 		lineageTag: 938c8109-a301-453e-bb3b-33b22b0eb6cb
 
 	measure 'Latest Model Prediction' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -113,7 +113,7 @@ table _Measures
 		lineageTag: 261069de-c495-45dc-8588-9c410162d375
 
 	measure 'Latest Model Confidence' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -137,7 +137,7 @@ table _Measures
 		lineageTag: 8805c5c5-8138-4e88-9793-6178b98fb146
 
 	measure 'Latest Model Inference Time' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -161,7 +161,7 @@ table _Measures
 		lineageTag: 67248c49-cf8b-4a78-a140-204dbc7604c6
 
 	measure 'Latest Model Status' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -183,7 +183,7 @@ table _Measures
 		lineageTag: 0c59ad57-6cf4-49b5-9411-3b741c575b3c
 
 	measure 'KPI Average Processing Time' =
-
+			
 			CALCULATE(
 			    AVERAGE(ImageBatch[ProcessingMilliseconds]),
 			    ImageBatch[MetricsEligible] = TRUE(),
@@ -193,7 +193,7 @@ table _Measures
 		lineageTag: 42181ab7-34a8-4ce5-81e3-cf7f432d5c0a
 
 	measure 'KPI Correct Predictions' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelPrediction),
 			    ImageBatch[MetricsEligible] = TRUE(),
@@ -203,7 +203,7 @@ table _Measures
 		lineageTag: d629586d-08f4-430e-9084-a34560910278
 
 	measure 'KPI Labelled Predictions' =
-
+			
 			CALCULATE(
 			    COUNTROWS(ModelPrediction),
 			    ImageBatch[MetricsEligible] = TRUE(),
@@ -213,7 +213,7 @@ table _Measures
 		lineageTag: a590f729-08b2-44b4-b37d-db9f07d8dfb1
 
 	measure 'KPI Observed Accuracy' =
-
+			
 			DIVIDE(
 			    [KPI Correct Predictions],
 			    [KPI Labelled Predictions],
@@ -223,7 +223,7 @@ table _Measures
 		lineageTag: fad247ac-e163-41a1-95d5-834238ef207f
 
 	measure 'Latest Processing Status' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -241,7 +241,7 @@ table _Measures
 		lineageTag: 5231e883-281e-4949-a3c2-407affdfe7e7
 
 	measure 'Latest Batch Consensus Digit' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -284,7 +284,7 @@ table _Measures
 		lineageTag: 327bd020-4902-4ae5-90ab-064790436f95
 
 	measure 'Latest Batch Observed Accuracy' =
-
+			
 			VAR LatestBatchRow =
 			    TOPN(
 			        1,
@@ -330,7 +330,7 @@ table _Measures
 	partition _Measures = calculated
 		mode: import
 		source =
-
+				
 				DATATABLE(
 				    "Measure Group", STRING,
 				    {
@@ -339,3 +339,4 @@ table _Measures
 				)
 
 	annotation PBI_Id = 471f1e7f241a4507a46101de34b746e2
+

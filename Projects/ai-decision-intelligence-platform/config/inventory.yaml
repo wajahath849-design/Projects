@@ -1,0 +1,8 @@
+inventory:
+  forecast_horizon_days: 30
+  default_lead_time_days: 7
+  zero_demand_days_supply: 999.0
+  critical_probability: 0.80
+  at_risk_probability: 0.40
+  excess_days_supply: 60.0
+  obsolete_daily_demand: 0.05

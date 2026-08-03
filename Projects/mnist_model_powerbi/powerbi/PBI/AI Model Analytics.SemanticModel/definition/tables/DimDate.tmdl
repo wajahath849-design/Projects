@@ -52,7 +52,7 @@ table DimDate
 	partition DimDate = calculated
 		mode: import
 		source =
-
+				
 				VAR MinimumDate =
 				    MINX(
 				        ALL(ImageBatch),
@@ -73,3 +73,4 @@ table DimDate
 				    )
 
 	annotation PBI_Id = 24c81431a14948d6b4ac3b2e1fc5c815
+

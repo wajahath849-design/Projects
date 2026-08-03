@@ -1,0 +1,14 @@
+ingestion:
+  raw_directory: data/raw/m5
+  sample_directory: data/samples/m5
+  chunk_size: 5000
+  database_batch_size: 2000
+  sample:
+    products: 4
+    stores: 2
+    days: 28
+    start_date: 2016-01-01
+  required_files:
+    - calendar.csv
+    - sales_train_validation.csv
+    - sell_prices.csv

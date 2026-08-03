@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-07-31T14:15:55.530006+00:00",
+  "critical_failure_count": 0,
+  "passed": true,
+  "pipeline_run_id": "04bebe7a-27e5-4d36-aaee-653b68a096fc",
+  "results": [
+    {
+      "category": "VALIDITY",
+      "check_id": "00000000-0000-0000-0000-000000000001",
+      "check_name": "example",
+      "description": "Example check",
+      "failed_records": 0,
+      "failure_percentage": 0.0,
+      "records_checked": 10,
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "table_name": "Example"
+    }
+  ]
+}

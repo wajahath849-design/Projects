@@ -174,3 +174,4 @@ table ModelPrediction
 				    dbo_ModelPrediction = AIModelAnalytics{[Schema="dbo",Item="ModelPrediction"]}[Data]
 				in
 				    dbo_ModelPrediction
+

@@ -240,7 +240,7 @@ table ImageBatch
 		annotation SummarizationSetBy = Automatic
 
 	column 'Detected Date' =
-
+			
 			DATE(
 			    YEAR(ImageBatch[DetectedAt]),
 			    MONTH(ImageBatch[DetectedAt]),
@@ -268,3 +268,4 @@ table ImageBatch
 				    dbo_ImageBatch = AIModelAnalytics{[Schema="dbo",Item="ImageBatch"]}[Data]
 				in
 				    dbo_ImageBatch
+

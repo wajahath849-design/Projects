@@ -1,0 +1,8 @@
+generation:
+  supplier_count: 25
+  warehouse_count: 5
+  suppliers_per_product: 3
+  output_directory: data/processed/enterprise
+  data_version: phase-3-v1
+  sample_product_limit: 10
+  database_batch_size: 2000

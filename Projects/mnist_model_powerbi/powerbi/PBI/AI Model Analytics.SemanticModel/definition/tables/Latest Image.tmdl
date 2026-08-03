@@ -54,3 +54,4 @@ table 'Latest Image'
 				    Selected = Table.SelectColumns(View,{"BatchID","ImageName","ImageUrl","ProcessedImageUrl","CompletedAt","ProcessingMilliseconds","ActualClass"})
 				in
 				    Selected
+

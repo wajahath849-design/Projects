@@ -61,7 +61,7 @@ table 'Prediction Detail'
 		lineageTag: acf89f48-b68c-48cf-b7fa-10b428ef8745
 
 	measure 'Prediction-wise Accuracy' =
-
+			
 			VAR CurrentPrediction = MAX('Prediction Detail'[PredictionID])
 			RETURN
 			    DIVIDE(
@@ -85,7 +85,7 @@ table 'Prediction Detail'
 		lineageTag: fe7ad32e-76bd-436d-942c-1f56263f323a
 
 	measure 'Best Model Name' =
-
+			
 			VAR RankedModels =
 			    ADDCOLUMNS(
 			        ALL('Prediction Detail'[ModelName]),
@@ -100,7 +100,7 @@ table 'Prediction Detail'
 		lineageTag: 85deec3e-9f09-458d-adc5-f5bc71267f04
 
 	measure 'Best Model Accuracy' =
-
+			
 			VAR RankedModels =
 			    ADDCOLUMNS(
 			        ALL('Prediction Detail'[ModelName]),
@@ -115,7 +115,7 @@ table 'Prediction Detail'
 		lineageTag: ff93b190-5ebc-4b40-b23c-640ddf011d46
 
 	measure 'Best Model Prediction' =
-
+			
 			VAR SelectedModel = [Best Model Name]
 			VAR LatestPrediction =
 			    TOPN(
@@ -133,7 +133,7 @@ table 'Prediction Detail'
 		lineageTag: 4123e63a-a68c-4bbc-92ef-75f7cc87f7f8
 
 	measure 'Best Model Confidence' =
-
+			
 			VAR SelectedModel = [Best Model Name]
 			VAR LatestPrediction =
 			    TOPN(
@@ -152,7 +152,7 @@ table 'Prediction Detail'
 		lineageTag: 4d363514-2f67-4475-934e-3ae1a17edc6e
 
 	measure 'Worst Model Name' =
-
+			
 			VAR RankedModels =
 			    ADDCOLUMNS(
 			        ALL('Prediction Detail'[ModelName]),
@@ -167,7 +167,7 @@ table 'Prediction Detail'
 		lineageTag: 14ae221d-0746-48ae-933f-db7bf9bc9a22
 
 	measure 'Worst Model Accuracy' =
-
+			
 			VAR RankedModels =
 			    ADDCOLUMNS(
 			        ALL('Prediction Detail'[ModelName]),
@@ -182,7 +182,7 @@ table 'Prediction Detail'
 		lineageTag: ebd28e27-aa83-4b88-b0ae-cce99c46fabb
 
 	measure 'Worst Model Prediction' =
-
+			
 			VAR SelectedModel = [Worst Model Name]
 			VAR LatestPrediction =
 			    TOPN(
@@ -200,7 +200,7 @@ table 'Prediction Detail'
 		lineageTag: 8280031a-c586-4e6a-9826-fd786240ba1e
 
 	measure 'Worst Model Confidence' =
-
+			
 			VAR SelectedModel = [Worst Model Name]
 			VAR LatestPrediction =
 			    TOPN(
@@ -444,7 +444,7 @@ table 'Prediction Detail'
 		sourceColumn: ResultStatus
 
 	column 'Is Latest Batch' =
-
+			
 			VAR LatestCompletedTime =
 			    CALCULATE(
 			        MAX('Prediction Detail'[CompletedAt]),
@@ -475,3 +475,4 @@ table 'Prediction Detail'
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,15 @@
+{
+  "views": {
+    "vw_PBI_ExecutiveOverview": 119,
+    "vw_PBI_DemandForecast": 945,
+    "vw_PBI_InventoryIntelligence": 20,
+    "vw_PBI_OptimizationRecommendations": 4,
+    "vw_PBI_ScenarioComparison": 200,
+    "vw_PBI_ModelPerformance": 12,
+    "vw_PBI_DataQuality": 104,
+    "vw_PBI_ForecastExplanations": 3600
+  },
+  "dax_measure_count": 45,
+  "pbix_generated": false,
+  "note": "Construction package and sample exports only; no PBIX is claimed."
+}

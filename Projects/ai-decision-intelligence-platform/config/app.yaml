@@ -1,0 +1,10 @@
+app:
+  name: AI Decision Intelligence Platform
+  environment: development
+  random_seed: 42
+  sample_mode: true
+  paths:
+    model_artifacts: models/artifacts
+    mlflow_tracking: mlruns
+    logs: logs
+

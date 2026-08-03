@@ -80,3 +80,4 @@ table vw_FailedPredictions
 				    dbo_vw_FailedPredictions = AIModelAnalytics{[Schema="dbo",Item="vw_FailedPredictions"]}[Data]
 				in
 				    dbo_vw_FailedPredictions
+

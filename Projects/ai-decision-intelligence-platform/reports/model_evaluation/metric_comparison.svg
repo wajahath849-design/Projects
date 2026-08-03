@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="360" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Holdout WAPE by model (lower is better)</text>
+<line x1="70" y1="290" x2="650" y2="290" stroke="#333"/>
+<rect x="113.5" y="114.3" width="106.3" height="175.7" fill="#2563eb"/>
+<text x="166.7" y="106.3" text-anchor="middle" font-family="sans-serif" font-size="13">0.371</text>
+<text x="166.7" y="312" text-anchor="middle" font-family="sans-serif" font-size="12">XGBOOST</text>
+<rect x="306.8" y="102.4" width="106.3" height="187.6" fill="#94a3b8"/>
+<text x="360.0" y="94.4" text-anchor="middle" font-family="sans-serif" font-size="13">0.396</text>
+<text x="360.0" y="312" text-anchor="middle" font-family="sans-serif" font-size="12">LIGHTGBM</text>
+<rect x="500.2" y="70.0" width="106.3" height="220.0" fill="#94a3b8"/>
+<text x="553.3" y="62.0" text-anchor="middle" font-family="sans-serif" font-size="13">0.465</text>
+<text x="553.3" y="312" text-anchor="middle" font-family="sans-serif" font-size="12">SEASONAL_NAIVE</text>
+</svg>

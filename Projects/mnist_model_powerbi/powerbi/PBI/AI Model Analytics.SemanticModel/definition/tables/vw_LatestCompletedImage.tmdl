@@ -135,3 +135,4 @@ table vw_LatestCompletedImage
 				    dbo_vw_LatestCompletedImage = AIModelAnalytics{[Schema="dbo",Item="vw_LatestCompletedImage"]}[Data]
 				in
 				    dbo_vw_LatestCompletedImage
+

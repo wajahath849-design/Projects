@@ -1,0 +1,9 @@
+optimization:
+  solver_time_limit_seconds: 60
+  planning_horizon_days: 30
+  service_level_target: 0.95
+  stockout_penalty_per_unit: 25.0
+  late_delivery_risk_weight: 2.0
+  excess_inventory_penalty_per_unit: 0.25
+  preserve_unrounded_internal_values: true
+  random_seed: 42

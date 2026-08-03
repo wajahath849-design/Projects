@@ -1,0 +1,61 @@
+scenarios:
+  price_up:
+    name: Price Increase 10 Percent
+    type: PRICE_CHANGE
+    parameter: price_multiplier
+    baseline: 1.0
+    value: 1.10
+  demand_up:
+    name: Demand Increase 20 Percent
+    type: DEMAND_CHANGE
+    parameter: demand_multiplier
+    baseline: 1.0
+    value: 1.20
+  supplier_delay:
+    name: Supplier Delay Five Days
+    type: SUPPLIER_DELAY
+    parameter: additional_delay_days
+    baseline: 0.0
+    value: 5.0
+  supplier_capacity:
+    name: Supplier Capacity Reduction 30 Percent
+    type: SUPPLIER_CAPACITY
+    parameter: capacity_multiplier
+    baseline: 1.0
+    value: 0.70
+  warehouse_capacity:
+    name: Warehouse Capacity Reduction 20 Percent
+    type: WAREHOUSE_CAPACITY
+    parameter: capacity_multiplier
+    baseline: 1.0
+    value: 0.80
+  budget_reduction:
+    name: Purchasing Budget Reduction 20 Percent
+    type: BUDGET_CHANGE
+    parameter: budget_multiplier
+    baseline: 1.0
+    value: 0.80
+  transport_cost:
+    name: Transportation Cost Increase 25 Percent
+    type: TRANSPORT_COST
+    parameter: transportation_cost_multiplier
+    baseline: 1.0
+    value: 1.25
+  service_level:
+    name: Service Level Increase
+    type: SERVICE_LEVEL
+    parameter: service_level_target
+    baseline: 0.95
+    value: 0.99
+  promotion:
+    name: Promotion Uplift 15 Percent
+    type: PROMOTION_UPLIFT
+    parameter: demand_multiplier
+    baseline: 1.0
+    value: 1.15
+  stock_loss:
+    name: Unexpected Stock Loss
+    type: STOCK_LOSS
+    parameter: lost_units
+    baseline: 0.0
+    value: 50.0

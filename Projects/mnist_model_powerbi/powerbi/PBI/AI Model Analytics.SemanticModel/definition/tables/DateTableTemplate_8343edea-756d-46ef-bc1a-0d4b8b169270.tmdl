@@ -115,3 +115,4 @@ table DateTableTemplate_8343edea-756d-46ef-bc1a-0d4b8b169270
 	annotation __PBI_TemplateDateTable = true
 
 	annotation DefaultItem = DateHierarchy
+

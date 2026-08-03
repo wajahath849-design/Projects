@@ -83,3 +83,4 @@ table vw_DailyProcessingTrend
 				    dbo_vw_DailyProcessingTrend = AIModelAnalytics{[Schema="dbo",Item="vw_DailyProcessingTrend"]}[Data]
 				in
 				    dbo_vw_DailyProcessingTrend
+

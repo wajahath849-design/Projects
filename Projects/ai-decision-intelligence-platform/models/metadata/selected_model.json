@@ -1,0 +1,11 @@
+{
+  "model_id": "XGBOOST",
+  "model_name": "XGBoost",
+  "artifact_path": "models/artifacts/xgboost_a250a208-faaa-422e-9b1f-0075ca9a2162.joblib",
+  "model_run_key": 11,
+  "wape": 0.37093773366898064,
+  "bias": -0.39931545725890566,
+  "residual_std": 1.9697483312084012,
+  "selected_at": "2026-07-31T16:19:19.544183+00:00",
+  "reason": "Lowest configured weighted score from measured holdout results."
+}

@@ -1,0 +1,10 @@
+database:
+  server: localhost\SQLEXPRESS
+  name: AIDecisionIntelligence
+  driver: ODBC Driver 18 for SQL Server
+  trusted_connection: true
+  trust_server_certificate: true
+  connection_timeout_seconds: 5
+  command_timeout_seconds: 60
+  schema_directory: database/schema
+  seed_directory: database/seeds

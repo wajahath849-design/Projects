@@ -70,3 +70,4 @@ table HumanReview
 				    dbo_HumanReview = AIModelAnalytics{[Schema="dbo",Item="HumanReview"]}[Data]
 				in
 				    dbo_HumanReview
+

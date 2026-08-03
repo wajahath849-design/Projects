@@ -1,0 +1,222 @@
+// Demand measures
+Total Actual Demand =
+// Actual units in the current filter context.
+COALESCE(SUM('Demand Forecast'[ActualDemand]), 0)
+
+Total Forecast Demand =
+// Forecast units in the current filter context.
+COALESCE(SUM('Demand Forecast'[ForecastDemand]), 0)
+
+Forecast Variance =
+// Signed units: forecast minus actual.
+[Total Forecast Demand] - [Total Actual Demand]
+
+Previous Forecast Demand =
+// Prior-period forecast used by the growth measure.
+CALCULATE([Total Forecast Demand], DATEADD('Date'[FullDate], -1, MONTH))
+
+Forecast Growth Percentage =
+// Month-over-month forecast change with safe division.
+DIVIDE([Total Forecast Demand] - [Previous Forecast Demand], [Previous Forecast Demand], 0)
+
+WAPE =
+// Mean stored weighted absolute percentage error for the selected context.
+COALESCE(AVERAGE('Model Performance'[WAPE]), 0)
+
+RMSE =
+// Mean stored root mean squared error.
+COALESCE(AVERAGE('Model Performance'[RMSE]), 0)
+
+MAE =
+// Mean stored mean absolute error.
+COALESCE(AVERAGE('Model Performance'[MAE]), 0)
+
+Forecast Bias =
+// Positive values indicate over-forecasting.
+COALESCE(AVERAGE('Model Performance'[Bias]), 0)
+
+Forecast Accuracy =
+// Bounded accuracy presentation derived from WAPE.
+MAX(0, 1 - [WAPE])
+
+Forecast Revenue =
+// Expected revenue from forecast output.
+COALESCE(SUM('Demand Forecast'[ForecastRevenue]), 0)
+
+Total Revenue =
+// Actual recognized revenue in the current filter context.
+COALESCE(SUM('Demand Forecast'[ActualRevenue]), 0)
+
+// Inventory measures
+Current Inventory =
+// Available inventory at the selected risk snapshot.
+COALESCE(SUM('Inventory Intelligence'[CurrentInventory]), 0)
+
+Inventory Value =
+// Stored inventory value from the operational snapshot.
+COALESCE(SUM('Inventory Intelligence'[InventoryValue]), 0)
+
+Average Days of Supply =
+// Average safe days of supply.
+COALESCE(AVERAGE('Inventory Intelligence'[DaysOfSupply]), 0)
+
+Products Below Reorder Point =
+// Distinct products whose inventory is below the reorder point.
+COALESCE(CALCULATE(
+    DISTINCTCOUNT('Inventory Intelligence'[ProductID]),
+    FILTER('Inventory Intelligence',
+        'Inventory Intelligence'[CurrentInventory] < 'Inventory Intelligence'[ReorderPoint])
+), 0)
+
+Products at Stockout Risk =
+// Distinct Critical or At Risk products.
+COALESCE(CALCULATE(
+    DISTINCTCOUNT('Inventory Intelligence'[ProductID]),
+    'Inventory Intelligence'[RiskClassification] IN {"Critical", "At Risk"}
+), 0)
+
+Critical Products =
+// Distinct products classified Critical.
+COALESCE(CALCULATE(
+    DISTINCTCOUNT('Inventory Intelligence'[ProductID]),
+    'Inventory Intelligence'[RiskClassification] = "Critical"
+), 0)
+
+Excess Inventory Units =
+// Current units classified as Excess.
+COALESCE(CALCULATE(
+    SUM('Inventory Intelligence'[CurrentInventory]),
+    'Inventory Intelligence'[RiskClassification] = "Excess"
+), 0)
+
+Warehouse Utilization =
+// Average configured warehouse utilization percentage.
+COALESCE(AVERAGE('Inventory Intelligence'[CurrentUtilization]), 0)
+
+// Recommendation measures
+Recommended Order Quantity =
+// Total validated integer replenishment quantity.
+COALESCE(SUM('Optimization Recommendations'[RecommendedOrderQuantity]), 0)
+
+Recommended Purchase Cost =
+// Purchase component of the recommended plan.
+COALESCE(SUM('Optimization Recommendations'[ExpectedPurchaseCost]), 0)
+
+Expected Revenue Protected =
+// Revenue expected to be protected by replenishment.
+COALESCE(SUM('Optimization Recommendations'[ExpectedRevenueProtected]), 0)
+
+Expected Cost Savings =
+// Estimated financial impact after total expected costs.
+COALESCE(SUM('Optimization Recommendations'[EstimatedFinancialImpact]), 0)
+
+Expected Stockout Reduction =
+// Average probability reduction from recommendations.
+COALESCE(AVERAGE('Optimization Recommendations'[ExpectedStockoutReduction]), 0)
+
+Supplier Reliability =
+// Mean supplier reliability in the recommendation context.
+COALESCE(AVERAGE('Optimization Recommendations'[ReliabilityScore]), 0)
+
+Average Supplier Lead Time =
+// Average base supplier lead time in days.
+COALESCE(AVERAGE('Optimization Recommendations'[BaseLeadTimeDays]), 0)
+
+// Scenario measures
+Scenario Revenue Impact =
+// Scenario revenue minus preserved baseline revenue.
+COALESCE(SUM('Scenario Comparison'[ScenarioRevenue])
+    - SUM('Scenario Comparison'[BaselineRevenue]), 0)
+
+Scenario Cost Impact =
+// Scenario total cost minus preserved baseline total cost.
+COALESCE(SUM('Scenario Comparison'[ScenarioTotalCost])
+    - SUM('Scenario Comparison'[BaselineTotalCost]), 0)
+
+Scenario Profit Impact =
+// Scenario profit minus preserved baseline profit.
+COALESCE(SUM('Scenario Comparison'[ScenarioProfit])
+    - SUM('Scenario Comparison'[BaselineProfit]), 0)
+
+Scenario Demand Impact =
+// Scenario demand minus preserved baseline demand.
+COALESCE(SUM('Scenario Comparison'[ScenarioDemand])
+    - SUM('Scenario Comparison'[BaselineDemand]), 0)
+
+Scenario Stockout Impact =
+// Mean change in stockout probability.
+COALESCE(AVERAGEX(
+    'Scenario Comparison',
+    'Scenario Comparison'[ScenarioStockoutProbability]
+        - 'Scenario Comparison'[BaselineStockoutProbability]
+), 0)
+
+// Data-quality and pipeline measures
+Data Quality Pass Rate =
+// Passed checks divided by total checks.
+DIVIDE(
+    CALCULATE(COUNTROWS('Data Quality'), 'Data Quality'[Status] = "PASS"),
+    COUNTROWS('Data Quality'),
+    0
+)
+
+Total Quality Checks =
+// Number of persisted quality checks.
+COUNTROWS('Data Quality')
+
+Passed Quality Checks =
+// Number of checks with PASS status.
+COALESCE(CALCULATE(COUNTROWS('Data Quality'), 'Data Quality'[Status] = "PASS"), 0)
+
+Warning Quality Checks =
+// Number of checks with WARNING status.
+COALESCE(CALCULATE(COUNTROWS('Data Quality'), 'Data Quality'[Status] = "WARNING"), 0)
+
+Failed Quality Checks =
+// Count of failed checks in context.
+COALESCE(CALCULATE(
+    COUNTROWS('Data Quality'),
+    'Data Quality'[Status] = "FAIL"
+), 0)
+
+Last Pipeline Run =
+// Latest quality-record timestamp as a pipeline freshness indicator.
+MAX('Data Quality'[CreatedAt])
+
+Records Processed =
+// Total records evaluated by quality checks.
+COALESCE(SUM('Data Quality'[RecordsChecked]), 0)
+
+Missing Value Failures =
+// Completeness failures used as the missing-value indicator.
+COALESCE(CALCULATE(
+    SUM('Data Quality'[FailedRecords]),
+    'Data Quality'[CheckCategory] = "COMPLETENESS"
+), 0)
+
+Duplicate Records =
+// Uniqueness failures used as the duplicate-record indicator.
+COALESCE(CALCULATE(
+    SUM('Data Quality'[FailedRecords]),
+    'Data Quality'[CheckCategory] = "UNIQUENESS"
+), 0)
+
+Pipeline Duration Seconds =
+// Elapsed seconds between the first and last check in the selected quality run.
+DATEDIFF(MIN('Data Quality'[CreatedAt]), MAX('Data Quality'[CreatedAt]), SECOND)
+
+Data Freshness Days =
+// Days since the latest source business date.
+DATEDIFF(MAX('Data Quality'[FullDate]), TODAY(), DAY)
+
+Optimization Savings =
+// Alias used by the executive page.
+[Expected Cost Savings]
+
+AI Insight Text =
+// Deterministic narrative; no generative model is used.
+VAR RiskCount = [Products at Stockout Risk]
+VAR Accuracy = FORMAT([Forecast Accuracy], "0.0%")
+RETURN
+    "Forecast accuracy is " & Accuracy & ". "
+    & FORMAT(RiskCount, "0") & " products currently require risk review."

@@ -1,0 +1,16 @@
+forecasting:
+  horizons: [7, 30, 90]
+  seasonal_period: 7
+  random_seed: 42
+  sample:
+    products: 10
+    stores: 3
+    days: 365
+  evaluation:
+    test_days: 7
+    rolling_origin_folds: 3
+  selection_weights:
+    wape: 0.50
+    absolute_bias: 0.20
+    inference_time: 0.10
+    stability: 0.20

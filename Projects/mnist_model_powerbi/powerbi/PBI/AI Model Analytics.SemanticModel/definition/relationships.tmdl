@@ -18,3 +18,4 @@ relationship 568c8e59-95ea-4bd8-9a3f-29e8281cb2e7
 relationship eb12eb2c-740e-c7fb-3100-62f454b4c21f
 	fromColumn: ImageBatch.'Detected Date'
 	toColumn: DimDate.Date
+

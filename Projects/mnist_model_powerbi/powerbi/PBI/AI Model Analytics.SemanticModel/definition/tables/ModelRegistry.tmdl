@@ -221,3 +221,4 @@ table ModelRegistry
 				    dbo_ModelRegistry = AIModelAnalytics{[Schema="dbo",Item="ModelRegistry"]}[Data]
 				in
 				    dbo_ModelRegistry
+

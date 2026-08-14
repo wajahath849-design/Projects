@@ -1,0 +1,47 @@
+version: 1.0
+description: Reproducible cleaning rules for the supplied synthetic canonical dataset.
+
+deduplication:
+  keep: first
+  tables:
+    server_metrics: [metric_id, server_id, timestamp]
+    power_metrics: [metric_id, facility_id, timestamp]
+    network_metrics: [metric_id, facility_id, timestamp]
+
+categorical_normalization:
+  servers.status:
+    trim: true
+    lowercase: true
+    allowed: [active, maintenance, decommissioned]
+  uptime_incidents.status:
+    trim: true
+    lowercase: true
+    mappings:
+      done: resolved
+      closed: resolved
+    allowed: [resolved]
+
+invalid_to_missing:
+  server_metrics.cpu_utilization_pct: {minimum: 0, maximum: 100}
+  server_metrics.memory_utilization_pct: {minimum: 0, maximum: 100}
+  server_metrics.disk_utilization_pct: {minimum: 0, maximum: 100}
+  server_metrics.network_utilization_pct: {minimum: 0, maximum: 100}
+  power_metrics.pue: {minimum: 1.0, maximum: 2.0}
+  network_metrics.packet_loss_pct: {minimum: 0, maximum: 5.0}
+
+imputation:
+  method: entity_time_linear_interpolation
+  fallback: entity_median_then_global_median
+  entity_columns:
+    server_metrics: server_id
+    power_metrics: facility_id
+    network_metrics: facility_id
+  ordering_column: timestamp
+
+rounding:
+  default_decimals: 2
+  columns:
+    power_metrics.pue: 3
+    network_metrics.packet_loss_pct: 3
+    network_metrics.network_availability_pct: 4
+

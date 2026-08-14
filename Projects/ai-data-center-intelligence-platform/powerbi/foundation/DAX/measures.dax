@@ -1,0 +1,83 @@
+// Inventory
+Server Count = DISTINCTCOUNT(DimServer[server_id])
+
+Active Server Count =
+CALCULATE(
+    DISTINCTCOUNT(DimServer[server_id]),
+    KEEPFILTERS(DimServer[status] = "active")
+)
+
+// Energy
+Average PUE = AVERAGE(FactPowerMetrics[pue])
+
+Total Power Draw = SUM(FactPowerMetrics[power_draw_kw])
+
+Total IT Load = SUM(FactPowerMetrics[it_load_kw])
+
+Total Cooling Power = SUM(FactPowerMetrics[cooling_power_kw])
+
+Total Cooling Cost = SUM(FactPowerMetrics[cooling_cost])
+
+// Infrastructure
+Average CPU Utilization = AVERAGE(FactServerMetrics[cpu_utilization_pct])
+
+Average Memory Utilization = AVERAGE(FactServerMetrics[memory_utilization_pct])
+
+Average Disk Utilization = AVERAGE(FactServerMetrics[disk_utilization_pct])
+
+Average Server Network Utilization = AVERAGE(FactServerMetrics[network_utilization_pct])
+
+// Network
+Average Network Latency = AVERAGE(FactNetworkMetrics[latency_ms])
+
+Average Packet Loss = AVERAGE(FactNetworkMetrics[packet_loss_pct])
+
+Average Throughput = AVERAGE(FactNetworkMetrics[throughput_mbps])
+
+Network Availability = AVERAGE(FactNetworkMetrics[network_availability_pct])
+
+// Reliability
+Total Downtime = SUM(FactIncidents[downtime_minutes])
+
+Incident Count = DISTINCTCOUNT(FactIncidents[incident_id])
+
+Downtime per Server = DIVIDE([Total Downtime], [Server Count])
+
+Incident Rate per 100 Servers = DIVIDE([Incident Count], [Server Count]) * 100
+
+Visible Days = DISTINCTCOUNT(DimDate[Date])
+
+Operational Availability =
+VAR PotentialServerMinutes = [Server Count] * [Visible Days] * 1440
+RETURN
+    100 * (1 - DIVIDE([Total Downtime], PotentialServerMinutes))
+
+// Time intelligence
+Previous Year Average PUE =
+CALCULATE([Average PUE], DATEADD(DimDate[Date], -1, YEAR))
+
+Year-over-Year PUE Change =
+DIVIDE([Average PUE] - [Previous Year Average PUE], [Previous Year Average PUE])
+
+Previous Year Cooling Cost =
+CALCULATE([Total Cooling Cost], DATEADD(DimDate[Date], -1, YEAR))
+
+Year-over-Year Cooling Cost Change =
+DIVIDE([Total Cooling Cost] - [Previous Year Cooling Cost], [Previous Year Cooling Cost])
+
+Previous Year Downtime =
+CALCULATE([Total Downtime], DATEADD(DimDate[Date], -1, YEAR))
+
+Year-over-Year Downtime Change =
+DIVIDE([Total Downtime] - [Previous Year Downtime], [Previous Year Downtime])
+
+Latest Data Date =
+MAXX(
+    UNION(
+        SELECTCOLUMNS(FactPowerMetrics, "DataDate", FactPowerMetrics[timestamp]),
+        SELECTCOLUMNS(FactNetworkMetrics, "DataDate", FactNetworkMetrics[timestamp]),
+        SELECTCOLUMNS(FactServerMetrics, "DataDate", FactServerMetrics[timestamp])
+    ),
+    [DataDate]
+)
+

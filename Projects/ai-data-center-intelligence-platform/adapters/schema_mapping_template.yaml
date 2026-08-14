@@ -1,0 +1,58 @@
+# External-to-canonical schema mapping template.
+facilities:
+  facility_id: null
+  facility_name: null
+  city: null
+  country: null
+  region: null
+  capacity_mw: null
+  rack_capacity: null
+  build_year: null
+  commission_date: null
+
+servers:
+  server_id: null
+  facility_id: null
+  rack_id: null
+  server_type: null
+  cpu_cores: null
+  memory_gb: null
+  install_date: null
+  status: null
+
+server_metrics:
+  server_id: null
+  timestamp: null
+  cpu_utilization_pct: null
+  memory_utilization_pct: null
+  disk_utilization_pct: null
+  network_utilization_pct: null
+
+power_metrics:
+  facility_id: null
+  timestamp: null
+  power_draw_kw: null
+  it_load_kw: null
+  cooling_power_kw: null
+  pue: null
+  cooling_cost: null
+
+network_metrics:
+  facility_id: null
+  timestamp: null
+  bandwidth_utilization_pct: null
+  latency_ms: null
+  packet_loss_pct: null
+  throughput_mbps: null
+  network_availability_pct: null
+
+uptime_incidents:
+  incident_id: null
+  facility_id: null
+  server_id: null
+  start_time: null
+  end_time: null
+  downtime_minutes: null
+  severity: null
+  root_cause: null
+  status: null

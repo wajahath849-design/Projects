@@ -1,0 +1,80 @@
+table DimServer
+
+	column server_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: server_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column rack_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: rack_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column server_type
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: server_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column cpu_cores
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: cpu_cores
+
+		annotation SummarizationSetBy = Automatic
+
+	column memory_gb
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: memory_gb
+
+		annotation SummarizationSetBy = Automatic
+
+	column install_date
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: install_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimServer = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/servers.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"server_id", type text}, {"facility_id", type text}, {"rack_id", type text},
+				        {"server_type", type text}, {"cpu_cores", Int64.Type}, {"memory_gb", Int64.Type},
+				        {"install_date", type date}, {"status", type text}
+				    })
+				in
+				    Typed
+

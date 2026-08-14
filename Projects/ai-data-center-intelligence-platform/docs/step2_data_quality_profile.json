@@ -1,0 +1,1244 @@
+{
+  "generated_at_utc": "2026-08-14T12:02:07.022943+00:00",
+  "scope": "raw data only; evaluation/private excluded",
+  "assumptions": {
+    "operational_period": [
+      "2015-01-01",
+      "2025-12-31"
+    ],
+    "pue_validity_rule": "1.0 to 2.0 for this synthetic canonical dataset",
+    "packet_loss_validity_rule": "0% to 5% for this synthetic canonical dataset",
+    "percentage_rule": "0% to 100%"
+  },
+  "tables": {
+    "facilities": {
+      "path": "data/raw/facilities.csv",
+      "bytes": 581,
+      "rows": 6,
+      "columns": [
+        "facility_id",
+        "facility_name",
+        "city",
+        "country",
+        "region",
+        "capacity_mw",
+        "rack_capacity",
+        "build_year",
+        "commission_date"
+      ],
+      "dtypes": {
+        "facility_id": "object",
+        "facility_name": "object",
+        "city": "object",
+        "country": "object",
+        "region": "object",
+        "capacity_mw": "float64",
+        "rack_capacity": "int64",
+        "build_year": "int64",
+        "commission_date": "object"
+      },
+      "nulls": {},
+      "exact_duplicates": {
+        "columns": [
+          "facility_id",
+          "facility_name",
+          "city",
+          "country",
+          "region",
+          "capacity_mw",
+          "rack_capacity",
+          "build_year",
+          "commission_date"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "facility_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "grain_duplicates": {
+        "columns": [
+          "facility_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "date_ranges": {
+        "commission_date": {
+          "min": "2009-08-18T00:00:00",
+          "max": "2014-05-06T00:00:00"
+        }
+      },
+      "invalid_dates": {
+        "commission_date": 0
+      },
+      "invalid_ranges": {
+        "capacity_mw": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "rack_capacity": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "1 <= value <= inf"
+        },
+        "build_year": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "1950 <= value <= 2025"
+        }
+      },
+      "categorical_values": {
+        "facility_id": {
+          "DC-FRA-01": 1,
+          "DC-DUB-01": 1,
+          "DC-IAD-01": 1,
+          "DC-PDX-01": 1,
+          "DC-SIN-01": 1,
+          "DC-SYD-01": 1
+        },
+        "facility_name": {
+          "Frankfurt Central": 1,
+          "Dublin West": 1,
+          "Ashburn East": 1,
+          "Portland West": 1,
+          "Singapore South": 1,
+          "Sydney Pacific": 1
+        },
+        "city": {
+          "Frankfurt": 1,
+          "Dublin": 1,
+          "Ashburn": 1,
+          "Portland": 1,
+          "Singapore": 1,
+          "Sydney": 1
+        },
+        "country": {
+          "United States": 2,
+          "Germany": 1,
+          "Ireland": 1,
+          "Singapore": 1,
+          "Australia": 1
+        },
+        "region": {
+          "EU-Central": 1,
+          "EU-West": 1,
+          "US-East": 1,
+          "US-West": 1,
+          "APAC-Southeast": 1,
+          "APAC-Pacific": 1
+        }
+      },
+      "numeric_profile": {
+        "capacity_mw": {
+          "count": 6,
+          "min": 9.5,
+          "p25": 10.625,
+          "median": 11.5,
+          "p75": 13.5,
+          "p99": 14.95,
+          "max": 15.0,
+          "mean": 12.0
+        },
+        "rack_capacity": {
+          "count": 6,
+          "min": 150,
+          "p25": 162.5,
+          "median": 175.0,
+          "p75": 198.75,
+          "p99": 219.25,
+          "max": 220,
+          "mean": 180.83333333333334
+        },
+        "build_year": {
+          "count": 6,
+          "min": 2008,
+          "p25": 2009.25,
+          "median": 2010.5,
+          "p75": 2011.75,
+          "p99": 2012.95,
+          "max": 2013,
+          "mean": 2010.5
+        }
+      }
+    },
+    "servers": {
+      "path": "data/raw/servers.csv",
+      "bytes": 30481,
+      "rows": 430,
+      "columns": [
+        "server_id",
+        "facility_id",
+        "rack_id",
+        "server_type",
+        "cpu_cores",
+        "memory_gb",
+        "install_date",
+        "status"
+      ],
+      "dtypes": {
+        "server_id": "object",
+        "facility_id": "object",
+        "rack_id": "object",
+        "server_type": "object",
+        "cpu_cores": "int64",
+        "memory_gb": "int64",
+        "install_date": "object",
+        "status": "object"
+      },
+      "nulls": {},
+      "exact_duplicates": {
+        "columns": [
+          "server_id",
+          "facility_id",
+          "rack_id",
+          "server_type",
+          "cpu_cores",
+          "memory_gb",
+          "install_date",
+          "status"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "server_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "grain_duplicates": {
+        "columns": [
+          "server_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "date_ranges": {
+        "install_date": {
+          "min": "2010-01-07T00:00:00",
+          "max": "2014-12-17T00:00:00"
+        }
+      },
+      "invalid_dates": {
+        "install_date": 0
+      },
+      "invalid_ranges": {
+        "cpu_cores": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "1 <= value <= inf"
+        },
+        "memory_gb": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "1 <= value <= inf"
+        }
+      },
+      "categorical_values": {
+        "facility_id": {
+          "DC-IAD-01": 80,
+          "DC-SIN-01": 76,
+          "DC-FRA-01": 72,
+          "DC-PDX-01": 70,
+          "DC-DUB-01": 68,
+          "DC-SYD-01": 64
+        },
+        "server_type": {
+          "compute": 194,
+          "virtualization": 99,
+          "storage": 75,
+          "database": 33,
+          "gpu": 29
+        },
+        "status": {
+          "active": 401,
+          "maintenance": 17,
+          "ACTIVE": 6,
+          "decommissioned": 6
+        }
+      },
+      "numeric_profile": {
+        "cpu_cores": {
+          "count": 430,
+          "min": 16,
+          "p25": 32.0,
+          "median": 48.0,
+          "p75": 64.0,
+          "p99": 96.0,
+          "max": 96,
+          "mean": 46.23255813953488
+        },
+        "memory_gb": {
+          "count": 430,
+          "min": 64,
+          "p25": 256.0,
+          "median": 256.0,
+          "p75": 512.0,
+          "p99": 768.0,
+          "max": 768,
+          "mean": 342.7720930232558
+        }
+      }
+    },
+    "server_metrics": {
+      "path": "data/raw/server_metrics.csv",
+      "bytes": 101247033,
+      "rows": 1728054,
+      "columns": [
+        "metric_id",
+        "server_id",
+        "timestamp",
+        "cpu_utilization_pct",
+        "memory_utilization_pct",
+        "disk_utilization_pct",
+        "network_utilization_pct"
+      ],
+      "dtypes": {
+        "metric_id": "object",
+        "server_id": "object",
+        "timestamp": "object",
+        "cpu_utilization_pct": "float64",
+        "memory_utilization_pct": "float64",
+        "disk_utilization_pct": "float64",
+        "network_utilization_pct": "float64"
+      },
+      "nulls": {
+        "cpu_utilization_pct": {
+          "count": 342,
+          "rate_pct": 0.019791
+        },
+        "memory_utilization_pct": {
+          "count": 353,
+          "rate_pct": 0.020428
+        },
+        "disk_utilization_pct": {
+          "count": 358,
+          "rate_pct": 0.020717
+        },
+        "network_utilization_pct": {
+          "count": 320,
+          "rate_pct": 0.018518
+        }
+      },
+      "exact_duplicates": {
+        "columns": [
+          "metric_id",
+          "server_id",
+          "timestamp",
+          "cpu_utilization_pct",
+          "memory_utilization_pct",
+          "disk_utilization_pct",
+          "network_utilization_pct"
+        ],
+        "affected_rows": 628,
+        "extra_rows": 314,
+        "extra_row_rate_pct": 0.018171
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "metric_id"
+        ],
+        "affected_rows": 628,
+        "extra_rows": 314,
+        "extra_row_rate_pct": 0.018171
+      },
+      "grain_duplicates": {
+        "columns": [
+          "server_id",
+          "timestamp"
+        ],
+        "affected_rows": 628,
+        "extra_rows": 314,
+        "extra_row_rate_pct": 0.018171
+      },
+      "date_ranges": {
+        "timestamp": {
+          "min": "2015-01-01T00:00:00",
+          "max": "2025-12-31T00:00:00"
+        }
+      },
+      "invalid_dates": {
+        "timestamp": 0
+      },
+      "invalid_ranges": {
+        "cpu_utilization_pct": {
+          "count": 343,
+          "rate_pct": 0.019849,
+          "rule": "0 <= value <= 100"
+        },
+        "memory_utilization_pct": {
+          "count": 343,
+          "rate_pct": 0.019849,
+          "rule": "0 <= value <= 100"
+        },
+        "disk_utilization_pct": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= 100"
+        },
+        "network_utilization_pct": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= 100"
+        }
+      },
+      "categorical_values": {},
+      "numeric_profile": {
+        "cpu_utilization_pct": {
+          "count": 1727712,
+          "min": 1.0,
+          "p25": 41.3,
+          "median": 50.09,
+          "p75": 57.39,
+          "p99": 73.89,
+          "max": 174.64,
+          "mean": 48.761965350706596
+        },
+        "memory_utilization_pct": {
+          "count": 1727701,
+          "min": 3.0,
+          "p25": 40.87,
+          "median": 48.61,
+          "p75": 55.82,
+          "p99": 72.58,
+          "max": 174.84,
+          "mean": 48.13965048350381
+        },
+        "disk_utilization_pct": {
+          "count": 1727696,
+          "min": 4.0,
+          "p25": 33.39,
+          "median": 39.53,
+          "p75": 45.66,
+          "p99": 60.13050000000047,
+          "max": 81.74,
+          "mean": 39.53018256105245
+        },
+        "network_utilization_pct": {
+          "count": 1727734,
+          "min": 1.0,
+          "p25": 30.05,
+          "median": 36.62,
+          "p75": 42.83,
+          "p99": 57.29,
+          "max": 81.8,
+          "mean": 36.29184434640979
+        }
+      }
+    },
+    "power_metrics": {
+      "path": "data/raw/power_metrics.csv",
+      "bytes": 1691742,
+      "rows": 24123,
+      "columns": [
+        "metric_id",
+        "facility_id",
+        "timestamp",
+        "power_draw_kw",
+        "it_load_kw",
+        "cooling_power_kw",
+        "pue",
+        "cooling_cost"
+      ],
+      "dtypes": {
+        "metric_id": "object",
+        "facility_id": "object",
+        "timestamp": "object",
+        "power_draw_kw": "float64",
+        "it_load_kw": "float64",
+        "cooling_power_kw": "float64",
+        "pue": "float64",
+        "cooling_cost": "float64"
+      },
+      "nulls": {
+        "cooling_power_kw": {
+          "count": 22,
+          "rate_pct": 0.091199
+        },
+        "pue": {
+          "count": 32,
+          "rate_pct": 0.132653
+        },
+        "cooling_cost": {
+          "count": 18,
+          "rate_pct": 0.074618
+        }
+      },
+      "exact_duplicates": {
+        "columns": [
+          "metric_id",
+          "facility_id",
+          "timestamp",
+          "power_draw_kw",
+          "it_load_kw",
+          "cooling_power_kw",
+          "pue",
+          "cooling_cost"
+        ],
+        "affected_rows": 30,
+        "extra_rows": 15,
+        "extra_row_rate_pct": 0.062181
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "metric_id"
+        ],
+        "affected_rows": 30,
+        "extra_rows": 15,
+        "extra_row_rate_pct": 0.062181
+      },
+      "grain_duplicates": {
+        "columns": [
+          "facility_id",
+          "timestamp"
+        ],
+        "affected_rows": 30,
+        "extra_rows": 15,
+        "extra_row_rate_pct": 0.062181
+      },
+      "date_ranges": {
+        "timestamp": {
+          "min": "2015-01-01T00:00:00",
+          "max": "2025-12-31T00:00:00"
+        }
+      },
+      "invalid_dates": {
+        "timestamp": 0
+      },
+      "invalid_ranges": {
+        "power_draw_kw": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "it_load_kw": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "cooling_power_kw": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "pue": {
+          "count": 25,
+          "rate_pct": 0.103636,
+          "rule": "1 <= value <= 2.0"
+        },
+        "cooling_cost": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        }
+      },
+      "categorical_values": {
+        "facility_id": {
+          "DC-SYD-01": 4022,
+          "DC-IAD-01": 4022,
+          "DC-PDX-01": 4021,
+          "DC-SIN-01": 4021,
+          "DC-DUB-01": 4019,
+          "DC-FRA-01": 4018
+        }
+      },
+      "numeric_profile": {
+        "power_draw_kw": {
+          "count": 24123,
+          "min": 2427.62,
+          "p25": 3989.98,
+          "median": 4680.82,
+          "p75": 5766.135,
+          "p99": 7500.0012,
+          "max": 8463.93,
+          "mean": 4901.896539816773
+        },
+        "it_load_kw": {
+          "count": 24123,
+          "min": 1610.05,
+          "p25": 2779.6,
+          "median": 3222.62,
+          "p75": 3791.495,
+          "p99": 5096.018999999999,
+          "max": 5875.36,
+          "mean": 3314.8332599593746
+        },
+        "cooling_power_kw": {
+          "count": 24101,
+          "min": 551.35,
+          "p25": 921.41,
+          "median": 1173.29,
+          "p75": 1585.54,
+          "p99": 2237.16,
+          "max": 2643.39,
+          "mean": 1270.1396684784863
+        },
+        "pue": {
+          "count": 24091,
+          "min": 1.22,
+          "p25": 1.404,
+          "median": 1.47,
+          "p75": 1.544,
+          "p99": 1.716,
+          "max": 2.998,
+          "mean": 1.477389315512017
+        },
+        "cooling_cost": {
+          "count": 24105,
+          "min": 1160.29,
+          "p25": 3147.23,
+          "median": 3890.54,
+          "p75": 5534.67,
+          "p99": 8102.7487999999985,
+          "max": 10836.8,
+          "mean": 4244.313632441402
+        }
+      }
+    },
+    "network_metrics": {
+      "path": "data/raw/network_metrics.csv",
+      "bytes": 1586549,
+      "rows": 24121,
+      "columns": [
+        "metric_id",
+        "facility_id",
+        "timestamp",
+        "bandwidth_utilization_pct",
+        "latency_ms",
+        "packet_loss_pct",
+        "throughput_mbps",
+        "network_availability_pct"
+      ],
+      "dtypes": {
+        "metric_id": "object",
+        "facility_id": "object",
+        "timestamp": "object",
+        "bandwidth_utilization_pct": "float64",
+        "latency_ms": "float64",
+        "packet_loss_pct": "float64",
+        "throughput_mbps": "float64",
+        "network_availability_pct": "float64"
+      },
+      "nulls": {
+        "latency_ms": {
+          "count": 36,
+          "rate_pct": 0.149248
+        },
+        "packet_loss_pct": {
+          "count": 32,
+          "rate_pct": 0.132664
+        },
+        "throughput_mbps": {
+          "count": 24,
+          "rate_pct": 0.099498
+        }
+      },
+      "exact_duplicates": {
+        "columns": [
+          "metric_id",
+          "facility_id",
+          "timestamp",
+          "bandwidth_utilization_pct",
+          "latency_ms",
+          "packet_loss_pct",
+          "throughput_mbps",
+          "network_availability_pct"
+        ],
+        "affected_rows": 26,
+        "extra_rows": 13,
+        "extra_row_rate_pct": 0.053895
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "metric_id"
+        ],
+        "affected_rows": 26,
+        "extra_rows": 13,
+        "extra_row_rate_pct": 0.053895
+      },
+      "grain_duplicates": {
+        "columns": [
+          "facility_id",
+          "timestamp"
+        ],
+        "affected_rows": 26,
+        "extra_rows": 13,
+        "extra_row_rate_pct": 0.053895
+      },
+      "date_ranges": {
+        "timestamp": {
+          "min": "2015-01-01T00:00:00",
+          "max": "2025-12-31T00:00:00"
+        }
+      },
+      "invalid_dates": {
+        "timestamp": 0
+      },
+      "invalid_ranges": {
+        "bandwidth_utilization_pct": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= 100"
+        },
+        "latency_ms": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "packet_loss_pct": {
+          "count": 25,
+          "rate_pct": 0.103644,
+          "rule": "0 <= value <= 5"
+        },
+        "throughput_mbps": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        },
+        "network_availability_pct": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= 100"
+        }
+      },
+      "categorical_values": {
+        "facility_id": {
+          "DC-FRA-01": 4021,
+          "DC-SYD-01": 4021,
+          "DC-DUB-01": 4020,
+          "DC-PDX-01": 4020,
+          "DC-SIN-01": 4020,
+          "DC-IAD-01": 4019
+        }
+      },
+      "numeric_profile": {
+        "bandwidth_utilization_pct": {
+          "count": 24121,
+          "min": 17.13,
+          "p25": 40.19,
+          "median": 46.89,
+          "p75": 53.72,
+          "p99": 67.49799999999999,
+          "max": 88.77,
+          "mean": 46.964886198747976
+        },
+        "latency_ms": {
+          "count": 24085,
+          "min": 2.32,
+          "p25": 8.7,
+          "median": 10.75,
+          "p75": 13.11,
+          "p99": 16.5916,
+          "max": 73.02,
+          "mean": 10.896720780568817
+        },
+        "packet_loss_pct": {
+          "count": 24089,
+          "min": 0.0,
+          "p25": 0.031,
+          "median": 0.055,
+          "p75": 0.079,
+          "p99": 0.137,
+          "max": 21.939,
+          "mean": 0.0742355016812653
+        },
+        "throughput_mbps": {
+          "count": 24097,
+          "min": 1094.26,
+          "p25": 3128.22,
+          "median": 4011.79,
+          "p75": 5000.03,
+          "p99": 6987.160400000001,
+          "max": 9108.39,
+          "mean": 4103.439478358302
+        },
+        "network_availability_pct": {
+          "count": 24121,
+          "min": 97.3504,
+          "p25": 99.9562,
+          "median": 99.9618,
+          "p75": 99.9675,
+          "p99": 99.975,
+          "max": 99.975,
+          "mean": 99.96110457692467
+        }
+      }
+    },
+    "uptime_incidents": {
+      "path": "data/raw/uptime_incidents.csv",
+      "bytes": 117256,
+      "rows": 1158,
+      "columns": [
+        "incident_id",
+        "facility_id",
+        "server_id",
+        "start_time",
+        "end_time",
+        "downtime_minutes",
+        "severity",
+        "root_cause",
+        "status"
+      ],
+      "dtypes": {
+        "incident_id": "object",
+        "facility_id": "object",
+        "server_id": "object",
+        "start_time": "object",
+        "end_time": "object",
+        "downtime_minutes": "int64",
+        "severity": "object",
+        "root_cause": "object",
+        "status": "object"
+      },
+      "nulls": {},
+      "exact_duplicates": {
+        "columns": [
+          "incident_id",
+          "facility_id",
+          "server_id",
+          "start_time",
+          "end_time",
+          "downtime_minutes",
+          "severity",
+          "root_cause",
+          "status"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "primary_key_duplicates": {
+        "columns": [
+          "incident_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "grain_duplicates": {
+        "columns": [
+          "incident_id"
+        ],
+        "affected_rows": 0,
+        "extra_rows": 0,
+        "extra_row_rate_pct": 0.0
+      },
+      "date_ranges": {
+        "start_time": {
+          "min": "2015-01-05T09:49:00",
+          "max": "2025-12-08T20:45:00"
+        },
+        "end_time": {
+          "min": "2015-01-05T10:00:00",
+          "max": "2025-12-08T21:18:00"
+        }
+      },
+      "invalid_dates": {
+        "start_time": 0,
+        "end_time": 0
+      },
+      "invalid_ranges": {
+        "downtime_minutes": {
+          "count": 0,
+          "rate_pct": 0.0,
+          "rule": "0 <= value <= inf"
+        }
+      },
+      "categorical_values": {
+        "facility_id": {
+          "DC-SIN-01": 228,
+          "DC-IAD-01": 212,
+          "DC-FRA-01": 199,
+          "DC-PDX-01": 180,
+          "DC-DUB-01": 174,
+          "DC-SYD-01": 165
+        },
+        "severity": {
+          "low": 526,
+          "medium": 375,
+          "high": 202,
+          "critical": 55
+        },
+        "root_cause": {
+          "hardware failure": 320,
+          "software failure": 234,
+          "network outage": 192,
+          "cooling failure": 145,
+          "scheduled maintenance": 137,
+          "power failure": 130
+        },
+        "status": {
+          "resolved": 1134,
+          "done": 10,
+          "RESOLVED": 8,
+          "Closed": 6
+        }
+      },
+      "numeric_profile": {
+        "downtime_minutes": {
+          "count": 1158,
+          "min": 5,
+          "p25": 13.0,
+          "median": 28.5,
+          "p75": 71.75,
+          "p99": 421.1500000000003,
+          "max": 831,
+          "mean": 63.52245250431779
+        }
+      }
+    }
+  },
+  "referential_integrity": [
+    {
+      "relationship": "servers.facility_id -> facilities.facility_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    },
+    {
+      "relationship": "server_metrics.server_id -> servers.server_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    },
+    {
+      "relationship": "power_metrics.facility_id -> facilities.facility_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    },
+    {
+      "relationship": "network_metrics.facility_id -> facilities.facility_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    },
+    {
+      "relationship": "uptime_incidents.facility_id -> facilities.facility_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    },
+    {
+      "relationship": "uptime_incidents.server_id -> servers.server_id",
+      "blank_rows": 0,
+      "orphan_rows": 0,
+      "orphan_rate_pct": 0.0
+    }
+  ],
+  "temporal_coverage": {
+    "expected_daily_dates": 4018,
+    "server_metrics": {
+      "entities_expected": 430,
+      "entities_observed": 430,
+      "min_unique_dates_per_entity": 4018,
+      "max_unique_dates_per_entity": 4018,
+      "entities_with_incomplete_daily_coverage": 0
+    },
+    "power_metrics": {
+      "entities_expected": 6,
+      "entities_observed": 6,
+      "min_unique_dates_per_entity": 4018,
+      "max_unique_dates_per_entity": 4018,
+      "entities_with_incomplete_daily_coverage": 0
+    },
+    "network_metrics": {
+      "entities_expected": 6,
+      "entities_observed": 6,
+      "min_unique_dates_per_entity": 4018,
+      "max_unique_dates_per_entity": 4018,
+      "entities_with_incomplete_daily_coverage": 0
+    }
+  },
+  "issue_distribution_by_year": {
+    "server_metrics": {
+      "2015": {
+        "missing_cells": 133,
+        "duplicate_extra_rows": 31,
+        "invalid_range_cells": 61
+      },
+      "2016": {
+        "missing_cells": 136,
+        "duplicate_extra_rows": 25,
+        "invalid_range_cells": 80
+      },
+      "2017": {
+        "missing_cells": 123,
+        "duplicate_extra_rows": 31,
+        "invalid_range_cells": 67
+      },
+      "2018": {
+        "missing_cells": 133,
+        "duplicate_extra_rows": 26,
+        "invalid_range_cells": 71
+      },
+      "2019": {
+        "missing_cells": 115,
+        "duplicate_extra_rows": 20,
+        "invalid_range_cells": 58
+      },
+      "2020": {
+        "missing_cells": 115,
+        "duplicate_extra_rows": 39,
+        "invalid_range_cells": 70
+      },
+      "2021": {
+        "missing_cells": 134,
+        "duplicate_extra_rows": 27,
+        "invalid_range_cells": 54
+      },
+      "2022": {
+        "missing_cells": 116,
+        "duplicate_extra_rows": 29,
+        "invalid_range_cells": 55
+      },
+      "2023": {
+        "missing_cells": 115,
+        "duplicate_extra_rows": 26,
+        "invalid_range_cells": 59
+      },
+      "2024": {
+        "missing_cells": 130,
+        "duplicate_extra_rows": 34,
+        "invalid_range_cells": 58
+      },
+      "2025": {
+        "missing_cells": 123,
+        "duplicate_extra_rows": 26,
+        "invalid_range_cells": 53
+      }
+    },
+    "power_metrics": {
+      "2015": {
+        "missing_cells": 7,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 2
+      },
+      "2016": {
+        "missing_cells": 6,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 3
+      },
+      "2017": {
+        "missing_cells": 9,
+        "duplicate_extra_rows": 0,
+        "invalid_range_cells": 1
+      },
+      "2018": {
+        "missing_cells": 7,
+        "duplicate_extra_rows": 3,
+        "invalid_range_cells": 1
+      },
+      "2019": {
+        "missing_cells": 8,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 0
+      },
+      "2020": {
+        "missing_cells": 6,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 4
+      },
+      "2021": {
+        "missing_cells": 5,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 3
+      },
+      "2022": {
+        "missing_cells": 5,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 4
+      },
+      "2023": {
+        "missing_cells": 6,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 5
+      },
+      "2024": {
+        "missing_cells": 3,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 1
+      },
+      "2025": {
+        "missing_cells": 10,
+        "duplicate_extra_rows": 0,
+        "invalid_range_cells": 1
+      }
+    },
+    "network_metrics": {
+      "2015": {
+        "missing_cells": 8,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 0
+      },
+      "2016": {
+        "missing_cells": 10,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 1
+      },
+      "2017": {
+        "missing_cells": 8,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 2
+      },
+      "2018": {
+        "missing_cells": 10,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 3
+      },
+      "2019": {
+        "missing_cells": 9,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 1
+      },
+      "2020": {
+        "missing_cells": 4,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 3
+      },
+      "2021": {
+        "missing_cells": 10,
+        "duplicate_extra_rows": 0,
+        "invalid_range_cells": 2
+      },
+      "2022": {
+        "missing_cells": 11,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 6
+      },
+      "2023": {
+        "missing_cells": 6,
+        "duplicate_extra_rows": 2,
+        "invalid_range_cells": 1
+      },
+      "2024": {
+        "missing_cells": 8,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 3
+      },
+      "2025": {
+        "missing_cells": 8,
+        "duplicate_extra_rows": 1,
+        "invalid_range_cells": 3
+      }
+    }
+  },
+  "consistency": {
+    "servers_noncanonical_status_rows": 6,
+    "incidents_noncanonical_status_rows": 24,
+    "incident_end_before_start_rows": 0,
+    "incident_duration_mismatch_rows": 0,
+    "power_draw_below_it_load_rows": 0,
+    "commission_before_build_rows": 0
+  },
+  "findings": [
+    {
+      "id": "DQ-001",
+      "severity": "high",
+      "finding": "Duplicate fact measurements violate primary-key and natural-grain uniqueness.",
+      "evidence": {
+        "server_metrics": 314,
+        "power_metrics": 15,
+        "network_metrics": 13
+      },
+      "risk": "Aggregations can be overstated and database primary-key loads can fail.",
+      "recommended_step3_action": "Deterministically retain one row per metric_id and verify natural-grain uniqueness."
+    },
+    {
+      "id": "DQ-002",
+      "severity": "high",
+      "finding": "Required analytical measures contain missing values.",
+      "evidence": {
+        "server_metrics": 1373,
+        "power_metrics": 72,
+        "network_metrics": 92
+      },
+      "risk": "Averages and totals can silently use different denominators.",
+      "recommended_step3_action": "Impute only with documented, group-aware rules and record affected rows."
+    },
+    {
+      "id": "DQ-003",
+      "severity": "high",
+      "finding": "CPU and memory percentages exceed their physical 0\u2013100% domain.",
+      "evidence": {
+        "cpu_utilization_pct": 343,
+        "memory_utilization_pct": 343
+      },
+      "risk": "Capacity and hotspot analysis would be biased upward.",
+      "recommended_step3_action": "Replace injected extremes using a reproducible robust rule; do not merely hide them in charts."
+    },
+    {
+      "id": "DQ-004",
+      "severity": "high",
+      "finding": "PUE and packet-loss values exceed conservative operational validity thresholds.",
+      "evidence": {
+        "pue_above_2_0": 25,
+        "packet_loss_above_5_pct": 25
+      },
+      "risk": "Energy and network anomaly rankings can be dominated by injected errors.",
+      "recommended_step3_action": "Flag and repair with documented domain rules, retaining an audit trail."
+    },
+    {
+      "id": "DQ-005",
+      "severity": "medium",
+      "finding": "Status labels use inconsistent casing and synonyms.",
+      "evidence": {
+        "servers_noncanonical_status_rows": 6,
+        "incidents_noncanonical_status_rows": 24,
+        "incident_end_before_start_rows": 0,
+        "incident_duration_mismatch_rows": 0,
+        "power_draw_below_it_load_rows": 0,
+        "commission_before_build_rows": 0
+      },
+      "risk": "Category counts split logically identical states across dashboard filters.",
+      "recommended_step3_action": "Normalize server status to lowercase and incident completion synonyms to resolved."
+    },
+    {
+      "id": "DQ-006",
+      "severity": "low",
+      "finding": "Referential integrity and daily coverage are complete after deduplicating the natural grain.",
+      "evidence": {
+        "foreign_key_orphan_rows": 0,
+        "temporal": {
+          "expected_daily_dates": 4018,
+          "server_metrics": {
+            "entities_expected": 430,
+            "entities_observed": 430,
+            "min_unique_dates_per_entity": 4018,
+            "max_unique_dates_per_entity": 4018,
+            "entities_with_incomplete_daily_coverage": 0
+          },
+          "power_metrics": {
+            "entities_expected": 6,
+            "entities_observed": 6,
+            "min_unique_dates_per_entity": 4018,
+            "max_unique_dates_per_entity": 4018,
+            "entities_with_incomplete_daily_coverage": 0
+          },
+          "network_metrics": {
+            "entities_expected": 6,
+            "entities_observed": 6,
+            "min_unique_dates_per_entity": 4018,
+            "max_unique_dates_per_entity": 4018,
+            "entities_with_incomplete_daily_coverage": 0
+          }
+        }
+      },
+      "risk": "No current join-coverage or calendar-gap remediation is required.",
+      "recommended_step3_action": "Preserve these checks as regression tests."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+pue:
+  canonical_term: Power Usage Effectiveness
+  synonyms: [PUE, energy efficiency, facility efficiency]
+  interpretation: Lower PUE is generally better.
+
+downtime:
+  canonical_term: Downtime
+  synonyms: [outage time, unavailable time, service downtime]
+  source: uptime_incidents.downtime_minutes
+
+incident:
+  canonical_term: Incident
+  synonyms: [failure, outage, operational event]
+
+cpu_utilization:
+  canonical_term: CPU Utilization
+  synonyms: [CPU usage, processor utilization, compute utilization]
+
+network_latency:
+  canonical_term: Network Latency
+  synonyms: [latency, delay, response delay]
+
+packet_loss:
+  canonical_term: Packet Loss
+  synonyms: [packet drop, dropped packets]
+
+cooling_cost:
+  canonical_term: Cooling Cost
+  synonyms: [cooling expense, HVAC cost, cooling spend]

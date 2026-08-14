@@ -1,0 +1,46 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_tmp/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated/runtime artifacts
+database/*.db
+database/*.db-*
+logs/*
+!logs/.gitkeep
+evaluation/results/*
+!evaluation/results/.gitkeep
+
+# Evaluation answers must never be available to production/RAG code.
+evaluation/private/
+
+# Large dataset files stay local; metadata and documentation remain versioned.
+data/raw/*.csv
+data/processed/*.csv
+data/cleaned_generated/*.csv
+
+# Editors and operating system
+.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Power BI local/cache artifacts
+*.pbix.autosave
+*.pbit.autosave
+**/.pbi/
+*.pbix

@@ -1,0 +1,119 @@
+table _Measures
+
+	column Placeholder
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: [Placeholder]
+
+	measure 'Server Count' = DISTINCTCOUNT(DimServer[server_id])
+		formatString: #,0
+		displayFolder: Inventory
+
+	measure 'Active Server Count' = CALCULATE(DISTINCTCOUNT(DimServer[server_id]), KEEPFILTERS(DimServer[status] = "active"))
+		formatString: #,0
+		displayFolder: Inventory
+
+	measure 'Average PUE' = AVERAGE(FactPowerMetrics[pue])
+		formatString: 0.000
+		displayFolder: Energy
+
+	measure 'Total Power Draw' = SUM(FactPowerMetrics[power_draw_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total IT Load' = SUM(FactPowerMetrics[it_load_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total Cooling Power' = SUM(FactPowerMetrics[cooling_power_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total Cooling Cost' = SUM(FactPowerMetrics[cooling_cost])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Average CPU Utilization' = AVERAGE(FactServerMetrics[cpu_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Memory Utilization' = AVERAGE(FactServerMetrics[memory_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Disk Utilization' = AVERAGE(FactServerMetrics[disk_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Server Network Utilization' = AVERAGE(FactServerMetrics[network_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Network Latency' = AVERAGE(FactNetworkMetrics[latency_ms])
+		formatString: 0.00
+		displayFolder: Network
+
+	measure 'Average Packet Loss' = AVERAGE(FactNetworkMetrics[packet_loss_pct])
+		formatString: 0.000
+		displayFolder: Network
+
+	measure 'Average Throughput' = AVERAGE(FactNetworkMetrics[throughput_mbps])
+		formatString: #,0.00
+		displayFolder: Network
+
+	measure 'Network Availability' = AVERAGE(FactNetworkMetrics[network_availability_pct])
+		formatString: 0.0000
+		displayFolder: Network
+
+	measure 'Total Downtime' = SUM(FactIncidents[downtime_minutes])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Incident Count' = DISTINCTCOUNT(FactIncidents[incident_id])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Downtime per Server' = DIVIDE([Total Downtime], [Server Count])
+		formatString: 0.00
+		displayFolder: Reliability
+
+	measure 'Incident Rate per 100 Servers' = DIVIDE([Incident Count], [Server Count]) * 100
+		formatString: 0.00
+		displayFolder: Reliability
+
+	measure 'Visible Days' = DISTINCTCOUNT(DimDate[Date])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Operational Availability' = VAR PotentialServerMinutes = [Server Count] * [Visible Days] * 1440 RETURN 100 * (1 - DIVIDE([Total Downtime], PotentialServerMinutes))
+		formatString: 0.0000
+		displayFolder: Reliability
+
+	measure 'Previous Year Average PUE' = CALCULATE([Average PUE], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: 0.000
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year PUE Change' = DIVIDE([Average PUE] - [Previous Year Average PUE], [Previous Year Average PUE])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	measure 'Previous Year Cooling Cost' = CALCULATE([Total Cooling Cost], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: #,0.00
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year Cooling Cost Change' = DIVIDE([Total Cooling Cost] - [Previous Year Cooling Cost], [Previous Year Cooling Cost])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	measure 'Previous Year Downtime' = CALCULATE([Total Downtime], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: #,0
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year Downtime Change' = DIVIDE([Total Downtime] - [Previous Year Downtime], [Previous Year Downtime])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	partition _Measures = calculated
+		mode: import
+		source = DATATABLE("Placeholder", STRING, {{"Measures"}})

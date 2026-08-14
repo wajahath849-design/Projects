@@ -1,0 +1,44 @@
+terms:
+  facility:
+    definition: A physical data-center site represented by one facilities row.
+    synonyms: [data center, datacenter, site, location]
+  server:
+    definition: A physical or logical server asset assigned to one facility.
+    synonyms: [host, machine, node]
+  pue:
+    canonical_term: Power Usage Effectiveness
+    definition: Total facility power divided by IT equipment power; lower is generally better.
+    synonyms: [PUE, energy efficiency, facility efficiency]
+    caveat: Average PUE is the arithmetic mean of daily PUE rows under the active filter context.
+  downtime:
+    definition: Recorded unavailable time from resolved incidents.
+    synonyms: [outage time, unavailable time, service downtime]
+    source: uptime_incidents.downtime_minutes
+  availability:
+    definition: Percentage of potential server-minutes not recorded as incident downtime.
+    synonyms: [operational availability, uptime percentage]
+    caveat: Distinct from network availability, which is measured directly in network_metrics.
+  network_availability:
+    definition: Average measured network availability percentage.
+    synonyms: [network uptime, connectivity availability]
+    source: network_metrics.network_availability_pct
+  incident:
+    definition: A recorded operational event with a start, end, severity, root cause, and downtime.
+    synonyms: [failure, outage, operational event]
+  active_server:
+    definition: A server whose canonical status equals active in the inventory snapshot.
+    synonyms: [online server, active host]
+  cpu_utilization:
+    definition: Average daily percentage of CPU capacity used.
+    synonyms: [CPU usage, processor utilization, compute utilization]
+  network_latency:
+    definition: Average measured round-trip or response delay in milliseconds.
+    synonyms: [latency, delay, response delay]
+  packet_loss:
+    definition: Percentage of transmitted packets not successfully delivered.
+    synonyms: [packet drop, dropped packets]
+  cooling_cost:
+    definition: Synthetic currency-equivalent cooling expense.
+    synonyms: [cooling expense, HVAC cost, cooling spend]
+    caveat: No real currency is assigned and no real-company cost claim is valid.
+

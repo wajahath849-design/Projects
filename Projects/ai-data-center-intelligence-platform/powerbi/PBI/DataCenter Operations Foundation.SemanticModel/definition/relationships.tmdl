@@ -1,0 +1,40 @@
+relationship rel_facility_server
+	fromColumn: DimServer.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_power
+	fromColumn: FactPowerMetrics.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_network
+	fromColumn: FactNetworkMetrics.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_incidents
+	fromColumn: FactIncidents.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_server_metrics
+	fromColumn: FactServerMetrics.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_server_incidents
+	isActive: false
+	fromColumn: FactIncidents.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_server_metrics
+	fromColumn: FactServerMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_power
+	fromColumn: FactPowerMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_network
+	fromColumn: FactNetworkMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_incidents
+	fromColumn: FactIncidents.incident_date
+	toColumn: DimDate.Date

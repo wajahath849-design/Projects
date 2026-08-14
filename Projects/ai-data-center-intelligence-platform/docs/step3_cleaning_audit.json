@@ -1,0 +1,329 @@
+{
+  "rules_version": "1.0",
+  "generated_at_utc": "2026-08-14T12:09:03.624467+00:00",
+  "input_directory": "data/raw",
+  "rows_before": {
+    "facilities": 6,
+    "servers": 430,
+    "server_metrics": 1728054,
+    "power_metrics": 24123,
+    "network_metrics": 24121,
+    "uptime_incidents": 1158
+  },
+  "duplicates_removed": {
+    "server_metrics": 314,
+    "power_metrics": 15,
+    "network_metrics": 13
+  },
+  "categories_normalized": {
+    "servers.status": 6,
+    "uptime_incidents.status": 24
+  },
+  "invalid_values_marked_missing": {
+    "server_metrics.cpu_utilization_pct": 343,
+    "server_metrics.memory_utilization_pct": 343,
+    "server_metrics.disk_utilization_pct": 0,
+    "server_metrics.network_utilization_pct": 0,
+    "power_metrics.pue": 25,
+    "network_metrics.packet_loss_pct": 25
+  },
+  "values_imputed": {
+    "server_metrics.cpu_utilization_pct": 685,
+    "server_metrics.memory_utilization_pct": 696,
+    "server_metrics.disk_utilization_pct": 358,
+    "server_metrics.network_utilization_pct": 320,
+    "power_metrics.power_draw_kw": 0,
+    "power_metrics.it_load_kw": 0,
+    "power_metrics.cooling_power_kw": 22,
+    "power_metrics.pue": 57,
+    "power_metrics.cooling_cost": 18,
+    "network_metrics.bandwidth_utilization_pct": 0,
+    "network_metrics.latency_ms": 36,
+    "network_metrics.packet_loss_pct": 57,
+    "network_metrics.throughput_mbps": 24,
+    "network_metrics.network_availability_pct": 0
+  },
+  "rows_after": {
+    "facilities": 6,
+    "servers": 430,
+    "server_metrics": 1727740,
+    "power_metrics": 24108,
+    "network_metrics": 24108,
+    "uptime_incidents": 1158
+  },
+  "output_directory": "data/cleaned_generated",
+  "baseline_comparison": {
+    "facilities": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "facility_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "facility_name": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "city": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "country": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "region": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "capacity_mw": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "rack_capacity": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "build_year": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "commission_date": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        }
+      }
+    },
+    "servers": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "server_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "facility_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "rack_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "server_type": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "cpu_cores": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "memory_gb": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "install_date": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "status": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        }
+      }
+    },
+    "server_metrics": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "metric_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "server_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "timestamp": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "cpu_utilization_pct": {
+          "mismatched_cells": 685,
+          "match_rate_pct": 99.960353,
+          "mae_on_mismatches": 5.471343,
+          "max_abs_difference": 25.69
+        },
+        "memory_utilization_pct": {
+          "mismatched_cells": 696,
+          "match_rate_pct": 99.959716,
+          "mae_on_mismatches": 7.744756,
+          "max_abs_difference": 32.92
+        },
+        "disk_utilization_pct": {
+          "mismatched_cells": 358,
+          "match_rate_pct": 99.979279,
+          "mae_on_mismatches": 6.818911,
+          "max_abs_difference": 32.89
+        },
+        "network_utilization_pct": {
+          "mismatched_cells": 320,
+          "match_rate_pct": 99.981479,
+          "mae_on_mismatches": 7.035406,
+          "max_abs_difference": 29.38
+        }
+      }
+    },
+    "power_metrics": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "metric_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "facility_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "timestamp": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "power_draw_kw": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "it_load_kw": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "cooling_power_kw": {
+          "mismatched_cells": 22,
+          "match_rate_pct": 99.908744,
+          "mae_on_mismatches": 78.637727,
+          "max_abs_difference": 293.88
+        },
+        "pue": {
+          "mismatched_cells": 53,
+          "match_rate_pct": 99.780156,
+          "mae_on_mismatches": 0.013642,
+          "max_abs_difference": 0.044
+        },
+        "cooling_cost": {
+          "mismatched_cells": 18,
+          "match_rate_pct": 99.925336,
+          "mae_on_mismatches": 237.326667,
+          "max_abs_difference": 517.41
+        }
+      }
+    },
+    "network_metrics": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "metric_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "facility_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "timestamp": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "bandwidth_utilization_pct": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "latency_ms": {
+          "mismatched_cells": 36,
+          "match_rate_pct": 99.850672,
+          "mae_on_mismatches": 1.153056,
+          "max_abs_difference": 3.82
+        },
+        "packet_loss_pct": {
+          "mismatched_cells": 56,
+          "match_rate_pct": 99.767712,
+          "mae_on_mismatches": 0.02875,
+          "max_abs_difference": 0.107
+        },
+        "throughput_mbps": {
+          "mismatched_cells": 24,
+          "match_rate_pct": 99.900448,
+          "mae_on_mismatches": 396.276667,
+          "max_abs_difference": 1157.11
+        },
+        "network_availability_pct": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        }
+      }
+    },
+    "uptime_incidents": {
+      "row_count_equal": true,
+      "column_order_equal": true,
+      "columns": {
+        "incident_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "facility_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "server_id": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "start_time": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "end_time": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "downtime_minutes": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0,
+          "mae_on_mismatches": 0.0,
+          "max_abs_difference": 0.0
+        },
+        "severity": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "root_cause": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        },
+        "status": {
+          "mismatched_cells": 0,
+          "match_rate_pct": 100.0
+        }
+      }
+    }
+  }
+}

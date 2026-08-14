@@ -1,0 +1,88 @@
+table DimFacility
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity_mw
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: capacity_mw
+
+		annotation SummarizationSetBy = Automatic
+
+	column rack_capacity
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: rack_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column build_year
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: build_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column commission_date
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: commission_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimFacility = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/facilities.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"facility_id", type text}, {"facility_name", type text}, {"city", type text},
+				        {"country", type text}, {"region", type text}, {"capacity_mw", type number},
+				        {"rack_capacity", Int64.Type}, {"build_year", Int64.Type}, {"commission_date", type date}
+				    })
+				in
+				    Typed
+

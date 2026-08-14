@@ -1,0 +1,67 @@
+average_pue:
+  display_name: Average PUE
+  source_table: power_metrics
+  source_column: pue
+  aggregation: average
+  unit: ratio
+  lower_is_better: true
+
+total_downtime:
+  display_name: Total Downtime
+  source_table: uptime_incidents
+  source_column: downtime_minutes
+  aggregation: sum
+  unit: minutes
+  lower_is_better: true
+
+incident_count:
+  display_name: Incident Count
+  source_table: uptime_incidents
+  aggregation: count
+  key_column: incident_id
+  unit: incidents
+  lower_is_better: true
+
+average_cpu_utilization:
+  display_name: Average CPU Utilization
+  source_table: server_metrics
+  source_column: cpu_utilization_pct
+  aggregation: average
+  unit: percent
+
+average_memory_utilization:
+  display_name: Average Memory Utilization
+  source_table: server_metrics
+  source_column: memory_utilization_pct
+  aggregation: average
+  unit: percent
+
+total_cooling_cost:
+  display_name: Total Cooling Cost
+  source_table: power_metrics
+  source_column: cooling_cost
+  aggregation: sum
+  unit: currency_equivalent
+
+average_network_latency:
+  display_name: Average Network Latency
+  source_table: network_metrics
+  source_column: latency_ms
+  aggregation: average
+  unit: milliseconds
+  lower_is_better: true
+
+average_packet_loss:
+  display_name: Average Packet Loss
+  source_table: network_metrics
+  source_column: packet_loss_pct
+  aggregation: average
+  unit: percent
+  lower_is_better: true
+
+downtime_per_server:
+  display_name: Downtime per Server
+  numerator: total_downtime
+  denominator: server_count
+  unit: minutes_per_server
+  lower_is_better: true

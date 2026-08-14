@@ -1,0 +1,80 @@
+table FactPowerMetrics
+
+	column metric_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: metric_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column power_draw_kw
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: power_draw_kw
+
+		annotation SummarizationSetBy = Automatic
+
+	column it_load_kw
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: it_load_kw
+
+		annotation SummarizationSetBy = Automatic
+
+	column cooling_power_kw
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: cooling_power_kw
+
+		annotation SummarizationSetBy = Automatic
+
+	column pue
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: pue
+
+		annotation SummarizationSetBy = Automatic
+
+	column cooling_cost
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: cooling_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactPowerMetrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/power_metrics.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"metric_id", type text}, {"facility_id", type text}, {"timestamp", type date},
+				        {"power_draw_kw", type number}, {"it_load_kw", type number},
+				        {"cooling_power_kw", type number}, {"pue", type number}, {"cooling_cost", type number}
+				    })
+				in
+				    Typed
+

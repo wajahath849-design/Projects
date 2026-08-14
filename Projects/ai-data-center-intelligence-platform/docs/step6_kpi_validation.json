@@ -1,0 +1,116 @@
+{
+  "generated_at_utc": "2026-08-14T13:40:33.600273+00:00",
+  "database": "database/datacenter.db",
+  "source_data": "data/processed",
+  "all_passed": true,
+  "metrics": {
+    "average_pue": {
+      "sql_value": 1.4762049527127925,
+      "python_value": 1.4762049527127925,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "total_power_draw": {
+      "sql_value": 118172953.04,
+      "python_value": 118172953.03999999,
+      "absolute_difference": 1.4901161193847656e-08,
+      "passed": true
+    },
+    "total_cooling_cost": {
+      "sql_value": 102313662.66,
+      "python_value": 102313662.66,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "total_downtime": {
+      "sql_value": 73559.0,
+      "python_value": 73559.0,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "incident_count": {
+      "sql_value": 1158.0,
+      "python_value": 1158.0,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "server_count": {
+      "sql_value": 430.0,
+      "python_value": 430.0,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "active_server_count": {
+      "sql_value": 407.0,
+      "python_value": 407.0,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "average_cpu_utilization": {
+      "sql_value": 48.7434278595159,
+      "python_value": 48.74342785951591,
+      "absolute_difference": 1.4210854715202004e-14,
+      "passed": true
+    },
+    "average_memory_utilization": {
+      "sql_value": 48.1207377325292,
+      "python_value": 48.120737732529186,
+      "absolute_difference": 1.4210854715202004e-14,
+      "passed": true
+    },
+    "average_network_latency": {
+      "sql_value": 10.896964078314253,
+      "python_value": 10.896964078314253,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "average_packet_loss": {
+      "sql_value": 0.05649182843869255,
+      "python_value": 0.05649182843869255,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "network_availability": {
+      "sql_value": 99.96110303218849,
+      "python_value": 99.96110303218849,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "downtime_per_server": {
+      "sql_value": 171.06744186046512,
+      "python_value": 171.06744186046512,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "incident_rate": {
+      "sql_value": 269.30232558139534,
+      "python_value": 269.30232558139534,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "operational_availability": {
+      "sql_value": 99.99704338390679,
+      "python_value": 99.99704338390679,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "yoy_pue_change": {
+      "sql_value": -1.0301639251074168,
+      "python_value": -1.0301639251074168,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    "yoy_cooling_cost_change": {
+      "sql_value": 0.23530133873449544,
+      "python_value": 0.23530133873451445,
+      "absolute_difference": 1.9012569296705806e-14,
+      "passed": true
+    },
+    "yoy_downtime_change": {
+      "sql_value": 34.494509655433546,
+      "python_value": 34.494509655433546,
+      "absolute_difference": 0.0,
+      "passed": true
+    }
+  }
+}

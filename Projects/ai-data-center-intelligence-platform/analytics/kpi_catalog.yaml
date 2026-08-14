@@ -1,0 +1,33 @@
+version: 1.0.0
+audience: data-center operational managers and portfolio reviewers
+review_cadence: monthly operational review with daily drill-down and annual trend comparison
+
+primary_kpis:
+  - average_pue
+  - operational_availability
+  - total_downtime
+  - network_availability
+
+drivers:
+  energy: [total_power_draw, total_cooling_cost, yoy_pue_change, yoy_cooling_cost_change]
+  reliability: [incident_count, incident_rate, downtime_per_server, yoy_downtime_change]
+  infrastructure: [active_server_count, average_cpu_utilization, average_memory_utilization]
+  network: [average_network_latency, average_packet_loss]
+
+guardrails:
+  - id: denominator_consistency
+    rule: AI SQL, Python validation, and DAX must use the same source, aggregation, filter context, and unit.
+  - id: date_anchor
+    rule: Relative periods use the latest loaded dataset date, not the current wall-clock date.
+  - id: availability_separation
+    rule: Operational Availability and Network Availability must never be presented as the same metric.
+  - id: synthetic_cost_label
+    rule: Cooling cost must be labeled synthetic currency-equivalent and must not imply real-company impact.
+  - id: no_unmeasured_targets
+    rule: No KPI target is asserted until a target-setting exercise is completed with an explicit baseline and operational owner.
+
+dimensions:
+  common: [date, facility, region]
+  server: [server, rack, server_type, server_status]
+  incident: [severity, root_cause]
+

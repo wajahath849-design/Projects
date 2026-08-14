@@ -1,0 +1,17 @@
+{
+  "raw_injected_issues": {
+    "servers_inconsistent_status_values": 6,
+    "server_metrics_missing_values": 1373,
+    "server_metrics_outlier_values": 686,
+    "server_metrics_duplicate_rows": 314,
+    "power_metrics_missing_values": 72,
+    "power_metrics_outlier_values": 25,
+    "power_metrics_duplicate_rows": 15,
+    "network_metrics_missing_values": 92,
+    "network_metrics_outlier_values": 25,
+    "network_metrics_duplicate_rows": 13,
+    "incidents_inconsistent_status_values": 24
+  },
+  "processed_dataset": "Canonical cleaned version.",
+  "purpose": "Use raw for ETL/data-quality demonstrations and processed as the trusted source."
+}

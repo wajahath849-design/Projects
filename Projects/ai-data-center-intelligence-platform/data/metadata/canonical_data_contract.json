@@ -1,0 +1,29 @@
+{
+  "dataset_name": "AI Data Center Operations Canonical Model",
+  "version": "2.0",
+  "synthetic": true,
+  "period": {
+    "start": "2015-01-01",
+    "end": "2025-12-31",
+    "calendar_years_inclusive": 11
+  },
+  "compatibility_rule": "External datasets can activate only the modules whose required canonical fields can be mapped. Missing modules must disable gracefully rather than break the platform.",
+  "modules": {
+    "inventory": [
+      "facilities",
+      "servers"
+    ],
+    "server_performance": [
+      "server_metrics"
+    ],
+    "energy": [
+      "power_metrics"
+    ],
+    "network": [
+      "network_metrics"
+    ],
+    "reliability": [
+      "uptime_incidents"
+    ]
+  }
+}

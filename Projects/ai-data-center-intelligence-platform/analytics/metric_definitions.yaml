@@ -1,0 +1,114 @@
+version: 1.0.0
+date_policy:
+  dataset_anchor: latest available timestamp in loaded data
+  incident_date: uptime_incidents.start_time
+  fact_dates: [server_metrics.timestamp, power_metrics.timestamp, network_metrics.timestamp]
+null_policy: Canonical inputs are non-null; DIVIDE-like ratios return null when the denominator is zero.
+
+metrics:
+  average_pue:
+    display_name: Average PUE
+    source: power_metrics.pue
+    aggregation: average
+    unit: ratio
+    direction: lower_is_better
+  total_power_draw:
+    display_name: Total Power Draw
+    source: power_metrics.power_draw_kw
+    aggregation: sum
+    unit: kWh_equivalent_daily_sum
+    caveat: Daily kW observations are summed for comparative analytics; do not label as metered kWh without interval semantics.
+  total_cooling_cost:
+    display_name: Total Cooling Cost
+    source: power_metrics.cooling_cost
+    aggregation: sum
+    unit: currency_equivalent
+    direction: lower_is_better
+  total_downtime:
+    display_name: Total Downtime
+    source: uptime_incidents.downtime_minutes
+    aggregation: sum
+    unit: minutes
+    direction: lower_is_better
+  incident_count:
+    display_name: Incident Count
+    source: uptime_incidents.incident_id
+    aggregation: distinct_count
+    unit: incidents
+    direction: lower_is_better
+  server_count:
+    display_name: Server Count
+    source: servers.server_id
+    aggregation: distinct_count
+    unit: servers
+  active_server_count:
+    display_name: Active Server Count
+    source: servers.server_id
+    aggregation: distinct_count
+    filter: servers.status = active
+    unit: servers
+  average_cpu_utilization:
+    display_name: Average CPU Utilization
+    source: server_metrics.cpu_utilization_pct
+    aggregation: average
+    unit: percent
+  average_memory_utilization:
+    display_name: Average Memory Utilization
+    source: server_metrics.memory_utilization_pct
+    aggregation: average
+    unit: percent
+  average_network_latency:
+    display_name: Average Network Latency
+    source: network_metrics.latency_ms
+    aggregation: average
+    unit: milliseconds
+    direction: lower_is_better
+  average_packet_loss:
+    display_name: Average Packet Loss
+    source: network_metrics.packet_loss_pct
+    aggregation: average
+    unit: percent
+    direction: lower_is_better
+  network_availability:
+    display_name: Network Availability
+    source: network_metrics.network_availability_pct
+    aggregation: average
+    unit: percent
+    direction: higher_is_better
+  downtime_per_server:
+    display_name: Downtime per Server
+    numerator: total_downtime
+    denominator: server_count
+    unit: minutes_per_server
+    direction: lower_is_better
+  incident_rate:
+    display_name: Incident Rate per 100 Servers
+    numerator: incident_count
+    denominator: server_count
+    multiplier: 100
+    unit: incidents_per_100_servers
+    direction: lower_is_better
+  operational_availability:
+    display_name: Operational Availability
+    formula: 100 * (1 - total_downtime / (server_count * visible_days * 1440))
+    unit: percent
+    direction: higher_is_better
+    caveat: Uses incident downtime and potential server-minutes; it is not network availability.
+  yoy_pue_change:
+    display_name: Year-over-Year PUE Change
+    base_metric: average_pue
+    comparison: previous_calendar_year
+    unit: percent_change
+    direction: lower_is_better
+  yoy_cooling_cost_change:
+    display_name: Year-over-Year Cooling Cost Change
+    base_metric: total_cooling_cost
+    comparison: previous_calendar_year
+    unit: percent_change
+  yoy_downtime_change:
+    display_name: Year-over-Year Downtime Change
+    base_metric: total_downtime
+    comparison: previous_calendar_year
+    unit: percent_change
+    direction: lower_is_better
+

@@ -1,0 +1,97 @@
+{
+  "facility_id": [
+    "facility_id",
+    "datacenter_id",
+    "data_center_id",
+    "dc_id",
+    "site_id",
+    "location_id"
+  ],
+  "facility_name": [
+    "facility_name",
+    "datacenter_name",
+    "data_center_name",
+    "site_name",
+    "dc_name"
+  ],
+  "server_id": [
+    "server_id",
+    "host_id",
+    "machine_id",
+    "node_id",
+    "vm_id"
+  ],
+  "timestamp": [
+    "timestamp",
+    "time",
+    "datetime",
+    "date",
+    "event_time",
+    "measurement_time"
+  ],
+  "cpu_utilization_pct": [
+    "cpu_utilization_pct",
+    "cpu_pct",
+    "cpu_usage",
+    "cpu_usage_pct",
+    "processor_utilization"
+  ],
+  "memory_utilization_pct": [
+    "memory_utilization_pct",
+    "memory_pct",
+    "memory_usage",
+    "ram_usage_pct"
+  ],
+  "pue": [
+    "pue",
+    "power_usage_effectiveness"
+  ],
+  "power_draw_kw": [
+    "power_draw_kw",
+    "total_power_kw",
+    "facility_power_kw",
+    "power_kw"
+  ],
+  "it_load_kw": [
+    "it_load_kw",
+    "it_power_kw",
+    "compute_power_kw"
+  ],
+  "cooling_power_kw": [
+    "cooling_power_kw",
+    "cooling_kw",
+    "hvac_power_kw"
+  ],
+  "cooling_cost": [
+    "cooling_cost",
+    "cooling_expense",
+    "hvac_cost"
+  ],
+  "latency_ms": [
+    "latency_ms",
+    "network_latency_ms",
+    "delay_ms"
+  ],
+  "packet_loss_pct": [
+    "packet_loss_pct",
+    "packet_loss",
+    "loss_pct"
+  ],
+  "throughput_mbps": [
+    "throughput_mbps",
+    "network_throughput_mbps",
+    "mbps"
+  ],
+  "downtime_minutes": [
+    "downtime_minutes",
+    "downtime_min",
+    "outage_minutes",
+    "unavailable_minutes"
+  ],
+  "root_cause": [
+    "root_cause",
+    "cause",
+    "incident_cause",
+    "failure_type"
+  ]
+}

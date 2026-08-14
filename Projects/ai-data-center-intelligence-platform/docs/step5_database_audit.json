@@ -1,0 +1,44 @@
+{
+  "generated_at_utc": "2026-08-14T13:31:11.370435+00:00",
+  "source_directory": "data/processed",
+  "database_path": "database/datacenter.db",
+  "loaded_rows": {
+    "facilities": 6,
+    "servers": 430,
+    "server_metrics": 1727740,
+    "power_metrics": 24108,
+    "network_metrics": 24108,
+    "uptime_incidents": 1158
+  },
+  "validation": {
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "row_counts": {
+      "facilities": 6,
+      "servers": 430,
+      "server_metrics": 1727740,
+      "power_metrics": 24108,
+      "network_metrics": 24108,
+      "uptime_incidents": 1158
+    },
+    "views": [
+      "vw_facility_daily_performance",
+      "vw_facility_reliability",
+      "vw_incident_summary",
+      "vw_monthly_energy_summary",
+      "vw_server_utilization"
+    ],
+    "indexes": [
+      "idx_incidents_facility_start",
+      "idx_incidents_root_cause",
+      "idx_incidents_server_start",
+      "idx_incidents_severity",
+      "idx_network_metrics_timestamp",
+      "idx_power_metrics_timestamp",
+      "idx_server_metrics_timestamp",
+      "idx_servers_facility",
+      "idx_servers_facility_status"
+    ]
+  },
+  "database_bytes": 283336704
+}

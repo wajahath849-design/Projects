@@ -1,0 +1,148 @@
+{
+  "contract_name": "AI Data Center Operations Canonical Model",
+  "contract_version": "2.1.0",
+  "source_contract_version": "2.0",
+  "synthetic": true,
+  "operational_period": {
+    "start": "2015-01-01",
+    "end": "2025-12-31",
+    "relative_date_anchor": "latest_available_dataset_timestamp"
+  },
+  "compatibility_policy": {
+    "partial_datasets_allowed": true,
+    "missing_optional_modules_are_errors": false,
+    "canonical_output_requires_exact_column_names": true,
+    "evaluation_paths_forbidden": ["evaluation", "evaluation/private"]
+  },
+  "modules": {
+    "inventory": {
+      "required_tables": ["facilities", "servers"],
+      "description": "Facility and server inventory analysis."
+    },
+    "server_performance": {
+      "required_tables": ["servers", "server_metrics"],
+      "description": "Server utilization and infrastructure performance."
+    },
+    "energy": {
+      "required_tables": ["facilities", "power_metrics"],
+      "description": "Power, PUE, cooling, and energy-cost analysis."
+    },
+    "network": {
+      "required_tables": ["facilities", "network_metrics"],
+      "description": "Network demand, latency, packet loss, throughput, and availability."
+    },
+    "reliability": {
+      "required_tables": ["facilities", "servers", "uptime_incidents"],
+      "description": "Incident, downtime, severity, and root-cause analysis."
+    }
+  },
+  "tables": {
+    "facilities": {
+      "description": "One canonical record per physical data-center facility.",
+      "grain": ["facility_id"],
+      "primary_key": ["facility_id"],
+      "foreign_keys": [],
+      "recommended_indexes": [["country"], ["region"]],
+      "columns": {
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable facility business identifier."},
+        "facility_name": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Human-readable facility name."},
+        "city": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Facility city."},
+        "country": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Facility country."},
+        "region": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Operational region."},
+        "capacity_mw": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "MW", "external_required": false, "description": "Designed facility power capacity."},
+        "rack_capacity": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 1, "unit": "racks", "external_required": false, "description": "Designed rack capacity."},
+        "build_year": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 1950, "external_required": false, "description": "Facility construction year."},
+        "commission_date": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Date the facility entered service."}
+      }
+    },
+    "servers": {
+      "description": "One canonical record per server asset.",
+      "grain": ["server_id"],
+      "primary_key": ["server_id"],
+      "foreign_keys": [{"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}],
+      "recommended_indexes": [["facility_id"], ["facility_id", "status"], ["server_type"]],
+      "columns": {
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable server business identifier."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Owning facility identifier."},
+        "rack_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Rack identifier within a facility."},
+        "server_type": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Server workload or hardware class."},
+        "cpu_cores": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 1, "unit": "cores", "external_required": false, "description": "Installed logical CPU-core capacity."},
+        "memory_gb": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 1, "unit": "GB", "external_required": false, "description": "Installed memory capacity."},
+        "install_date": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Server installation date."},
+        "status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["active", "maintenance", "decommissioned"], "external_required": false, "description": "Canonical lifecycle status."}
+      }
+    },
+    "server_metrics": {
+      "description": "Daily utilization measurements for each server.",
+      "grain": ["server_id", "timestamp"],
+      "primary_key": ["metric_id"],
+      "foreign_keys": [{"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]}],
+      "recommended_indexes": [["server_id", "timestamp"], ["timestamp"]],
+      "columns": {
+        "metric_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "generate_if_missing": true, "description": "Canonical measurement identifier."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Measured server identifier."},
+        "timestamp": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Daily measurement date."},
+        "cpu_utilization_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Average daily CPU utilization."},
+        "memory_utilization_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Average daily memory utilization."},
+        "disk_utilization_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Average daily storage utilization."},
+        "network_utilization_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Average daily server-network utilization."}
+      }
+    },
+    "power_metrics": {
+      "description": "Daily energy and cooling measurements for each facility.",
+      "grain": ["facility_id", "timestamp"],
+      "primary_key": ["metric_id"],
+      "foreign_keys": [{"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}],
+      "recommended_indexes": [["facility_id", "timestamp"], ["timestamp"]],
+      "columns": {
+        "metric_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "generate_if_missing": true, "description": "Canonical power-measurement identifier."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Measured facility identifier."},
+        "timestamp": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Daily measurement date."},
+        "power_draw_kw": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "kW", "external_required": false, "description": "Total facility power draw."},
+        "it_load_kw": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "kW", "external_required": false, "description": "Power used by IT equipment."},
+        "cooling_power_kw": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "kW", "external_required": false, "description": "Power used by cooling systems."},
+        "pue": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 1, "maximum": 2, "unit": "ratio", "external_required": false, "description": "Power Usage Effectiveness."},
+        "cooling_cost": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "currency_equivalent", "external_required": false, "description": "Synthetic daily cooling cost."}
+      }
+    },
+    "network_metrics": {
+      "description": "Daily facility-level network performance measurements.",
+      "grain": ["facility_id", "timestamp"],
+      "primary_key": ["metric_id"],
+      "foreign_keys": [{"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}],
+      "recommended_indexes": [["facility_id", "timestamp"], ["timestamp"]],
+      "columns": {
+        "metric_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "generate_if_missing": true, "description": "Canonical network-measurement identifier."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Measured facility identifier."},
+        "timestamp": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Daily measurement date."},
+        "bandwidth_utilization_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Allocated bandwidth in use."},
+        "latency_ms": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "milliseconds", "external_required": false, "description": "Average network latency."},
+        "packet_loss_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 5, "unit": "percent", "external_required": false, "description": "Average packet loss."},
+        "throughput_mbps": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "unit": "Mbps", "external_required": false, "description": "Average achieved throughput."},
+        "network_availability_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "unit": "percent", "external_required": false, "description": "Network availability percentage."}
+      }
+    },
+    "uptime_incidents": {
+      "description": "One record per resolved operational incident affecting a server and facility.",
+      "grain": ["incident_id"],
+      "primary_key": ["incident_id"],
+      "foreign_keys": [
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]},
+        {"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]}
+      ],
+      "recommended_indexes": [["facility_id", "start_time"], ["server_id", "start_time"], ["severity"], ["root_cause"]],
+      "columns": {
+        "incident_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable incident identifier."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected facility identifier."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected server identifier."},
+        "start_time": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Incident start timestamp."},
+        "end_time": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Incident end timestamp."},
+        "downtime_minutes": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "unit": "minutes", "external_required": true, "description": "Elapsed unavailable time."},
+        "severity": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["low", "medium", "high", "critical"], "external_required": false, "description": "Canonical incident severity."},
+        "root_cause": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Reported incident cause category."},
+        "status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["resolved"], "external_required": false, "description": "Canonical incident state for this historical dataset."}
+      }
+    }
+  }
+}
+

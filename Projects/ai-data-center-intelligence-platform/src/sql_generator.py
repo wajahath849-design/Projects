@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 
 
@@ -12,20 +14,37 @@ class GeneratedSQL:
     output_tokens: int | None = None
 
 
-class OpenAISQLGenerator:
-    """Generate SQL with the OpenAI Responses API and strict structured output."""
+class OllamaSQLGenerator:
+    """Generate SQL locally with Ollama and a strict JSON response schema."""
 
-    def __init__(self, api_key: str, model: str, client=None) -> None:
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY is required for OpenAI SQL generation")
+    def __init__(self, host: str, model: str, client=None) -> None:
         if client is None:
             try:
-                from openai import OpenAI
+                from ollama import Client
             except ImportError as error:
-                raise RuntimeError("Install the official openai package") from error
-            client = OpenAI(api_key=api_key)
+                raise RuntimeError("Install the official ollama Python package") from error
+            client = Client(host=host)
         self.client = client
+        self.host = host.rstrip("/")
         self.model = model
+
+    @staticmethod
+    def server_available(host: str, timeout: float = 0.5) -> bool:
+        try:
+            with urllib.request.urlopen(f"{host.rstrip('/')}/api/tags", timeout=timeout) as response:
+                return response.status == 200
+        except (OSError, urllib.error.URLError):
+            return False
+
+    @staticmethod
+    def model_available(host: str, model: str, timeout: float = 0.5) -> bool:
+        try:
+            with urllib.request.urlopen(f"{host.rstrip('/')}/api/tags", timeout=timeout) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            names = {item.get("name") for item in payload.get("models", [])}
+            return model in names or (":" not in model and f"{model}:latest" in names)
+        except (OSError, ValueError, urllib.error.URLError):
+            return False
 
     def generate(self, question: str, context: str) -> GeneratedSQL:
         prompt = f"""Generate one read-only SQLite SELECT query.
@@ -39,30 +58,26 @@ CONTEXT:
 USER QUESTION:
 {question}
 """
-        response = self.client.responses.create(
+        schema = {
+            "type": "object",
+            "properties": {"sql": {"type": "string"}},
+            "required": ["sql"],
+            "additionalProperties": False,
+        }
+        response = self.client.chat(
             model=self.model,
-            input=prompt,
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "generated_sql",
-                    "strict": True,
-                    "schema": {
-                        "type": "object",
-                        "properties": {"sql": {"type": "string"}},
-                        "required": ["sql"],
-                        "additionalProperties": False,
-                    },
-                }
-            },
+            messages=[{"role": "user", "content": f"{prompt}\nJSON SCHEMA:\n{json.dumps(schema)}"}],
+            format=schema,
+            options={"temperature": 0},
         )
-        sql = json.loads(response.output_text)["sql"]
-        usage = getattr(response, "usage", None)
+        message = getattr(response, "message", None)
+        content = getattr(message, "content", None) if message is not None else response["message"]["content"]
+        sql = json.loads(content)["sql"]
         return GeneratedSQL(
             sql,
-            "openai",
-            getattr(usage, "input_tokens", None),
-            getattr(usage, "output_tokens", None),
+            "ollama",
+            getattr(response, "prompt_eval_count", None),
+            getattr(response, "eval_count", None),
         )
 
 
@@ -80,4 +95,4 @@ class VerifiedExampleSQLGenerator:
         for key, sql in self.EXAMPLES.items():
             if key in lower:
                 return GeneratedSQL(sql, "verified_example")
-        raise RuntimeError("No offline verified SQL example matches; configure OpenAI for general questions")
+        raise RuntimeError("No offline verified SQL example matches; start Ollama for general questions")

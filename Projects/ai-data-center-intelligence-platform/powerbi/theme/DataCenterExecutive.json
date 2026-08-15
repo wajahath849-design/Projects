@@ -1,0 +1,13 @@
+{
+  "name": "Data Center Executive",
+  "dataColors": ["#14B8A6", "#38BDF8", "#F59E0B", "#F43F5E", "#8B5CF6", "#94A3B8"],
+  "background": "#F8FAFC",
+  "foreground": "#0F172A",
+  "tableAccent": "#14B8A6",
+  "good": "#16A34A",
+  "neutral": "#F59E0B",
+  "bad": "#DC2626",
+  "maximum": "#0F766E",
+  "center": "#F59E0B",
+  "minimum": "#FEE2E2"
+}

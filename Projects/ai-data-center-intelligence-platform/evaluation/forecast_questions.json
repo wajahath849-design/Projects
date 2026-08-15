@@ -1,0 +1,18 @@
+[
+  {"id":"f01","question":"What will the PUE be in 2030?","metric":"average_pue","expected_behavior":"forecast"},
+  {"id":"f02","question":"What will cooling be in 2030?","metric":"cooling_power_kw","expected_behavior":"forecast"},
+  {"id":"f03","question":"Estimate the price of cooling in 2030.","metric":"cooling_cost","expected_behavior":"forecast"},
+  {"id":"f04","question":"Forecast average power draw in 2030.","metric":"power_draw_kw","expected_behavior":"forecast"},
+  {"id":"f05","question":"What will IT load be in 2030?","metric":"it_load_kw","expected_behavior":"forecast"},
+  {"id":"f06","question":"Predict CPU utilization in 2030.","metric":"cpu_utilization_pct","expected_behavior":"forecast"},
+  {"id":"f07","question":"Predict memory utilization in 2030.","metric":"memory_utilization_pct","expected_behavior":"forecast"},
+  {"id":"f08","question":"Predict disk utilization in 2030.","metric":"disk_utilization_pct","expected_behavior":"forecast"},
+  {"id":"f09","question":"What will bandwidth utilization be in 2030?","metric":"bandwidth_utilization_pct","expected_behavior":"forecast"},
+  {"id":"f10","question":"What will Frankfurt network latency be in 2030?","metric":"latency_ms","expected_behavior":"forecast"},
+  {"id":"f11","question":"Estimate packet loss in 2030.","metric":"packet_loss_pct","expected_behavior":"forecast"},
+  {"id":"f12","question":"Estimate network throughput in 2030.","metric":"throughput_mbps","expected_behavior":"forecast"},
+  {"id":"f13","question":"What will network availability be in 2030?","metric":"network_availability_pct","expected_behavior":"forecast"},
+  {"id":"f14","question":"How much downtime will there be in 2030?","metric":"downtime_minutes","expected_behavior":"forecast"},
+  {"id":"f15","question":"How many incidents will there be in 2030?","metric":"incident_count","expected_behavior":"forecast_with_low_confidence_caveat"},
+  {"id":"f16","question":"What will server count be in 2030?","metric":null,"expected_behavior":"clarify_unsupported_static_metric"}
+]

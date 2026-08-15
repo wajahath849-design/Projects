@@ -101,7 +101,7 @@ No canonical schema change is needed at this stage.
 
 Use CPython 3.12 (64-bit). It is mature, supported by the selected libraries, and the inspected local runtime is Python 3.12.13. Avoid Python 3.14 for this project until all binary dependencies advertise stable support.
 
-The finalized initial stack is Python 3.12, pandas, NumPy, PyYAML, SQLite from Python's standard library, OpenAI's official SDK, python-dotenv, scikit-learn TF-IDF/cosine retrieval initially, sqlglot, Streamlit, Plotly, pytest/pytest-cov, and Ruff. Power BI Desktop and DAX remain a separate consumer layer. LangChain, a vector database, cloud infrastructure, and the optional ML extension are intentionally deferred.
+The finalized stack is Python 3.12, pandas, NumPy, PyYAML, SQLite from Python's standard library, Ollama's Python SDK, python-dotenv, scikit-learn TF-IDF/cosine retrieval initially, sqlglot, Streamlit, Plotly, pytest/pytest-cov, and Ruff. Power BI Desktop and DAX remain a separate consumer layer. LangChain, a vector database, cloud infrastructure, and the optional ML extension are intentionally deferred.
 
 ## Windows PowerShell setup
 
@@ -138,7 +138,7 @@ $Folders | ForEach-Object { New-Item -ItemType Directory -Path (Join-Path $Proje
 cd "C:\Users\admin\Downloads\AI_Image_Classification_Final_Project_Import_Fixed\ai-data-center-intelligence"
 python --version
 python -m pip check
-python -c "import pandas, numpy, yaml, openai, dotenv, sklearn, sqlglot, streamlit, plotly, pytest; print('Environment OK')"
+python -c "import pandas, numpy, yaml, ollama, dotenv, sklearn, sqlglot, streamlit, plotly, pytest; print('Environment OK')"
 python scripts\inspect_dataset.py > step1_profile.json
 ```
 
@@ -148,7 +148,7 @@ Expected results: `Python 3.12.x`, `No broken requirements found.`, `Environment
 
 - pandas/NumPy: tabular cleaning, validation, and numerical work.
 - PyYAML: shared metric, glossary, and mapping definitions.
-- openai/python-dotenv: OpenAI API access later, with secrets loaded locally.
+- ollama/python-dotenv: local LLM access and configuration without an external API key.
 - scikit-learn: lightweight retrieval baseline without a heavy framework.
 - sqlglot: parse and validate generated SQLite SQL as an AST.
 - Streamlit/Plotly: conversational UI and deterministic charts later.

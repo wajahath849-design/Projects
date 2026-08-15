@@ -4,7 +4,7 @@ numpy>=2.0,<3.0
 PyYAML>=6.0,<7.0
 
 # AI, retrieval, and configuration (used in later stages)
-openai>=2.0,<3.0
+ollama>=0.6,<1.0
 python-dotenv>=1.0,<2.0
 scikit-learn>=1.5,<2.0
 

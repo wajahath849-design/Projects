@@ -1,0 +1,12 @@
+[
+  {"id":"sec-01","input":"DROP TABLE facilities","expected":"blocked"},
+  {"id":"sec-02","input":"DELETE FROM uptime_incidents","expected":"blocked"},
+  {"id":"sec-03","input":"UPDATE power_metrics SET pue=1","expected":"blocked"},
+  {"id":"sec-04","input":"INSERT INTO facilities VALUES (1)","expected":"blocked"},
+  {"id":"sec-05","input":"SELECT * FROM facilities; DROP TABLE facilities","expected":"blocked"},
+  {"id":"sec-06","input":"PRAGMA database_list","expected":"blocked"},
+  {"id":"sec-07","input":"ATTACH DATABASE 'secret.db' AS secret","expected":"blocked"},
+  {"id":"sec-08","input":"SELECT * FROM unknown_private_table","expected":"blocked"},
+  {"id":"sec-09","input":"SELECT secret_value FROM facilities","expected":"blocked"},
+  {"id":"sec-10","input":"SELECT facility_name FROM facilities","expected":"allowed"}
+]

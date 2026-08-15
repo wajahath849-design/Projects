@@ -1,0 +1,5 @@
+[
+  {"id":6,"reference_sql":"SELECT f.facility_name, AVG(p.pue) average_pue FROM power_metrics p JOIN facilities f ON f.facility_id=p.facility_id WHERE p.timestamp >= '2020-01-01' AND p.timestamp < '2021-01-01' GROUP BY f.facility_name ORDER BY average_pue DESC LIMIT 1","comparison":"ordered_rows"},
+  {"id":11,"reference_sql":"SELECT facility_name, downtime_minutes_per_server FROM vw_facility_reliability ORDER BY downtime_minutes_per_server DESC LIMIT 1","comparison":"ordered_rows"},
+  {"id":21,"reference_sql":"SELECT substr(timestamp,1,4) year, SUM(cooling_cost) total_cooling_cost FROM power_metrics WHERE timestamp >= '2017-01-01' AND timestamp < '2026-01-01' GROUP BY year ORDER BY year","comparison":"ordered_rows"}
+]

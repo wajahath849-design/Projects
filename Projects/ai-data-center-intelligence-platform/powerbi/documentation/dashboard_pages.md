@@ -1,6 +1,6 @@
 # Power BI Foundation Pages
 
-This step establishes page responsibilities and field mappings. Final styling and completed visual composition remain Step 16.
+This is the final source specification for the three report pages. Apply `powerbi/theme/DataCenterExecutive.json`; the PBIP generator and tests preserve page/model metadata. Final pixel-level review and `.pbix` export require Power BI Desktop.
 
 ## Page 1 — Executive Operations Overview
 
@@ -47,4 +47,3 @@ Foundation visuals:
 - Charts cross-filter; avoid bidirectional model relationships.
 - Tooltips show exact value, period, facility, and relevant denominator.
 - Latest date is 31 Dec 2025; relative-period language anchors to loaded data, not the current date.
-

@@ -50,11 +50,32 @@ class SQLValidator:
             unknown = table_names - {name.lower() for name in self.schema}
             if unknown:
                 return SQLValidation(False, candidate, f"Unknown table(s): {', '.join(sorted(unknown))}")
+            all_columns = {column.lower() for columns in self.schema.values() for column in columns}
+            selected_aliases = {
+                alias.alias.lower() for alias in expression.find_all(exp.Alias) if alias.alias
+            }
+            unknown_columns = {
+                column.name.lower() for column in expression.find_all(exp.Column)
+                if column.name != "*" and column.name.lower() not in all_columns | selected_aliases
+            }
+            if unknown_columns:
+                return SQLValidation(False, candidate, f"Unknown column(s): {', '.join(sorted(unknown_columns))}")
         except ImportError:
+            cte_names = {name.lower() for name in re.findall(r"(?:\bwith|,)\s*([A-Za-z_]\w*)\s+as\s*\(", candidate, re.IGNORECASE)}
             names = re.findall(r"\b(?:from|join)\s+[\"`\[]?([\w]+)", candidate, re.IGNORECASE)
-            unknown = {name.lower() for name in names} - {name.lower() for name in self.schema}
+            unknown = {name.lower() for name in names} - {name.lower() for name in self.schema} - cte_names
             if unknown:
                 return SQLValidation(False, candidate, f"Unknown table(s): {', '.join(sorted(unknown))}")
+            select_clauses = re.findall(r"\bselect\s+(.*?)\s+from\b", candidate, re.IGNORECASE | re.DOTALL)
+            known_columns = {column.lower() for columns in self.schema.values() for column in columns}
+            for clause in select_clauses:
+                for item in clause.split(","):
+                    expression_text = re.sub(r"\bas\s+[A-Za-z_]\w*\s*$", "", item.strip(), flags=re.IGNORECASE)
+                    expression_text = re.sub(r"\b(?:avg|sum|min|max|count|distinct|substr|date|datetime|coalesce)\s*\(", "(", expression_text, flags=re.IGNORECASE)
+                    identifiers = re.findall(r"(?<!['\"])(?:\b[A-Za-z_]\w*\.)?([A-Za-z_]\w*)\b", expression_text)
+                    unknown_columns = {name.lower() for name in identifiers if name != "*"} - known_columns
+                    if unknown_columns:
+                        return SQLValidation(False, candidate, f"Unknown column(s): {', '.join(sorted(unknown_columns))}")
         except Exception as error:
             return SQLValidation(False, candidate, f"Invalid SQL: {error}")
 

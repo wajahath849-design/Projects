@@ -1,0 +1,123 @@
+relationship rel_facility_server
+	fromColumn: DimServer.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_power
+	fromColumn: FactPowerMetrics.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_network
+	fromColumn: FactNetworkMetrics.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_facility_incidents
+	fromColumn: FactIncidents.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_server_metrics
+	fromColumn: FactServerMetrics.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_server_incidents
+	isActive: false
+	fromColumn: FactIncidents.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_server_metrics
+	fromColumn: FactServerMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_power
+	fromColumn: FactPowerMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_network
+	fromColumn: FactNetworkMetrics.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_date_incidents
+	fromColumn: FactIncidents.incident_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_logs
+	fromColumn: FactSystemLogs.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_server_logs
+	isActive: false
+	fromColumn: FactSystemLogs.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_logs
+	fromColumn: FactSystemLogs.log_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_alerts
+	fromColumn: FactAlerts.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_server_alerts
+	isActive: false
+	fromColumn: FactAlerts.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_alerts
+	fromColumn: FactAlerts.alert_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_actions
+	fromColumn: FactMaintenanceActions.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_server_actions
+	isActive: false
+	fromColumn: FactMaintenanceActions.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_actions
+	fromColumn: FactMaintenanceActions.action_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_anomalies
+	fromColumn: FactAnomalies.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_date_anomalies
+	fromColumn: FactAnomalies.timestamp
+	toColumn: DimDate.Date
+
+relationship rel_server_risk
+	fromColumn: FactServerRisk.server_id
+	toColumn: DimServer.server_id
+
+relationship rel_date_risk
+	fromColumn: FactServerRisk.score_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_health
+	fromColumn: FactFacilityHealth.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_date_health
+	fromColumn: FactFacilityHealth.score_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_cost_carbon
+	fromColumn: FactCostCarbon.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_date_cost_carbon
+	fromColumn: FactCostCarbon.snapshot_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_incident_impact
+	fromColumn: FactIncidentImpact.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship rel_date_incident_impact
+	fromColumn: FactIncidentImpact.incident_date
+	toColumn: DimDate.Date
+
+relationship rel_facility_live_snapshot
+	fromColumn: FactLiveOperationsSnapshot.facility_id
+	toColumn: DimFacility.facility_id

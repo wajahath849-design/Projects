@@ -1,0 +1,11 @@
+version: "1.0"
+score_direction: higher_score_means_larger_improvement_opportunity
+weights:
+  pue: 0.40
+  cooling_cost_per_it_kwh: 0.30
+  carbon_intensity: 0.20
+  incident_rate: 0.10
+guardrails:
+  - Cross-facility min-max normalization is used only for relative portfolio prioritization.
+  - A score is not an engineering safety rating or a financial return guarantee.
+  - Cost and carbon factors are synthetic portfolio-demo assumptions unless replaced by governed real inputs.

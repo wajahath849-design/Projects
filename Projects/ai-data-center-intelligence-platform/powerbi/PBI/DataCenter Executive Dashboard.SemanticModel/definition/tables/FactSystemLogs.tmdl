@@ -1,0 +1,104 @@
+table FactSystemLogs
+
+	column log_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: log_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column server_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: server_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column rack_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: rack_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column component
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: component
+
+		annotation SummarizationSetBy = Automatic
+
+	column log_level
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: log_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_code
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: event_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column message
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: message
+
+		annotation SummarizationSetBy = Automatic
+
+	column log_date
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: log_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSystemLogs = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/system_logs.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"log_id", type text}, {"timestamp", type datetime}, {"facility_id", type text},
+				        {"server_id", type text}, {"rack_id", type text}, {"source", type text},
+				        {"component", type text}, {"log_level", type text}, {"event_code", type text}, {"message", type text}
+				    }),
+				    LogDate = Table.AddColumn(Typed, "log_date", each Date.From([timestamp]), type date)
+				in
+				    LogDate

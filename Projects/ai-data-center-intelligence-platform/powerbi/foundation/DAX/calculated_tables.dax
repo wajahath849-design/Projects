@@ -11,4 +11,3 @@ ADDCOLUMNS(
     "Weekday Number", WEEKDAY([Date], 2),
     "Weekday", FORMAT([Date], "ddd")
 )
-

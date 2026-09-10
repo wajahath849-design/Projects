@@ -1,0 +1,70 @@
+runbooks:
+  cooling_degradation:
+    title: Cooling degradation investigation
+    applies_to: [cooling_failure, TEMP_HIGH, COOL_FLOW_LOW, elevated_pue]
+    safety: Follow site electrical and mechanical safety procedures; the copilot does not authorize physical intervention.
+    steps:
+      - Confirm facility, rack, affected server, and investigation window.
+      - Validate temperature sensors against a second telemetry source.
+      - Compare PUE and cooling power with the facility's preceding baseline.
+      - Inspect controller state, coolant flow, pressure, pump state, and valve position.
+      - Check for workload throttling or server restart evidence.
+      - Escalate to a facilities engineer before physical changes.
+      - Record observations, approved action, result, and post-action validation.
+
+  network_path_outage:
+    title: Network path outage investigation
+    applies_to: [network_outage, LATENCY_HIGH, PACKET_LOSS_HIGH, LINK_SERVICE_IMPACT]
+    safety: Do not change routes or network policy without authorization and a rollback plan.
+    steps:
+      - Confirm affected facility, server, interface, and time window.
+      - Compare latency, packet loss, availability, and throughput with baseline.
+      - Review switch and interface state plus correlated path events.
+      - Check whether impact is isolated or facility-wide.
+      - Escalate to a network engineer with evidence and proposed rollback.
+      - Validate bidirectional connectivity after approved recovery.
+
+  power_path_failure:
+    title: Power path failure investigation
+    applies_to: [power_failure, VOLTAGE_UNSTABLE, UPS_TRANSFER]
+    safety: Electrical systems require qualified personnel; never infer that equipment is safe to handle.
+    steps:
+      - Confirm the affected feed, facility, server, and incident window.
+      - Review UPS transfer state and power-distribution events.
+      - Compare power draw and IT load with their baseline.
+      - Escalate to a facilities engineer for inspection and authorization.
+      - Verify stable supply and service health after approved restoration.
+
+  server_hardware_failure:
+    title: Server hardware failure investigation
+    applies_to: [hardware_failure, HW_HEALTH_WARNING, DEVICE_IO_ERROR]
+    safety: Preserve diagnostic evidence and follow change-control before component work.
+    steps:
+      - Confirm the server, rack, facility, and incident window.
+      - Preserve controller, operating-system, and I/O evidence.
+      - Compare CPU, memory, and disk utilization with the server baseline.
+      - Run approved vendor-neutral health diagnostics.
+      - Escalate to a hardware technician before reseating or replacing parts.
+      - Record the confirmed component only when human-verified.
+
+  application_failure:
+    title: Application service recovery
+    applies_to: [software_failure, APP_ERROR_RATE_HIGH, SERVICE_UNRESPONSIVE]
+    safety: Use approved change control; avoid destructive restart or rollback without authorization.
+    steps:
+      - Confirm service, server, facility, and incident window.
+      - Review health checks, error-rate events, dependencies, and recent changes.
+      - Compare CPU and memory utilization with baseline.
+      - Choose an approved recovery or rollback with an operator.
+      - Validate functional health and record the human-confirmed cause.
+
+  scheduled_maintenance:
+    title: Scheduled maintenance validation
+    applies_to: [scheduled_maintenance, MAINT_WINDOW_NOTICE, COMPONENT_DRAIN]
+    safety: Continue only within the approved maintenance scope and window.
+    steps:
+      - Confirm approval, scope, owners, timing, and rollback plan.
+      - Drain affected workloads and verify redundancy.
+      - Perform only the approved activity.
+      - Validate infrastructure and application health.
+      - Record result, evidence, and operator confirmation.

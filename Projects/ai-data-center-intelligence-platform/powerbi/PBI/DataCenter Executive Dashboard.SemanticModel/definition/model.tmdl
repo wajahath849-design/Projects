@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+ref table DimDate
+ref table DimFacility
+ref table DimServer
+ref table FactServerMetrics
+ref table FactPowerMetrics
+ref table FactNetworkMetrics
+ref table FactIncidents
+ref table FactSystemLogs
+ref table FactAlerts
+ref table FactMaintenanceActions
+ref table FactAnomalies
+ref table FactServerRisk
+ref table FactFacilityHealth
+ref table FactCostCarbon
+ref table FactIncidentImpact
+ref table FactLiveOperationsSnapshot
+ref table _Measures

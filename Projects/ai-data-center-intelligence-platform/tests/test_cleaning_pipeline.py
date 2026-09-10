@@ -105,4 +105,3 @@ def test_baseline_has_same_shape_and_only_repaired_values_can_differ(cleaned) ->
             qualified = f"{table}.{column}"
             if qualified not in expected_possible_differences:
                 assert result["mismatched_cells"] == 0, qualified
-

@@ -1,0 +1,265 @@
+table FactIncidentImpact
+
+	column incident_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: incident_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column incident_date
+		dataType: dateTime
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: incident_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column server_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: server_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column root_cause
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: root_cause
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column downtime_minutes
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: downtime_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column during_pue
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: during_pue
+
+		annotation SummarizationSetBy = Automatic
+
+	column during_latency_ms
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: during_latency_ms
+
+		annotation SummarizationSetBy = Automatic
+
+	column during_packet_loss_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: during_packet_loss_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column during_network_availability_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: during_network_availability_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column before_pue
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: before_pue
+
+		annotation SummarizationSetBy = Automatic
+
+	column after_pue
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: after_pue
+
+		annotation SummarizationSetBy = Automatic
+
+	column before_latency_ms
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: before_latency_ms
+
+		annotation SummarizationSetBy = Automatic
+
+	column after_latency_ms
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: after_latency_ms
+
+		annotation SummarizationSetBy = Automatic
+
+	column before_packet_loss_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: before_packet_loss_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column after_packet_loss_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: after_packet_loss_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column before_network_availability_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: before_network_availability_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column after_network_availability_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: after_network_availability_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column change_pue_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: change_pue_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column change_latency_ms_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: change_latency_ms_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column change_packet_loss_pct_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: change_packet_loss_pct_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column change_network_availability_pct_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: change_network_availability_pct_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_downtime_cost_exposure_usd
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_downtime_cost_exposure_usd
+
+		annotation SummarizationSetBy = Automatic
+
+	column comparison_window_days
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: comparison_window_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column claim_level
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: claim_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_synthetic
+		dataType: boolean
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: is_synthetic
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_version
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: snapshot_version
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactIncidentImpact = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/powerbi_incident_impact_snapshot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"incident_id", type text}, {"incident_date", type date}, {"facility_id", type text},
+				        {"facility_name", type text}, {"server_id", type text}, {"severity", type text},
+				        {"root_cause", type text}, {"status", type text}, {"downtime_minutes", Int64.Type},
+				        {"during_pue", type number}, {"during_latency_ms", type number},
+				        {"during_packet_loss_pct", type number}, {"during_network_availability_pct", type number},
+				        {"before_pue", type number}, {"after_pue", type number},
+				        {"before_latency_ms", type number}, {"after_latency_ms", type number},
+				        {"before_packet_loss_pct", type number}, {"after_packet_loss_pct", type number},
+				        {"before_network_availability_pct", type number}, {"after_network_availability_pct", type number},
+				        {"change_pue_pct", type number}, {"change_latency_ms_pct", type number},
+				        {"change_packet_loss_pct_pct", type number}, {"change_network_availability_pct_pct", type number},
+				        {"modeled_downtime_cost_exposure_usd", type number}, {"comparison_window_days", Int64.Type},
+				        {"claim_level", type text}, {"is_synthetic", type logical}, {"snapshot_version", type text}
+				    })
+				in
+				    Typed

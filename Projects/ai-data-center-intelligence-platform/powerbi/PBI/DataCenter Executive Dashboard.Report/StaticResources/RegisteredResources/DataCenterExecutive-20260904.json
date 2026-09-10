@@ -1,0 +1,20 @@
+{
+  "name": "DataCenterExecutive-20260904.json",
+  "dataColors": [
+    "#2388E8",
+    "#2FB344",
+    "#FF8A00",
+    "#E03131",
+    "#7048E8",
+    "#12B886"
+  ],
+  "background": "#F4F7FB",
+  "foreground": "#102A43",
+  "tableAccent": "#2388E8",
+  "good": "#2FB344",
+  "neutral": "#F2A900",
+  "bad": "#E03131",
+  "maximum": "#2388E8",
+  "center": "#F2A900",
+  "minimum": "#E8F3FC"
+}

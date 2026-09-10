@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-14T13:40:33.600273+00:00",
+  "generated_at_utc": "2026-08-28T10:51:08.708004+00:00",
   "database": "database/datacenter.db",
   "source_data": "data/processed",
   "all_passed": true,
@@ -48,14 +48,14 @@
     },
     "average_cpu_utilization": {
       "sql_value": 48.7434278595159,
-      "python_value": 48.74342785951591,
-      "absolute_difference": 1.4210854715202004e-14,
+      "python_value": 48.743427859515904,
+      "absolute_difference": 7.105427357601002e-15,
       "passed": true
     },
     "average_memory_utilization": {
       "sql_value": 48.1207377325292,
-      "python_value": 48.120737732529186,
-      "absolute_difference": 1.4210854715202004e-14,
+      "python_value": 48.1207377325292,
+      "absolute_difference": 0.0,
       "passed": true
     },
     "average_network_latency": {
@@ -66,8 +66,8 @@
     },
     "average_packet_loss": {
       "sql_value": 0.05649182843869255,
-      "python_value": 0.05649182843869255,
-      "absolute_difference": 0.0,
+      "python_value": 0.056491828438692555,
+      "absolute_difference": 6.938893903907228e-18,
       "passed": true
     },
     "network_availability": {

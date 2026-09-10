@@ -1,0 +1,173 @@
+table FactLiveOperationsSnapshot
+
+	column simulation_session_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: simulation_session_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_name
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: scenario_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column session_status
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: session_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_timestamp
+		dataType: dateTime
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: snapshot_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column health_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: health_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column energy_efficiency_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: energy_efficiency_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column reliability_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: reliability_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column network_health_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: network_health_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column infrastructure_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: infrastructure_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column alert_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: alert_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column anomaly_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: anomaly_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_alert_count
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: active_alert_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_anomaly_count
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: active_anomaly_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_completeness_pct
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: data_completeness_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column method_version
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: method_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_synthetic
+		dataType: boolean
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: is_synthetic
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_version
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: snapshot_version
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactLiveOperationsSnapshot = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/powerbi_live_operations_snapshot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"simulation_session_id", type text}, {"scenario_name", type text},
+				        {"session_status", type text}, {"snapshot_timestamp", type datetime},
+				        {"facility_id", type text}, {"facility_name", type text}, {"health_score", type number},
+				        {"energy_efficiency_score", type number}, {"reliability_score", type number},
+				        {"network_health_score", type number}, {"infrastructure_score", type number},
+				        {"alert_score", type number}, {"anomaly_score", type number},
+				        {"active_alert_count", Int64.Type}, {"active_anomaly_count", Int64.Type},
+				        {"data_completeness_pct", type number}, {"method_version", type text},
+				        {"is_synthetic", type logical}, {"snapshot_version", type text}
+				    })
+				in
+				    Typed

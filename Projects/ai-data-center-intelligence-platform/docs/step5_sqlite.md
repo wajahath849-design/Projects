@@ -77,4 +77,3 @@ Expected: integrity `ok`, zero foreign-key violations, canonical row counts, fiv
 **Why atomic replacement?** Consumers see either the old valid database or the new valid database, never a partial build.
 
 **Production migration?** Move DDL and loads to PostgreSQL, add roles/read replicas, partition large facts, and use managed migrations.
-

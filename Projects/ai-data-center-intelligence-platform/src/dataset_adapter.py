@@ -72,4 +72,3 @@ class DatasetAdapter:
             raise ValueError(f"Missing externally required fields for {table}: {missing_required}")
         frame = frame[[column for column in definition["columns"] if column in frame.columns]]
         return AdaptationResult(table, frame, mapping, generated, warnings)
-

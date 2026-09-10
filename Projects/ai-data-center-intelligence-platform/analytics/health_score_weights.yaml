@@ -1,0 +1,14 @@
+version: 1.0.0
+score_range: [0, 100]
+weights:
+  energy_efficiency: 0.20
+  reliability: 0.20
+  network_health: 0.20
+  infrastructure_utilization: 0.15
+  incident_severity: 0.15
+  anomaly_frequency: 0.10
+rules:
+  lower_is_better: [average_pue, downtime_per_server, average_latency_ms, average_packet_loss_pct, severity_points_per_server, anomaly_count]
+  higher_is_better: [average_network_availability_pct]
+  infrastructure_utilization: Full dimension score through 70 percent average CPU-memory-disk utilization; deterministic linear penalty above 70 percent.
+caveat: The score is a transparent relative triage index over the latest complete synthetic year, not a safety certification or service-level guarantee.

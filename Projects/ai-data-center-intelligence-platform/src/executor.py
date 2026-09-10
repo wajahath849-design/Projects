@@ -27,13 +27,13 @@ class SQLExecutor:
         self.timeout_seconds = timeout_seconds
         self.max_rows = max_rows
 
-    def execute(self, sql: str) -> ExecutionResult:
+    def execute(self, sql: str, parameters: tuple[object, ...] = ()) -> ExecutionResult:
         started = time.perf_counter()
         deadline = started + self.timeout_seconds
         with connect_read_only(self.database_path) as connection:
             connection.set_progress_handler(lambda: 1 if time.perf_counter() > deadline else 0, 1000)
             try:
-                frame = pd.read_sql_query(sql, connection)
+                frame = pd.read_sql_query(sql, connection, params=parameters)
             except sqlite3.OperationalError as error:
                 if "interrupted" in str(error).lower():
                     raise QueryTimeoutError(f"Query exceeded {self.timeout_seconds} seconds") from error

@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from src.database import discover_schema
 from src.pipeline import AnalyticsPipeline
 from src.sql_generator import VerifiedExampleSQLGenerator
 from src.sql_validator import SQLValidator
-
-
-ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
@@ -28,8 +31,9 @@ def main() -> None:
     offline_results = []
     for truth in ground_truth:
         result = pipeline.ask(questions[truth["id"]]["question"])
+        query_executed = bool(result.sql and result.frame is not None)
         offline_results.append({
-            "id": truth["id"], "status": result.status, "sql_executed": result.status == "ok",
+            "id": truth["id"], "status": result.status, "sql_executed": query_executed,
             "row_count": 0 if result.frame is None else len(result.frame), "execution_ms": result.execution_ms,
         })
 

@@ -1,0 +1,7 @@
+facility_id,effective_from,effective_to,grams_co2e_per_kwh,methodology,annual_change_pct,source_label,is_synthetic
+DC-DUB-01,2015-01-01,2040-12-31,296,location_based_modeled_factor,-2.0,portfolio_demo_assumption,true
+DC-FRA-01,2015-01-01,2040-12-31,338,location_based_modeled_factor,-2.2,portfolio_demo_assumption,true
+DC-IAD-01,2015-01-01,2040-12-31,371,location_based_modeled_factor,-1.8,portfolio_demo_assumption,true
+DC-PDX-01,2015-01-01,2040-12-31,124,location_based_modeled_factor,-1.5,portfolio_demo_assumption,true
+DC-SIN-01,2015-01-01,2040-12-31,408,location_based_modeled_factor,-1.7,portfolio_demo_assumption,true
+DC-SYD-01,2015-01-01,2040-12-31,512,location_based_modeled_factor,-2.4,portfolio_demo_assumption,true

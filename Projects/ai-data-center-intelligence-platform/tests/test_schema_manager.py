@@ -18,7 +18,7 @@ def manager() -> SchemaManager:
 
 @pytest.fixture(scope="module")
 def canonical_tables() -> dict[str, pd.DataFrame]:
-    directory = PROJECT_ROOT / "data" / "cleaned_generated"
+    directory = PROJECT_ROOT / "data" / "processed"
     return {path.stem: pd.read_csv(path, low_memory=False) for path in directory.glob("*.csv")}
 
 
@@ -26,7 +26,9 @@ def test_contract_is_complete_and_self_consistent(manager) -> None:
     contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
     assert set(contract["tables"]) == {
         "facilities", "servers", "server_metrics", "power_metrics",
-        "network_metrics", "uptime_incidents",
+        "network_metrics", "uptime_incidents", "system_logs", "alerts",
+        "maintenance_actions", "detected_anomalies", "incident_reviews",
+        "server_failure_risk", "facility_health_scores",
     }
     for table, definition in contract["tables"].items():
         columns = set(definition["columns"])
@@ -40,7 +42,11 @@ def test_complete_canonical_dataset_is_valid(manager, canonical_tables) -> None:
     result = manager.validate_tables(canonical_tables)
     assert result.is_valid, result.errors
     assert set(result.enabled_modules) == {
-        "inventory", "server_performance", "energy", "network", "reliability"
+        "inventory", "server_performance", "energy", "network", "reliability",
+        "operational_evidence",
+        "anomaly_detection",
+        "incident_learning",
+        "predictive_maintenance", "health_scoring",
     }
     assert result.disabled_modules == []
 
@@ -51,7 +57,11 @@ def test_power_only_dataset_enables_energy_without_crashing(manager, canonical_t
     assert result.is_valid
     assert result.enabled_modules == ["energy"]
     assert set(result.disabled_modules) == {
-        "inventory", "server_performance", "network", "reliability"
+        "inventory", "server_performance", "network", "reliability",
+        "operational_evidence",
+        "anomaly_detection",
+        "incident_learning",
+        "predictive_maintenance", "health_scoring",
     }
 
 
@@ -83,4 +93,3 @@ def test_orphan_foreign_key_fails(manager, canonical_tables) -> None:
     result = manager.validate_tables({"facilities": canonical_tables["facilities"], "servers": broken})
     assert not result.is_valid
     assert any("orphan rows" in error for error in result.errors)
-

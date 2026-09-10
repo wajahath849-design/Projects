@@ -44,4 +44,3 @@ rounding:
     power_metrics.pue: 3
     network_metrics.packet_loss_pct: 3
     network_metrics.network_availability_pct: 4
-

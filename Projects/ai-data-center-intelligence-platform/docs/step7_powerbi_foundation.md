@@ -1,100 +1,84 @@
-# Step 7 — Power BI Foundation
+# Power BI Dashboard Handoff
 
-## What and why
+## Delivered dashboard
 
-Step 7 creates a source-controlled Power BI Project foundation with a star schema, six imported canonical sources, a conformed date table, ten relationships, 27 foundational measures, and three empty report pages ready for visual composition.
+The Power BI Project is fully generated at
+`powerbi/PBI/DataCenter Executive Dashboard.pbip`. It contains:
 
-Power BI imports the verified processed CSVs. The AI uses equivalent SQLite tables. Both are governed by the same canonical contract and KPI definitions. CSV import avoids an undeclared third-party SQLite ODBC dependency while keeping refresh reproducible.
+- 7 populated 1600 × 900 report pages;
+- 223 native Power BI visuals;
+- 17 semantic-model tables and 30 relationships;
+- 56 governed DAX measures;
+- a registered executive theme;
+- historical, predictive, sustainability, reliability-impact, and latest
+  simulation snapshot views.
 
-## Files
+Power BI imports governed CSV files rather than connecting directly to SQLite.
+This avoids requiring a third-party SQLite driver and keeps report refreshes
+reproducible. Raw real-time events are not imported; the dashboard receives a
+compact reviewed latest-session snapshot.
 
-- `powerbi/PBI/DataCenter Operations Foundation.pbip`: generated Power BI Project entry point.
-- `powerbi/PBI/*.SemanticModel`: source-controlled TMDL semantic model.
-- `powerbi/PBI/*.Report`: three-page report foundation.
-- `powerbi/foundation/PowerQuery`: copy-ready typed M queries.
-- `powerbi/foundation/DAX`: date-table and measure source.
-- `powerbi/documentation/data_model.md`: model and relationship teaching guide.
-- `powerbi/documentation/dax_measures.md`: definitions, formats, context, and validation.
-- `powerbi/documentation/dashboard_pages.md`: three-page visual brief.
-- `scripts/build_powerbi_project.py`: deterministic PBIP generator.
-- `tests/test_powerbi_foundation.py`: structural foundation tests.
+## Open the correct project
 
-## Model
+If an older or empty report is already open, close it without saving over the
+generated source. Then open this exact file:
 
-Dimensions: DimDate, DimFacility, DimServer.
+`powerbi/PBI/DataCenter Executive Dashboard.pbip`
 
-Facts: FactServerMetrics, FactPowerMetrics, FactNetworkMetrics, FactIncidents.
+The project shown in Power BI Desktop must have these seven tabs:
 
-Filters are single-direction from dimensions to facts. The Server-to-Incident relationship is inactive because an active relationship would create a second Facility→Server→Incident path alongside the direct Facility→Incident relationship.
+1. Executive Operations Overview
+2. Infrastructure Performance
+3. Energy & Reliability
+4. Reliability & Incident Intelligence
+5. Predictive Operations
+6. Cost & Sustainability
+7. Reliability Impact
 
-## Power BI Desktop status
+If only five tabs are present, the old project is open.
 
-The PBIP project was generated and Power BI Desktop was launched against it. The Desktop process started and remained responsive, but the Windows automation helper failed twice with a local permission error and the process did not expose a titled project window during the observation period. Therefore visual/model-load validation inside Desktop is **not claimed complete**.
+## Refresh sequence
 
-The project structure, JSON metadata, table count, page count, relationships, DAX presence, Power Query sources, SQL results, and Python results are automated and verified. Open the PBIP manually to complete the final Desktop gate:
+1. Select **Home → Refresh** or the **Refresh now** banner.
+2. If Power BI asks for privacy levels, mark every local CSV source with the
+   same privacy level and approve local-file access.
+3. Wait for all 17 tables to finish, then select **Close** on any old error
+   dialog and refresh once more.
+4. Save only after charts and cards display values.
+
+The three advanced snapshot files should contain 792 cost/carbon rows, 1,158
+incident-impact rows, and 6 latest live-operation rows. Canonical tables retain
+their original row counts, including 1,727,740 server-metric records.
+
+## Rebuild after moving or updating the project
+
+Run these commands from the project folder before reopening Power BI:
 
 ```powershell
-& "C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe" `
-  ".\powerbi\PBI\DataCenter Operations Foundation.pbip"
+python scripts/export_powerbi_snapshots.py
+python scripts/build_powerbi_project.py
+python -m pytest tests/test_powerbi_foundation.py -q
 ```
 
-If Desktop reports a TMDL compatibility issue, enable the Power BI Project/PBIP preview feature supported by the installed release, restart Desktop, and reopen. Do not convert or publish until the model refresh succeeds.
+The generator writes absolute local source paths for the current project
+location. Rebuilding therefore repairs broken paths after the folder is moved.
 
-## Desktop verification steps
+## Dashboard structure
 
-1. Open the PBIP.
-2. Refresh all tables and confirm the canonical row counts.
-3. Mark DimDate as the date table using `Date`.
-4. Sort Month by Month Number and Quarter by Quarter Number.
-5. Confirm ten relationships and that Server→Incident is inactive.
-6. Create cards for the validated overall KPI values and compare them with `docs/step6_kpi_validation.json`.
-7. Save the project only after values reconcile.
+The shared layout is summary first: KPI cards, a time trend, a diagnostic
+breakdown, and a detailed evidence table. Every page includes Facility and
+Context slicers. Historical relative-date logic anchors to 31 December 2025,
+the latest date in the canonical dataset, rather than the computer clock.
 
-## Expected row counts
+Cost and carbon values are modeled using synthetic assumptions; they are not
+invoices or audited emissions. Incident before/after values are descriptive
+associations, not proof of causation. Predictions and risk scores are screening
+signals and require human review.
 
-- DimFacility: 6.
-- DimServer: 430.
-- FactServerMetrics: 1,727,740.
-- FactPowerMetrics: 24,108.
-- FactNetworkMetrics: 24,108.
-- FactIncidents: 1,158.
-- DimDate: 4,018.
+## Verification status
 
-## Verification checklist
-
-- [x] Star-schema roles and grains defined.
-- [x] Typed Power Query sources created.
-- [x] Conformed date table created.
-- [x] Cardinality and filter direction documented.
-- [x] Ambiguous incident path avoided.
-- [x] Foundational DAX created and SQL/Python counterparts validated.
-- [x] Three foundation pages created.
-- [x] PBIP source project generated deterministically.
-- [x] Power BI Desktop executable found and launch attempted.
-- [ ] Desktop refresh and visual reconciliation completed manually; automation was blocked by local permissions.
-- [ ] Final dashboard styling, which remains Step 16.
-
-## Common errors
-
-- File privacy prompt: classify all six local CSVs consistently and approve only local file access.
-- Broken source path: edit the Power Query DataRoot parameter or regenerate the PBIP in its new location.
-- Percentage displays 100× too large: values are stored on a 0–100 scale; use a literal-percent numeric format.
-- Ambiguous relationship error: keep DimServer→FactIncidents inactive.
-- YoY returns blank: mark DimDate as the date table and verify active date relationships.
-
-## Interview preparation
-
-**Why a star schema?** It makes filter propagation predictable, improves usability, and separates descriptive dimensions from measurable facts.
-
-**Why single-direction relationships?** They reduce ambiguity and prevent facts from unexpectedly filtering dimensions or other facts.
-
-**Why a dedicated date table?** It provides consistent year, quarter, month, and time-intelligence behavior across every fact.
-
-**Why import CSV instead of SQLite?** Power BI Desktop has no native SQLite connector. CSV import avoids a third-party driver while using the same verified canonical data.
-
-**How do DAX and SQL stay consistent?** Definitions share sources, aggregation, units, and filter semantics, and headline results are reconciled against SQL/Python.
-
-## Step boundary
-
-Steps 5–7 are complete subject to the disclosed manual Desktop refresh gate. The generic external dataset adapter remains Step 8 and has not started.
-
+Automated source validation passes all 10 Power BI checks. It verifies the page
+order, visual definitions, field bindings, measures, relationships, theme, and
+snapshot row counts. Final pixel-level rendering and publication still require
+Power BI Desktop because the desktop window is not available to this task's UI
+automation session.

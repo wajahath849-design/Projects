@@ -10,4 +10,3 @@ let
     IncidentDate = Table.AddColumn(Typed, "incident_date", each Date.From([start_time]), type date)
 in
     IncidentDate
-

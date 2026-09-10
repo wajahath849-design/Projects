@@ -48,6 +48,26 @@ METRICS = (
 )
 
 
+AGGREGATE_COLUMNS = {
+    "average_pue": "average_pue",
+    "power_draw_kw": "average_power_draw_kw",
+    "it_load_kw": "average_it_load_kw",
+    "cooling_power_kw": "average_cooling_power_kw",
+    "cooling_cost": "total_cooling_cost",
+    "cpu_utilization_pct": "average_cpu_utilization_pct",
+    "memory_utilization_pct": "average_memory_utilization_pct",
+    "disk_utilization_pct": "average_disk_utilization_pct",
+    "server_network_utilization_pct": "average_server_network_utilization_pct",
+    "bandwidth_utilization_pct": "average_bandwidth_utilization_pct",
+    "latency_ms": "average_latency_ms",
+    "packet_loss_pct": "average_packet_loss_pct",
+    "throughput_mbps": "average_throughput_mbps",
+    "network_availability_pct": "average_network_availability_pct",
+    "downtime_minutes": "total_downtime_minutes",
+    "incident_count": "incident_count",
+}
+
+
 @dataclass
 class ForecastOutput:
     frame: pd.DataFrame
@@ -67,7 +87,11 @@ def detect_metric(question: str) -> MetricSpec | None:
     ]
     if re.search(r"\b(price|cost|expense|tariff)\b", lower):
         monetary = [item for item in matches if item[1].unit == "currency-equivalent"]
-        return max(monetary, key=lambda item: item[0])[1] if monetary else None
+        if monetary:
+            return max(monetary, key=lambda item: item[0])[1]
+        if not re.search(r"\b(?:price|cost|expense|tariff)\s+(?:of|for)\s+\w+", lower):
+            return next(spec for spec in METRICS if spec.key == "cooling_cost")
+        return None
     return max(matches, key=lambda item: item[0])[1] if matches else None
 
 
@@ -92,6 +116,55 @@ def supported_metric_names() -> list[str]:
 
 def has_forecast_intent(question: str) -> bool:
     return bool(re.search(r"\b(forecast|predict|prediction|project|projection|future|will|estimate|expected)\b", question.lower()))
+
+
+def asks_trend_direction(question: str) -> bool:
+    return bool(re.search(
+        r"\b(increase|increse|decrease|decrese|rise|fall|grow|decline|up|down|trend)\b",
+        question.lower(),
+    ))
+
+
+def contextualize_question(
+    question: str,
+    previous_metric: MetricSpec | None,
+    previous_year: int | None = None,
+    previous_facilities: list[str] | None = None,
+    latest_complete_year: int = 2025,
+) -> str:
+    if previous_metric is None:
+        return question
+    stripped = question.strip()
+    lower = stripped.lower()
+    previous_facilities = previous_facilities or []
+    mentioned_facility = bool(re.search(
+        r"\b(frankfurt|dublin|ashburn|portland|singapore|sydney)\b", lower
+    ))
+    facility_text = f" for {', '.join(previous_facilities)}" if previous_facilities else ""
+    if re.fullmatch(r"20\d{2}\??", stripped):
+        year = int(re.search(r"20\d{2}", stripped).group(0))
+        action = "Forecast" if year > latest_complete_year else "Show"
+        return f"{action} {previous_metric.display_name}{facility_text} in {year}"
+
+    follow_up = bool(re.search(
+        r"^(and\b|also\b|what about\b|how about\b|same\b)|"
+        r"\b(it|that|those|same|why|increase|increse|decrease|decrese|rise|fall|up|down)\b",
+        lower,
+    ))
+    if not follow_up:
+        return question
+
+    additions = []
+    if detect_metric(stripped) is None:
+        additions.append(previous_metric.display_name)
+    if previous_facilities and not mentioned_facility:
+        additions.append(", ".join(previous_facilities))
+    has_year = bool(re.search(r"\b20\d{2}\b", lower))
+    if previous_year and not has_year and not asks_trend_direction(stripped):
+        additions.append(str(previous_year))
+    if additions:
+        return f"{stripped.rstrip('?')} for {' in '.join(additions)}?"
+    return question
 
 
 def resolve_target_year(question: str, latest_complete_year: int) -> int | None:
@@ -171,7 +244,19 @@ class MetricForecaster:
         return year if str(latest)[5:10] == "12-31" else year - 1
 
     @staticmethod
-    def source_sql(spec: MetricSpec, complete_year: int) -> str:
+    def source_sql(
+        spec: MetricSpec, complete_year: int, use_aggregate: bool = False
+    ) -> str:
+        if use_aggregate:
+            aggregate_column = AGGREGATE_COLUMNS[spec.key]
+            return f"""SELECT
+    f.facility_name,
+    a.year,
+    a.{aggregate_column} AS metric_value
+FROM agg_facility_yearly AS a
+JOIN facilities AS f ON f.facility_id = a.facility_id
+WHERE a.year <= {complete_year}
+ORDER BY f.facility_name, a.year"""
         alias = {"power_metrics": "p", "server_metrics": "sm", "network_metrics": "n", "uptime_incidents": "i"}[spec.table]
         return f"""SELECT
     f.facility_name,
@@ -185,8 +270,11 @@ ORDER BY f.facility_name, year"""
 
     def load_history(self, spec: MetricSpec) -> tuple[pd.DataFrame, str]:
         complete_year = self.latest_complete_year()
-        sql = self.source_sql(spec, complete_year)
         with connect_read_only(self.database_path) as connection:
+            use_aggregate = connection.execute(
+                "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'agg_facility_yearly'"
+            ).fetchone() is not None
+            sql = self.source_sql(spec, complete_year, use_aggregate=use_aggregate)
             frame = pd.read_sql_query(sql, connection)
         if frame.empty:
             raise ValueError(f"No history is available for {spec.display_name}")
@@ -238,3 +326,22 @@ ORDER BY f.facility_name, year"""
             pd.DataFrame(records), spec, training_start, training_end, target_year, sql,
             (time.perf_counter() - started) * 1000,
         )
+
+    def historical(self, spec: MetricSpec, years: list[int], facilities: list[str] | None = None) -> tuple[pd.DataFrame, str]:
+        history, sql = self.load_history(spec)
+        requested = sorted(set(years))
+        history = history[history["year"].isin(requested)]
+        if history.empty:
+            raise ValueError(f"No {spec.display_name} history exists for the requested year(s)")
+        if facilities:
+            history = history[history["facility_name"].isin(set(facilities))]
+            if history.empty:
+                raise ValueError("No matching facility history exists")
+            scoped = history.rename(columns={"metric_value": "value"})
+        else:
+            operation = "sum" if spec.fleet_aggregation == "sum" else "mean"
+            scoped = history.groupby("year", as_index=False).agg(value=("metric_value", operation))
+            scoped.insert(0, "facility_name", "All Facilities")
+        scoped.insert(1, "metric", spec.display_name)
+        scoped["unit"] = spec.unit
+        return scoped[["facility_name", "metric", "year", "value", "unit"]].sort_values(["facility_name", "year"]), sql

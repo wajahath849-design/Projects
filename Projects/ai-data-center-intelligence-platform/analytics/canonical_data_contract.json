@@ -1,6 +1,6 @@
 {
   "contract_name": "AI Data Center Operations Canonical Model",
-  "contract_version": "2.1.0",
+  "contract_version": "2.2.0",
   "source_contract_version": "2.0",
   "synthetic": true,
   "operational_period": {
@@ -34,6 +34,26 @@
     "reliability": {
       "required_tables": ["facilities", "servers", "uptime_incidents"],
       "description": "Incident, downtime, severity, and root-cause analysis."
+    },
+    "operational_evidence": {
+      "required_tables": ["facilities", "servers", "uptime_incidents", "system_logs", "alerts", "maintenance_actions"],
+      "description": "Synthetic operational logs, threshold alerts, and role-based resolution history linked to canonical incidents."
+    },
+    "anomaly_detection": {
+      "required_tables": ["facilities", "detected_anomalies"],
+      "description": "Explainable facility-level anomalies with observed values, seasonal bounds, direction, and severity."
+    },
+    "incident_learning": {
+      "required_tables": ["uptime_incidents", "incident_reviews"],
+      "description": "Human-controlled confirmation and knowledge-update workflow for incident investigations."
+    },
+    "predictive_maintenance": {
+      "required_tables": ["servers", "server_failure_risk"],
+      "description": "Explainable seven-day server risk screening with fixed feature weights."
+    },
+    "health_scoring": {
+      "required_tables": ["facilities", "facility_health_scores"],
+      "description": "Governed facility health score with versioned dimension weights."
     }
   },
   "tables": {
@@ -142,7 +162,182 @@
         "root_cause": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": false, "description": "Reported incident cause category."},
         "status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["resolved"], "external_required": false, "description": "Canonical incident state for this historical dataset."}
       }
+    },
+    "system_logs": {
+      "description": "Deterministic operational events derived from canonical incident windows, affected assets, and observed daily metrics.",
+      "grain": ["log_id"],
+      "primary_key": ["log_id"],
+      "foreign_keys": [
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]},
+        {"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]}
+      ],
+      "recommended_indexes": [["facility_id", "timestamp"], ["server_id", "timestamp"], ["event_code", "timestamp"]],
+      "columns": {
+        "log_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable synthetic log-event identifier."},
+        "timestamp": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Event timestamp relative to its source incident."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected facility identifier."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected server identifier."},
+        "rack_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected rack identifier copied from inventory."},
+        "source": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "System emitting the event."},
+        "component": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Operational component associated with the event."},
+        "log_level": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["INFO", "WARNING", "ERROR", "CRITICAL"], "external_required": true, "description": "Canonical event severity."},
+        "event_code": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable event category code."},
+        "message": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Synthetic evidence message; data, not executable instruction."}
+      }
+    },
+    "alerts": {
+      "description": "Threshold alerts emitted only when canonical measurements or downtime meet documented rules.",
+      "grain": ["alert_id"],
+      "primary_key": ["alert_id"],
+      "foreign_keys": [
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]},
+        {"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]}
+      ],
+      "recommended_indexes": [["facility_id", "timestamp"], ["server_id", "timestamp"], ["status", "severity"]],
+      "columns": {
+        "alert_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable synthetic alert identifier."},
+        "timestamp": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Alert occurrence timestamp."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected facility identifier."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected server identifier."},
+        "component": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected operational component."},
+        "severity": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["low", "medium", "high", "critical"], "external_required": true, "description": "Alert severity inherited from its incident."},
+        "alert_type": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Documented threshold-rule category."},
+        "metric_name": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Canonical metric evaluated by the rule."},
+        "observed_value": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Observed canonical value at alert creation."},
+        "threshold_value": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Fixed threshold used by the rule."},
+        "status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["open", "acknowledged", "resolved"], "external_required": true, "description": "Alert lifecycle state."},
+        "resolved_at": {"type": "datetime", "sqlite_type": "TEXT", "nullable": true, "external_required": false, "description": "Resolution timestamp when present."}
+      }
+    },
+    "maintenance_actions": {
+      "description": "Role-labelled historical resolution actions tied to confirmed canonical incidents.",
+      "grain": ["action_id"],
+      "primary_key": ["action_id"],
+      "foreign_keys": [
+        {"columns": ["incident_id"], "references_table": "uptime_incidents", "references_columns": ["incident_id"]},
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]},
+        {"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]}
+      ],
+      "recommended_indexes": [["incident_id", "timestamp"], ["facility_id", "timestamp"]],
+      "columns": {
+        "action_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable action identifier."},
+        "incident_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Resolved incident identifier."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected facility identifier."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Affected server identifier."},
+        "timestamp": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Recorded completion time."},
+        "action_type": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Normalized maintenance action category."},
+        "description": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Checks or recovery work recorded for the incident."},
+        "result": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Conservative result grounded in the confirmed incident classification."},
+        "performed_by_role": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["operations_engineer", "network_engineer", "facilities_engineer", "hardware_technician", "application_engineer"], "external_required": true, "description": "Operator role; no personal identity."}
+      }
+    },
+    "detected_anomalies": {
+      "description": "Explainable anomalies generated by the governed seasonal-IQR detector.",
+      "grain": ["anomaly_id"],
+      "primary_key": ["anomaly_id"],
+      "foreign_keys": [
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}
+      ],
+      "recommended_indexes": [["facility_id", "timestamp"], ["metric_name", "timestamp"], ["severity", "timestamp"]],
+      "columns": {
+        "anomaly_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable detector-output identifier."},
+        "timestamp": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Observation date or month represented by the anomaly."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Facility represented by the observation."},
+        "metric_name": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Canonical metric evaluated."},
+        "observed_value": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Observed source value."},
+        "expected_value": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Seasonal median baseline."},
+        "lower_bound": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Lower Tukey fence."},
+        "upper_bound": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Upper Tukey fence."},
+        "deviation_pct": {"type": "number", "sqlite_type": "REAL", "nullable": false, "external_required": true, "description": "Signed deviation from seasonal median."},
+        "direction": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["low", "high"], "external_required": true, "description": "Side of the expected range."},
+        "severity": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["medium", "high", "critical"], "external_required": true, "description": "Deterministic severity from robust distance."},
+        "anomaly_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "external_required": true, "description": "Distance from median measured in robust standard deviations."},
+        "method": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["seasonal_iqr"], "external_required": true, "description": "Governed detector method."},
+        "source_table": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Canonical observation table."},
+        "source_grain": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["facility_day", "facility_month"], "external_required": true, "description": "Aggregation grain evaluated."},
+        "source_record_count": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Number of canonical records represented by the observation."}
+      }
+    },
+    "incident_reviews": {
+      "description": "Human or explicitly simulated review records; AI hypotheses remain separate from confirmed labels.",
+      "grain": ["review_id"],
+      "primary_key": ["review_id"],
+      "foreign_keys": [
+        {"columns": ["incident_id"], "references_table": "uptime_incidents", "references_columns": ["incident_id"]}
+      ],
+      "recommended_indexes": [["incident_id", "created_at"], ["review_status", "knowledge_update_status"]],
+      "columns": {
+        "review_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable review identifier."},
+        "incident_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Incident being reviewed."},
+        "created_at": {"type": "datetime", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Review creation timestamp."},
+        "review_status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["pending", "confirmed", "rejected"], "external_required": true, "description": "Human-review lifecycle state."},
+        "ai_hypothesis": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Untrusted diagnostic hypothesis submitted for review."},
+        "ai_confidence": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["Low", "Moderate", "High"], "external_required": true, "description": "Deterministically calculated evidence confidence at submission."},
+        "human_confirmed_root_cause": {"type": "string", "sqlite_type": "TEXT", "nullable": true, "external_required": false, "description": "Root-cause category entered by the reviewer when confirmed."},
+        "resolution_notes": {"type": "string", "sqlite_type": "TEXT", "nullable": true, "external_required": false, "description": "Reviewer-provided resolution evidence."},
+        "reviewed_by_role": {"type": "string", "sqlite_type": "TEXT", "nullable": true, "external_required": false, "description": "Reviewer role without personal identity."},
+        "reviewed_at": {"type": "datetime", "sqlite_type": "TEXT", "nullable": true, "external_required": false, "description": "Review decision timestamp."},
+        "knowledge_update_status": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["not_eligible", "pending_review", "approved", "rejected"], "external_required": true, "description": "Separate human decision controlling knowledge eligibility."},
+        "simulation": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "maximum": 1, "external_required": true, "description": "One only for an explicitly simulated portfolio review."}
+      }
+    },
+    "server_failure_risk": {
+      "description": "Latest explainable seven-day risk-screening snapshot for each server.",
+      "grain": ["score_date", "forecast_horizon_days", "server_id"],
+      "primary_key": ["risk_id"],
+      "foreign_keys": [
+        {"columns": ["server_id"], "references_table": "servers", "references_columns": ["server_id"]},
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}
+      ],
+      "recommended_indexes": [["risk_level", "risk_score"], ["facility_id", "risk_score"]],
+      "columns": {
+        "risk_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable risk record identifier."},
+        "score_date": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Dataset-anchored score date."},
+        "forecast_horizon_days": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 7, "maximum": 7, "external_required": true, "description": "Risk-screening horizon."},
+        "server_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Scored server."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Owning facility."},
+        "risk_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Deterministic screening score."},
+        "risk_level": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "allowed_values": ["low", "moderate", "high", "critical"], "external_required": true, "description": "Governed score band."},
+        "hardware_error_count": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Hardware health and I/O signals in lookback."},
+        "service_impact_count": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Server service-impact signals in lookback."},
+        "thermal_signal_count": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Cooling and temperature signals in lookback."},
+        "incident_count_365d": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Incidents in lookback."},
+        "incident_severity_points": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Fixed severity-weighted incident burden."},
+        "maintenance_count_365d": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 0, "external_required": true, "description": "Recorded maintenance actions in lookback."},
+        "avg_cpu_30d": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Recent mean CPU utilization."},
+        "avg_memory_30d": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Recent mean memory utilization."},
+        "avg_disk_30d": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Recent mean disk utilization."},
+        "asset_age_years": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "external_required": true, "description": "Asset age at score date."},
+        "primary_signal": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Largest score contribution."},
+        "recommendation": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Cautious inspection recommendation."},
+        "signal_summary_json": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Machine-readable signal summary."},
+        "lookback_days": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 365, "maximum": 365, "external_required": true, "description": "Evidence lookback."},
+        "method_version": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Governed scoring version."}
+      }
+    },
+    "facility_health_scores": {
+      "description": "Latest governed multi-dimensional health score for each facility.",
+      "grain": ["score_date", "facility_id"],
+      "primary_key": ["health_score_id"],
+      "foreign_keys": [
+        {"columns": ["facility_id"], "references_table": "facilities", "references_columns": ["facility_id"]}
+      ],
+      "recommended_indexes": [["health_score"]],
+      "columns": {
+        "health_score_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Stable health-score identifier."},
+        "score_date": {"type": "date", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Dataset-anchored score date."},
+        "source_year": {"type": "integer", "sqlite_type": "INTEGER", "nullable": false, "minimum": 1950, "maximum": 2100, "external_required": true, "description": "Complete year used for component scores."},
+        "facility_id": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Scored facility."},
+        "health_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Weighted overall health score."},
+        "energy_efficiency_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Relative PUE component."},
+        "reliability_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Relative downtime-per-server component."},
+        "network_health_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Availability latency and packet-loss component."},
+        "infrastructure_utilization_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Capacity-pressure component."},
+        "incident_severity_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Relative severity burden component."},
+        "anomaly_frequency_score": {"type": "number", "sqlite_type": "REAL", "nullable": false, "minimum": 0, "maximum": 100, "external_required": true, "description": "Relative anomaly-frequency component."},
+        "weights_version": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Governed weight version."},
+        "weights_json": {"type": "string", "sqlite_type": "TEXT", "nullable": false, "external_required": true, "description": "Exact canonical weights used."}
+      }
     }
   }
 }
-

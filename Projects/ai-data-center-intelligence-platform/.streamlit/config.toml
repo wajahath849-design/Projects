@@ -1,0 +1,23 @@
+[server]
+headless = true
+runOnSave = true
+
+[theme.light]
+primaryColor = "#155EEF"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F7FA"
+textColor = "#172B4D"
+borderColor = "#D0D5DD"
+baseRadius = "8px"
+buttonRadius = "8px"
+showWidgetBorder = true
+
+[theme.dark]
+primaryColor = "#84ADFF"
+backgroundColor = "#101828"
+secondaryBackgroundColor = "#1D2939"
+textColor = "#F2F4F7"
+borderColor = "#344054"
+baseRadius = "8px"
+buttonRadius = "8px"
+showWidgetBorder = true

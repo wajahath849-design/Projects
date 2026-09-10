@@ -246,4 +246,3 @@ The exact runtime varies by machine. On the verified local runtime, the seven te
 ## Step boundary
 
 Step 2 is complete. Cleaning logic, cleaned-output generation, and comparison against the supplied processed dataset belong to Step 3 and have not been implemented here.
-

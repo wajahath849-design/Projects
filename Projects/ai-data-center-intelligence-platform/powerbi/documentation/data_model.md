@@ -1,54 +1,53 @@
-# Power BI Foundation Data Model
+# Power BI Analytical Model
 
 ## Purpose
 
-The Power BI model is an analytical star schema, not a copy of SQLite's operational layout. It imports the verified `data/processed` CSVs because Power BI Desktop does not include a native SQLite connector and a third-party SQLite ODBC driver is not assumed.
+The report is an import-mode star schema over the verified `data/processed`
+CSV files. The AI application uses equivalent SQLite tables. Shared contracts,
+KPI definitions, and generated snapshots keep the two consumer layers aligned.
 
-The AI layer uses the equivalent SQLite tables. Shared contracts and KPI definitions keep both consumer layers aligned.
+## Model inventory
 
-## Tables
+| Group | Tables | Grain |
+|---|---|---|
+| Dimensions | DimDate, DimFacility, DimServer | date, facility, server |
+| Historical facts | FactServerMetrics, FactPowerMetrics, FactNetworkMetrics, FactIncidents | daily server/facility observations and incidents |
+| Evidence facts | FactSystemLogs, FactAlerts, FactMaintenanceActions, FactAnomalies | one governed evidence event |
+| Scored snapshots | FactServerRisk, FactFacilityHealth | server/facility score date |
+| Advanced snapshots | FactCostCarbon, FactIncidentImpact, FactLiveOperationsSnapshot | facility-month, incident, latest simulated facility |
+| Measures | _Measures | one centralized DAX measure home table |
 
-| Power BI table | Source | Role | Grain |
-|---|---|---|---|
-| DimDate | calculated DAX table | conformed date dimension | one date |
-| DimFacility | facilities.csv | dimension | one facility |
-| DimServer | servers.csv | dimension | one server |
-| FactServerMetrics | server_metrics.csv | fact | server per day |
-| FactPowerMetrics | power_metrics.csv | fact | facility per day |
-| FactNetworkMetrics | network_metrics.csv | fact | facility per day |
-| FactIncidents | uptime_incidents.csv | fact | incident |
-| _Measures | empty home table | measure organization | not applicable |
+The generated model contains 17 tables and 30 relationships. Dimensions filter
+facts in one direction. Server-to-incident/log/alert/action relationships remain
+inactive when an active facility path would otherwise create ambiguity.
 
-## Relationships
+## Advanced snapshot governance
 
-| From (one) | To (many) | Active | Direction | Reason |
-|---|---|---|---|---|
-| DimFacility[facility_id] | DimServer[facility_id] | yes | single | facility filters server inventory |
-| DimFacility[facility_id] | FactPowerMetrics[facility_id] | yes | single | facility filters energy facts |
-| DimFacility[facility_id] | FactNetworkMetrics[facility_id] | yes | single | facility filters network facts |
-| DimFacility[facility_id] | FactIncidents[facility_id] | yes | single | facility filters reliability facts |
-| DimServer[server_id] | FactServerMetrics[server_id] | yes | single | server filters utilization facts |
-| DimServer[server_id] | FactIncidents[server_id] | no | single | inactive to avoid an ambiguous Facility→Server→Incident path |
-| DimDate[Date] | FactServerMetrics[timestamp] | yes | single | conformed daily filtering |
-| DimDate[Date] | FactPowerMetrics[timestamp] | yes | single | conformed daily filtering |
-| DimDate[Date] | FactNetworkMetrics[timestamp] | yes | single | conformed daily filtering |
-| DimDate[Date] | FactIncidents[incident_date] | yes | single | incident filtering by start date |
+`FactCostCarbon` is generated at facility-month grain from daily power history,
+date-effective synthetic energy prices, and location-based synthetic carbon
+factors. Its additive cost, energy, and carbon fields can be safely summed.
 
-All filters flow from dimensions to facts. Bidirectional filtering is intentionally avoided because it can produce ambiguous propagation and unexpected totals.
+`FactIncidentImpact` contains one row per canonical incident. Its metric changes
+compare seven days before with seven days after the incident. This supports
+descriptive association only. The modeled cost-exposure field is a
+time-proportional analytical proxy, not a causal loss estimate.
 
-## Fact versus dimension
+`FactLiveOperationsSnapshot` contains only the latest per-facility health output
+from the isolated simulation database. Raw high-frequency events, logs, and
+rolling states are not imported into Power BI.
 
-A dimension describes entities used for filtering and grouping. A fact records measurable events at a declared grain. Dimensions sit on the `1` side of relationships; facts sit on the `*` side.
+## Date and refresh behavior
 
-## Date table
+DimDate covers all 4,018 dates from 1 January 2015 to 31 December 2025. Monthly
+advanced snapshots relate through their month-start dates, and incident impact
+relates through incident date. The separate live snapshot is intentionally not
+connected to DimDate because it belongs to the simulation clock.
 
-DimDate contains all 4,018 days from 1 Jan 2015 through 31 Dec 2025. Mark `DimDate[Date]` as the model's date table and sort Month by Month Number. Disable Auto date/time for the file.
+To regenerate safely:
 
-## Keys
+1. Run `python -m scripts.export_powerbi_snapshots`.
+2. Run `python scripts/build_powerbi_project.py --project-root . --output powerbi/PBI`.
+3. Open the PBIP file and select **Refresh** in Power BI Desktop.
 
-The model uses stable business keys from the canonical data. Power BI does not need additional surrogate keys at this stage because the dimensions are Type 1 snapshots from one source. Surrogates may be introduced if future datasets require slowly changing dimension history or overlapping source identifiers.
-
-## Import mode
-
-Import mode is appropriate for a portable portfolio project with approximately 1.8M fact rows. It provides fast visual interactions without requiring a continuously running database. Refresh reads the same canonical processed files validated against SQLite.
-
+The generator resolves source files from the current project folder and never
+modifies the canonical SQLite history.

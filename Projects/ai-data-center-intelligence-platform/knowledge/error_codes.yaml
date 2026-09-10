@@ -1,0 +1,19 @@
+error_codes:
+  TEMP_HIGH: {component: cooling, meaning: Rack inlet temperature warning, check: Validate sensors and inspect airflow and cooling circulation.}
+  COOL_FLOW_LOW: {component: cooling, meaning: Cooling-flow signal below expected state, check: Inspect flow, pressure, pump state, and valve position.}
+  COOLING_INCIDENT: {component: cooling, meaning: Cooling-related service-impact event, check: Correlate temperature, flow, PUE, cooling power, and server evidence.}
+  LATENCY_HIGH: {component: network, meaning: Latency exceeded the documented operating threshold, check: Compare path, interface, packet loss, throughput, and baseline.}
+  PACKET_LOSS_HIGH: {component: network, meaning: Packet delivery degraded, check: Inspect interface and path health and determine the impact scope.}
+  LINK_SERVICE_IMPACT: {component: network, meaning: Network service-impact event, check: Verify switch and interface state before recovery.}
+  VOLTAGE_UNSTABLE: {component: power, meaning: Power-quality warning, check: Review qualified power-feed and UPS telemetry.}
+  UPS_TRANSFER: {component: power, meaning: UPS transfer event, check: Review transfer reason and downstream distribution state.}
+  POWER_SERVICE_IMPACT: {component: power, meaning: Power-related service-impact event, check: Verify stable supply through qualified personnel.}
+  HW_HEALTH_WARNING: {component: hardware, meaning: Server hardware-health warning, check: Preserve evidence and run approved diagnostics.}
+  DEVICE_IO_ERROR: {component: hardware, meaning: Device input-output error, check: Inspect storage device and controller health.}
+  SERVER_SERVICE_IMPACT: {component: hardware, meaning: Hardware-related server impact, check: Correlate health warnings, I/O errors, utilization, and incident history.}
+  APP_ERROR_RATE_HIGH: {component: application, meaning: Application error rate increased, check: Review dependencies, changes, resource pressure, and health checks.}
+  SERVICE_UNRESPONSIVE: {component: application, meaning: Service health check became unresponsive, check: Inspect service state and dependencies before approved recovery.}
+  APPLICATION_SERVICE_IMPACT: {component: application, meaning: Application-related service impact, check: Correlate application events, server metrics, and change history.}
+  MAINT_WINDOW_NOTICE: {component: maintenance, meaning: Approved maintenance-window notice, check: Confirm scope, timing, owners, and rollback plan.}
+  COMPONENT_DRAIN: {component: maintenance, meaning: Service or workload drain before maintenance, check: Verify redundancy and successful drain.}
+  MAINT_ACTIVITY: {component: maintenance, meaning: Scheduled maintenance activity started, check: Confirm work remains inside approved scope.}

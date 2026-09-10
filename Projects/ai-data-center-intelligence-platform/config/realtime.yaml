@@ -1,0 +1,22 @@
+version: 1.0.0
+simulation:
+  tick_interval_seconds: 5.0
+  server_sample_size_per_facility: 3
+  default_speed_multiplier: 1.0
+  random_seed: 2026
+storage:
+  retention_hours: 24
+  max_events_per_session: 250000
+  queue_max_batches: 100
+  write_batch_size: 5000
+analytics:
+  rolling_windows_minutes: [1, 5, 15]
+  anomaly_baseline_minutes: 15
+  anomaly_minimum_samples: 5
+  anomaly_z_threshold: 3.0
+  anomaly_active_minutes: 15
+  maximum_lateness_seconds: 120
+caveat: >-
+  This configuration generates synthetic real-time telemetry for demonstrations and
+  evaluation. It is not connected to production infrastructure and cannot execute
+  operational actions.

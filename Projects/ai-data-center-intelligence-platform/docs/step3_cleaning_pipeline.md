@@ -217,4 +217,3 @@ The full suite should report 15 passing tests: seven Step 2 profiling tests plus
 ## Step boundary
 
 Step 3 is complete. Canonical database-model decisions and SQLite implementation remain outside this step.
-

@@ -1,0 +1,23 @@
+version: live_rules_v1.0.0
+score_range: [0, 100]
+weights:
+  energy_efficiency: 0.20
+  reliability: 0.20
+  network_health: 0.20
+  infrastructure: 0.15
+  alert_burden: 0.15
+  anomaly_burden: 0.10
+required_signals:
+  energy_efficiency: [pue]
+  reliability: [availability_pct, downtime_minutes, incident_indicator]
+  network_health: [latency_ms, packet_loss_pct, network_availability_pct]
+  infrastructure: [cpu_utilization_pct, memory_utilization_pct, disk_utilization_pct, temperature_c]
+rules:
+  pue_reference_range: [1.2, 2.2]
+  utilization_pressure_starts_pct: 70
+  temperature_pressure_starts_c: 65
+  latency_reference_ms: 5
+caveat: >-
+  The live health score is a deterministic synthetic-operations triage index. It is
+  separate from the historical annual health score and is not a safety certification
+  or service-level guarantee.

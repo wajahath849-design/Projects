@@ -1,0 +1,80 @@
+table FactNetworkMetrics
+
+	column metric_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: metric_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column bandwidth_utilization_pct
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: bandwidth_utilization_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column latency_ms
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: latency_ms
+
+		annotation SummarizationSetBy = Automatic
+
+	column packet_loss_pct
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: packet_loss_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column throughput_mbps
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: throughput_mbps
+
+		annotation SummarizationSetBy = Automatic
+
+	column network_availability_pct
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: network_availability_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactNetworkMetrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/network_metrics.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"metric_id", type text}, {"facility_id", type text}, {"timestamp", type date},
+				        {"bandwidth_utilization_pct", type number}, {"latency_ms", type number},
+				        {"packet_loss_pct", type number}, {"throughput_mbps", type number},
+				        {"network_availability_pct", type number}
+				    })
+				in
+				    Typed

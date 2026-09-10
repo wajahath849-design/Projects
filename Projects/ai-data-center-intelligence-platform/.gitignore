@@ -12,6 +12,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .pytest_tmp/
+.pytest_*/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -22,6 +23,7 @@ database/*.db
 database/*.db-*
 logs/*
 !logs/.gitkeep
+*.log
 evaluation/results/*
 !evaluation/results/.gitkeep
 
@@ -44,3 +46,9 @@ Thumbs.db
 *.pbit.autosave
 **/.pbi/
 *.pbix
+
+# Local scratch and packaging output
+dist/
+build/
+*.tmp
+*.bak

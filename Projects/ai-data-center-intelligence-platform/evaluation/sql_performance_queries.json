@@ -1,0 +1,65 @@
+[
+  {
+    "id": "pue_frankfurt_2024",
+    "category": "indexed_range",
+    "question": "What was Frankfurt Central's average PUE in 2024?",
+    "raw_sql": "SELECT f.facility_name, ROUND(AVG(p.pue), 8) AS average_pue FROM facilities AS f JOIN power_metrics AS p ON p.facility_id = f.facility_id WHERE f.facility_name = 'Frankfurt Central' AND p.timestamp >= '2024-01-01' AND p.timestamp < '2025-01-01' GROUP BY f.facility_name ORDER BY f.facility_name",
+    "optimized_sql": "SELECT f.facility_name, ROUND(a.average_pue, 8) AS average_pue FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id WHERE f.facility_name = 'Frankfurt Central' AND a.year = 2024 ORDER BY f.facility_name"
+  },
+  {
+    "id": "latency_dublin_range",
+    "category": "indexed_range",
+    "question": "What was Dublin West's average latency from 2020 through 2025?",
+    "raw_sql": "SELECT f.facility_name, ROUND(AVG(n.latency_ms), 8) AS average_latency_ms FROM facilities AS f JOIN network_metrics AS n ON n.facility_id = f.facility_id WHERE f.facility_name = 'Dublin West' AND n.timestamp >= '2020-01-01' AND n.timestamp < '2026-01-01' GROUP BY f.facility_name ORDER BY f.facility_name",
+    "optimized_sql": "SELECT f.facility_name, ROUND(SUM(a.average_latency_ms * a.network_measurement_count) / SUM(a.network_measurement_count), 8) AS average_latency_ms FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id WHERE f.facility_name = 'Dublin West' AND a.year BETWEEN 2020 AND 2025 GROUP BY f.facility_name ORDER BY f.facility_name"
+  },
+  {
+    "id": "server_cpu_point_range",
+    "category": "raw_detail",
+    "question": "What was SRV-00001's average CPU utilization in 2024?",
+    "raw_sql": "SELECT sm.server_id, ROUND(AVG(sm.cpu_utilization_pct), 8) AS average_cpu_utilization_pct FROM server_metrics AS sm WHERE sm.server_id = 'SRV-00001' AND sm.timestamp >= '2024-01-01' AND sm.timestamp < '2025-01-01' GROUP BY sm.server_id ORDER BY sm.server_id",
+    "optimized_sql": "SELECT sm.server_id, ROUND(AVG(sm.cpu_utilization_pct), 8) AS average_cpu_utilization_pct FROM server_metrics AS sm WHERE sm.server_id = 'SRV-00001' AND sm.timestamp >= '2024-01-01' AND sm.timestamp < '2025-01-01' GROUP BY sm.server_id ORDER BY sm.server_id"
+  },
+  {
+    "id": "incidents_frankfurt_range",
+    "category": "indexed_range",
+    "question": "How many incidents and downtime minutes did Frankfurt Central have from 2018 through 2024?",
+    "raw_sql": "SELECT f.facility_name, COUNT(i.incident_id) AS incident_count, SUM(i.downtime_minutes) AS total_downtime_minutes FROM facilities AS f JOIN uptime_incidents AS i ON i.facility_id = f.facility_id WHERE f.facility_name = 'Frankfurt Central' AND i.start_time >= '2018-01-01' AND i.start_time < '2025-01-01' GROUP BY f.facility_name ORDER BY f.facility_name",
+    "optimized_sql": "SELECT f.facility_name, SUM(a.incident_count) AS incident_count, SUM(a.total_downtime_minutes) AS total_downtime_minutes FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id WHERE f.facility_name = 'Frankfurt Central' AND a.year BETWEEN 2018 AND 2024 GROUP BY f.facility_name ORDER BY f.facility_name"
+  },
+  {
+    "id": "server_metrics_by_facility_year",
+    "category": "large_aggregation",
+    "question": "Show average CPU, memory, disk, and server network utilization by facility by year.",
+    "raw_sql": "SELECT f.facility_id, f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) AS year, COUNT(*) AS server_measurement_count, ROUND(AVG(sm.cpu_utilization_pct), 8) AS average_cpu_utilization_pct, ROUND(AVG(sm.memory_utilization_pct), 8) AS average_memory_utilization_pct, ROUND(AVG(sm.disk_utilization_pct), 8) AS average_disk_utilization_pct, ROUND(AVG(sm.network_utilization_pct), 8) AS average_server_network_utilization_pct FROM server_metrics AS sm JOIN servers AS s ON s.server_id = sm.server_id JOIN facilities AS f ON f.facility_id = s.facility_id GROUP BY f.facility_id, f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) ORDER BY f.facility_id, year",
+    "optimized_sql": "SELECT a.facility_id, f.facility_name, a.year, a.server_measurement_count, ROUND(a.average_cpu_utilization_pct, 8) AS average_cpu_utilization_pct, ROUND(a.average_memory_utilization_pct, 8) AS average_memory_utilization_pct, ROUND(a.average_disk_utilization_pct, 8) AS average_disk_utilization_pct, ROUND(a.average_server_network_utilization_pct, 8) AS average_server_network_utilization_pct FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id ORDER BY a.facility_id, a.year"
+  },
+  {
+    "id": "forecast_cpu_history",
+    "category": "forecast_history",
+    "question": "Load annual CPU utilization history by facility for forecasting.",
+    "raw_sql": "SELECT f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) AS year, ROUND(AVG(sm.cpu_utilization_pct), 8) AS metric_value FROM server_metrics AS sm JOIN servers AS s ON s.server_id = sm.server_id JOIN facilities AS f ON f.facility_id = s.facility_id WHERE CAST(substr(sm.timestamp, 1, 4) AS INTEGER) <= 2025 GROUP BY f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) ORDER BY f.facility_name, year",
+    "optimized_sql": "SELECT f.facility_name, a.year, ROUND(a.average_cpu_utilization_pct, 8) AS metric_value FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id WHERE a.year <= 2025 ORDER BY f.facility_name, a.year"
+  },
+  {
+    "id": "forecast_memory_history",
+    "category": "forecast_history",
+    "question": "Load annual memory utilization history by facility for forecasting.",
+    "raw_sql": "SELECT f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) AS year, ROUND(AVG(sm.memory_utilization_pct), 8) AS metric_value FROM server_metrics AS sm JOIN servers AS s ON s.server_id = sm.server_id JOIN facilities AS f ON f.facility_id = s.facility_id WHERE CAST(substr(sm.timestamp, 1, 4) AS INTEGER) <= 2025 GROUP BY f.facility_name, CAST(substr(sm.timestamp, 1, 4) AS INTEGER) ORDER BY f.facility_name, year",
+    "optimized_sql": "SELECT f.facility_name, a.year, ROUND(a.average_memory_utilization_pct, 8) AS metric_value FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id WHERE a.year <= 2025 ORDER BY f.facility_name, a.year"
+  },
+  {
+    "id": "power_metrics_by_facility_year",
+    "category": "annual_aggregation",
+    "question": "Show PUE, power, IT load, cooling power, and cooling cost by facility by year.",
+    "raw_sql": "SELECT f.facility_id, f.facility_name, CAST(substr(p.timestamp, 1, 4) AS INTEGER) AS year, COUNT(*) AS power_measurement_count, ROUND(AVG(p.pue), 8) AS average_pue, ROUND(AVG(p.power_draw_kw), 8) AS average_power_draw_kw, ROUND(AVG(p.it_load_kw), 8) AS average_it_load_kw, ROUND(AVG(p.cooling_power_kw), 8) AS average_cooling_power_kw, ROUND(SUM(p.cooling_cost), 8) AS total_cooling_cost FROM power_metrics AS p JOIN facilities AS f ON f.facility_id = p.facility_id GROUP BY f.facility_id, f.facility_name, CAST(substr(p.timestamp, 1, 4) AS INTEGER) ORDER BY f.facility_id, year",
+    "optimized_sql": "SELECT a.facility_id, f.facility_name, a.year, a.power_measurement_count, ROUND(a.average_pue, 8) AS average_pue, ROUND(a.average_power_draw_kw, 8) AS average_power_draw_kw, ROUND(a.average_it_load_kw, 8) AS average_it_load_kw, ROUND(a.average_cooling_power_kw, 8) AS average_cooling_power_kw, ROUND(a.total_cooling_cost, 8) AS total_cooling_cost FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id ORDER BY a.facility_id, a.year"
+  },
+  {
+    "id": "network_metrics_by_facility_year",
+    "category": "annual_aggregation",
+    "question": "Show network performance by facility by year.",
+    "raw_sql": "SELECT f.facility_id, f.facility_name, CAST(substr(n.timestamp, 1, 4) AS INTEGER) AS year, COUNT(*) AS network_measurement_count, ROUND(AVG(n.bandwidth_utilization_pct), 8) AS average_bandwidth_utilization_pct, ROUND(AVG(n.latency_ms), 8) AS average_latency_ms, ROUND(AVG(n.packet_loss_pct), 8) AS average_packet_loss_pct, ROUND(AVG(n.throughput_mbps), 8) AS average_throughput_mbps, ROUND(AVG(n.network_availability_pct), 8) AS average_network_availability_pct FROM network_metrics AS n JOIN facilities AS f ON f.facility_id = n.facility_id GROUP BY f.facility_id, f.facility_name, CAST(substr(n.timestamp, 1, 4) AS INTEGER) ORDER BY f.facility_id, year",
+    "optimized_sql": "SELECT a.facility_id, f.facility_name, a.year, a.network_measurement_count, ROUND(a.average_bandwidth_utilization_pct, 8) AS average_bandwidth_utilization_pct, ROUND(a.average_latency_ms, 8) AS average_latency_ms, ROUND(a.average_packet_loss_pct, 8) AS average_packet_loss_pct, ROUND(a.average_throughput_mbps, 8) AS average_throughput_mbps, ROUND(a.average_network_availability_pct, 8) AS average_network_availability_pct FROM agg_facility_yearly AS a JOIN facilities AS f ON f.facility_id = a.facility_id ORDER BY a.facility_id, a.year"
+  }
+]

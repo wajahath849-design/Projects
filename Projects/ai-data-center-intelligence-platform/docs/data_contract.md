@@ -271,4 +271,3 @@ The Step 4 test file should report seven passes. The complete suite should repor
 ## Step boundary
 
 Step 4 is complete. SQL DDL, physical indexes, analytical views, database loading, and SQLite validation belong to Step 5.
-

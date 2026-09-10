@@ -1,0 +1,122 @@
+table FactFacilityHealth
+
+	column health_score_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: health_score_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column score_date
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: score_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_year
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: source_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column health_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: health_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column energy_efficiency_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: energy_efficiency_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column reliability_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: reliability_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column network_health_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: network_health_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column infrastructure_utilization_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: infrastructure_utilization_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column incident_severity_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: incident_severity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column anomaly_frequency_score
+		dataType: double
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: anomaly_frequency_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column weights_version
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: weights_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column weights_json
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: weights_json
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactFacilityHealth = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/facility_health_scores.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"health_score_id", type text}, {"score_date", type date}, {"source_year", Int64.Type},
+				        {"facility_id", type text}, {"health_score", type number},
+				        {"energy_efficiency_score", type number}, {"reliability_score", type number},
+				        {"network_health_score", type number}, {"infrastructure_utilization_score", type number},
+				        {"incident_severity_score", type number}, {"anomaly_frequency_score", type number},
+				        {"weights_version", type text}, {"weights_json", type text}
+				    })
+				in
+				    Typed

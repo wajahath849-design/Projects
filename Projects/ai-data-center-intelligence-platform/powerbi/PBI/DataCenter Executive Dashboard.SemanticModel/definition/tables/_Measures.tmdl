@@ -1,0 +1,235 @@
+table _Measures
+
+	column Placeholder
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: [Placeholder]
+
+	measure 'Server Count' = DISTINCTCOUNT(DimServer[server_id])
+		formatString: #,0
+		displayFolder: Inventory
+
+	measure 'Active Server Count' = CALCULATE(DISTINCTCOUNT(DimServer[server_id]), KEEPFILTERS(DimServer[status] = "active"))
+		formatString: #,0
+		displayFolder: Inventory
+
+	measure 'Average PUE' = AVERAGE(FactPowerMetrics[pue])
+		formatString: 0.000
+		displayFolder: Energy
+
+	measure 'Total Power Draw' = SUM(FactPowerMetrics[power_draw_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total IT Load' = SUM(FactPowerMetrics[it_load_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total Cooling Power' = SUM(FactPowerMetrics[cooling_power_kw])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Total Cooling Cost' = SUM(FactPowerMetrics[cooling_cost])
+		formatString: #,0.00
+		displayFolder: Energy
+
+	measure 'Average CPU Utilization' = AVERAGE(FactServerMetrics[cpu_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Memory Utilization' = AVERAGE(FactServerMetrics[memory_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Disk Utilization' = AVERAGE(FactServerMetrics[disk_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Server Network Utilization' = AVERAGE(FactServerMetrics[network_utilization_pct])
+		formatString: 0.00
+		displayFolder: Infrastructure
+
+	measure 'Average Network Latency' = AVERAGE(FactNetworkMetrics[latency_ms])
+		formatString: 0.00
+		displayFolder: Network
+
+	measure 'Average Packet Loss' = AVERAGE(FactNetworkMetrics[packet_loss_pct])
+		formatString: 0.000
+		displayFolder: Network
+
+	measure 'Average Throughput' = AVERAGE(FactNetworkMetrics[throughput_mbps])
+		formatString: #,0.00
+		displayFolder: Network
+
+	measure 'Network Availability' = AVERAGE(FactNetworkMetrics[network_availability_pct])
+		formatString: 0.0000
+		displayFolder: Network
+
+	measure 'Total Downtime' = SUM(FactIncidents[downtime_minutes])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Incident Count' = DISTINCTCOUNT(FactIncidents[incident_id])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Downtime per Server' = DIVIDE([Total Downtime], [Server Count])
+		formatString: 0.00
+		displayFolder: Reliability
+
+	measure 'Incident Rate per 100 Servers' = DIVIDE([Incident Count], [Server Count]) * 100
+		formatString: 0.00
+		displayFolder: Reliability
+
+	measure 'Visible Days' = DISTINCTCOUNT(DimDate[Date])
+		formatString: #,0
+		displayFolder: Reliability
+
+	measure 'Operational Availability' = VAR PotentialServerMinutes = [Server Count] * [Visible Days] * 1440 RETURN 100 * (1 - DIVIDE([Total Downtime], PotentialServerMinutes))
+		formatString: 0.0000
+		displayFolder: Reliability
+
+	measure 'Previous Year Average PUE' = CALCULATE([Average PUE], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: 0.000
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year PUE Change' = DIVIDE([Average PUE] - [Previous Year Average PUE], [Previous Year Average PUE])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	measure 'Previous Year Cooling Cost' = CALCULATE([Total Cooling Cost], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: #,0.00
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year Cooling Cost Change' = DIVIDE([Total Cooling Cost] - [Previous Year Cooling Cost], [Previous Year Cooling Cost])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	measure 'Previous Year Downtime' = CALCULATE([Total Downtime], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: #,0
+		displayFolder: Time Intelligence
+
+	measure 'Year-over-Year Downtime Change' = DIVIDE([Total Downtime] - [Previous Year Downtime], [Previous Year Downtime])
+		formatString: 0.00%
+		displayFolder: Time Intelligence
+
+	measure 'Log Count' = DISTINCTCOUNT(FactSystemLogs[log_id])
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Error Log Count' = CALCULATE([Log Count], KEEPFILTERS(FactSystemLogs[log_level] IN {"ERROR", "CRITICAL"}))
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Critical Log Count' = CALCULATE([Log Count], KEEPFILTERS(FactSystemLogs[log_level] = "CRITICAL"))
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Alert Count' = DISTINCTCOUNT(FactAlerts[alert_id])
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Critical Alert Count' = CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[severity] = "critical"))
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Open Alert Count' = CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[status] = "open"))
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Anomaly Count' = DISTINCTCOUNT(FactAnomalies[anomaly_id])
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Critical Anomaly Count' = CALCULATE([Anomaly Count], KEEPFILTERS(FactAnomalies[severity] = "critical"))
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'Maintenance Action Count' = DISTINCTCOUNT(FactMaintenanceActions[action_id])
+		formatString: #,0
+		displayFolder: Incident Intelligence
+
+	measure 'MTTR Minutes' = AVERAGE(FactIncidents[downtime_minutes])
+		formatString: 0.00
+		displayFolder: Reliability
+
+	measure 'Average Server Risk Score' = AVERAGE(FactServerRisk[risk_score])
+		formatString: 0.00
+		displayFolder: Predictive Operations
+
+	measure 'High Risk Server Count' = CALCULATE(DISTINCTCOUNT(FactServerRisk[server_id]), KEEPFILTERS(FactServerRisk[risk_level] IN {"high", "critical"}))
+		formatString: #,0
+		displayFolder: Predictive Operations
+
+	measure 'Average Facility Health Score' = AVERAGE(FactFacilityHealth[health_score])
+		formatString: 0.00
+		displayFolder: Predictive Operations
+
+	measure 'Latest Data Date' = MAXX(UNION(SELECTCOLUMNS(FactPowerMetrics, "DataDate", FactPowerMetrics[timestamp]), SELECTCOLUMNS(FactNetworkMetrics, "DataDate", FactNetworkMetrics[timestamp]), SELECTCOLUMNS(FactServerMetrics, "DataDate", FactServerMetrics[timestamp])), [DataDate])
+		formatString: General Date
+		displayFolder: Data Quality
+
+	measure 'Server Risk Observation Count' = COUNTROWS(FactServerRisk)
+		formatString: #,0
+		displayFolder: Predictive Operations
+
+	measure 'Modeled Energy' = SUM(FactCostCarbon[modeled_energy_kwh])
+		formatString: #,0
+		displayFolder: Cost and Carbon
+
+	measure 'Modeled Energy Cost' = SUM(FactCostCarbon[modeled_energy_cost_usd])
+		formatString: $#,0
+		displayFolder: Cost and Carbon
+
+	measure 'Modeled Cooling Cost' = SUM(FactCostCarbon[modeled_cooling_cost_usd])
+		formatString: $#,0
+		displayFolder: Cost and Carbon
+
+	measure 'Modeled Carbon' = SUM(FactCostCarbon[modeled_carbon_tonnes])
+		formatString: #,0.00
+		displayFolder: Cost and Carbon
+
+	measure 'Average Energy Price' = AVERAGE(FactCostCarbon[price_per_kwh])
+		formatString: $0.000
+		displayFolder: Cost and Carbon
+
+	measure 'Average Carbon Intensity' = AVERAGE(FactCostCarbon[grams_co2e_per_kwh])
+		formatString: #,0.0
+		displayFolder: Cost and Carbon
+
+	measure 'Average Efficiency Opportunity Score' = AVERAGE(FactCostCarbon[efficiency_opportunity_score])
+		formatString: 0.0
+		displayFolder: Cost and Carbon
+
+	measure 'Incident Impact Count' = DISTINCTCOUNT(FactIncidentImpact[incident_id])
+		formatString: #,0
+		displayFolder: Reliability Impact
+
+	measure 'Average Incident PUE Change' = AVERAGE(FactIncidentImpact[change_pue_pct])
+		formatString: 0.00
+		displayFolder: Reliability Impact
+
+	measure 'Average Incident Latency Change' = AVERAGE(FactIncidentImpact[change_latency_ms_pct])
+		formatString: 0.00
+		displayFolder: Reliability Impact
+
+	measure 'Modeled Downtime Cost Exposure' = SUM(FactIncidentImpact[modeled_downtime_cost_exposure_usd])
+		formatString: $#,0
+		displayFolder: Reliability Impact
+
+	measure 'Live Facility Health Score' = AVERAGE(FactLiveOperationsSnapshot[health_score])
+		formatString: 0.0
+		displayFolder: Live Operations
+
+	measure 'Live Active Alert Count' = SUM(FactLiveOperationsSnapshot[active_alert_count])
+		formatString: #,0
+		displayFolder: Live Operations
+
+	measure 'Live Data Completeness' = AVERAGE(FactLiveOperationsSnapshot[data_completeness_pct])
+		formatString: 0.0
+		displayFolder: Live Operations
+
+	partition _Measures = calculated
+		mode: import
+		source = DATATABLE("Placeholder", STRING, {{"Measures"}})

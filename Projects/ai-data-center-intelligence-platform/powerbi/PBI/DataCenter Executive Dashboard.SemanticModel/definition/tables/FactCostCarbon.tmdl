@@ -1,0 +1,241 @@
+table FactCostCarbon
+
+	column snapshot_date
+		dataType: dateTime
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_label
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: month_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column observation_days
+		dataType: int64
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: observation_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_energy_kwh
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_energy_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_it_energy_kwh
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_it_energy_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_cooling_energy_kwh
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_cooling_energy_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_energy_cost_usd
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_energy_cost_usd
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_it_cost_usd
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_it_cost_usd
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_cooling_cost_usd
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_cooling_cost_usd
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_carbon_tonnes
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_carbon_tonnes
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_it_carbon_tonnes
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_it_carbon_tonnes
+
+		annotation SummarizationSetBy = Automatic
+
+	column modeled_cooling_carbon_tonnes
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: modeled_cooling_carbon_tonnes
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_pue
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: average_pue
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_per_kwh
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: price_per_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+	column grams_co2e_per_kwh
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: grams_co2e_per_kwh
+
+		annotation SummarizationSetBy = Automatic
+
+	column efficiency_opportunity_score
+		dataType: double
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: efficiency_opportunity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column pricing_basis
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: pricing_basis
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_source
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: price_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column carbon_methodology
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: carbon_methodology
+
+		annotation SummarizationSetBy = Automatic
+
+	column carbon_source
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: carbon_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column assumptions_are_synthetic
+		dataType: boolean
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: assumptions_are_synthetic
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_version
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: snapshot_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_period
+		dataType: string
+		isNullable: true
+		summarizeBy: none
+		sourceColumn: source_period
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactCostCarbon = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/powerbi_cost_carbon_snapshot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"snapshot_date", type date}, {"year", Int64.Type}, {"month_label", type text},
+				        {"facility_id", type text}, {"facility_name", type text}, {"observation_days", Int64.Type},
+				        {"modeled_energy_kwh", type number}, {"modeled_it_energy_kwh", type number},
+				        {"modeled_cooling_energy_kwh", type number}, {"modeled_energy_cost_usd", type number},
+				        {"modeled_it_cost_usd", type number}, {"modeled_cooling_cost_usd", type number},
+				        {"modeled_carbon_tonnes", type number}, {"modeled_it_carbon_tonnes", type number},
+				        {"modeled_cooling_carbon_tonnes", type number}, {"average_pue", type number},
+				        {"price_per_kwh", type number}, {"grams_co2e_per_kwh", type number},
+				        {"efficiency_opportunity_score", type number}, {"currency", type text},
+				        {"pricing_basis", type text}, {"price_source", type text},
+				        {"carbon_methodology", type text}, {"carbon_source", type text},
+				        {"assumptions_are_synthetic", type logical}, {"snapshot_version", type text},
+				        {"source_period", type text}
+				    })
+				in
+				    Typed

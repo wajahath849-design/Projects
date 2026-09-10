@@ -31,6 +31,9 @@ def test_ollama_generator_uses_structured_output():
     assert result.sql.startswith("SELECT")
     assert client.kwargs["format"]["additionalProperties"] is False
     assert client.kwargs["options"]["temperature"] == 0
+    assert client.kwargs["options"]["num_ctx"] == 4096
+    assert client.kwargs["options"]["num_predict"] == 256
+    assert client.kwargs["keep_alive"] == "30m"
 
 
 def test_offline_generator_error_mentions_ollama():

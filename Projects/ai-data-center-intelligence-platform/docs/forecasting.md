@@ -18,7 +18,7 @@ What will CPU utilization be in 2030?
 
 ## Automatic updates
 
-No forecast values are hard-coded or cached. Each future question reads and refits from `database/datacenter.db`. After updating canonical processed data, rebuild the database:
+No forecast values are hard-coded or cached. Each future question reads and refits from `database/datacenter.db`. Annual model history is read from the governed `agg_facility_yearly` summary, which is rebuilt from canonical raw rows whenever the database is loaded. If that derived table is absent in an older database, the forecaster safely falls back to the original raw-table query. After updating canonical processed data, rebuild the database:
 
 ```powershell
 python scripts\load_database.py
@@ -31,6 +31,8 @@ The training end year and predictions will change when a newer complete year is 
 The parser accepts a future year anywhere in the question, so “cooling 2030” and “forecast cooling for 2030” are equivalent. “Next year,” “5 years from now,” and word-number phrases such as “five years from now” resolve relative to the latest complete database year. If forecast intent is present but no date can be resolved, the assistant asks which future year to use instead of silently running a historical query.
 
 Multiple questions separated by question marks, semicolons, or new lines are executed independently and returned as numbered answers. A single future question may also request multiple metrics, for example `Forecast PUE, cooling cost, and latency in 2030`. Each metric is modeled separately because units and aggregation semantics differ; mixed-unit results are shown in one evidence table rather than a misleading combined chart.
+
+The chat UI remembers the most recently discussed metric, facility, and year. A follow-up such as `2040`, `what about Dublin?`, or `and PUE?` is expanded into a standalone data question before routing. If there is no usable context, the assistant asks for the missing metric or year instead of guessing. Generic `price` means Annual Cooling Cost because it is the dataset's only monetary time series. Historical price comparisons and increase/decrease questions are answered directly from current database history.
 
 ## Interpretation
 

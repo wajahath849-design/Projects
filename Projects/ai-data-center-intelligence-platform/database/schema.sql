@@ -87,4 +87,3 @@ CREATE INDEX idx_incidents_facility_start ON uptime_incidents(facility_id, start
 CREATE INDEX idx_incidents_server_start ON uptime_incidents(server_id, start_time);
 CREATE INDEX idx_incidents_severity ON uptime_incidents(severity);
 CREATE INDEX idx_incidents_root_cause ON uptime_incidents(root_cause);
-

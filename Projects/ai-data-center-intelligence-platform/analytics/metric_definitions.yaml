@@ -111,4 +111,41 @@ metrics:
     comparison: previous_calendar_year
     unit: percent_change
     direction: lower_is_better
-
+  modeled_energy_kwh:
+    display_name: Modeled Energy Consumption
+    formula: average_power_draw_kw * 24 hours for each facility-day
+    source: power_metrics.power_draw_kw
+    aggregation: sum
+    unit: kWh
+    caveat: Daily source rows are treated as average kW over 24 hours; this is modeled energy, not meter data.
+  modeled_energy_cost:
+    display_name: Modeled Energy Cost
+    formula: modeled_energy_kwh * date-effective price_per_kwh
+    source: power_metrics + data/assumptions/energy_prices.csv
+    aggregation: sum
+    unit: USD
+    direction: lower_is_better
+    caveat: Uses synthetic price assumptions and is not an invoice or real-company financial claim.
+  modeled_cooling_cost:
+    display_name: Modeled Cooling Energy Cost
+    formula: cooling_power_kw * 24 hours * date-effective price_per_kwh
+    source: power_metrics + data/assumptions/energy_prices.csv
+    aggregation: sum
+    unit: USD
+    direction: lower_is_better
+  modeled_carbon_tonnes:
+    display_name: Modeled Carbon Emissions
+    formula: modeled_energy_kwh * grams_co2e_per_kwh / 1000000
+    source: power_metrics + data/assumptions/carbon_intensity.csv
+    aggregation: sum
+    unit: tonnes_CO2e
+    direction: lower_is_better
+    caveat: Uses synthetic location-based factors; it is not a verified emissions inventory.
+  efficiency_opportunity_score:
+    display_name: Efficiency Opportunity Score
+    formula: weighted normalized PUE, cooling cost per IT kWh, carbon intensity, and incident rate
+    source: governed cost, carbon, power, and incident metrics
+    aggregation: facility_score
+    unit: score_0_to_100
+    direction: lower_is_better
+    caveat: Relative portfolio-prioritization score, not a safety rating or guaranteed return.

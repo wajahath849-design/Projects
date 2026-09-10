@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-14T13:31:11.370435+00:00",
+  "generated_at_utc": "2026-08-28T10:39:01.849550+00:00",
   "source_directory": "data/processed",
   "database_path": "database/datacenter.db",
   "loaded_rows": {
@@ -8,7 +8,16 @@
     "server_metrics": 1727740,
     "power_metrics": 24108,
     "network_metrics": 24108,
-    "uptime_incidents": 1158
+    "uptime_incidents": 1158,
+    "system_logs": 5790,
+    "alerts": 544,
+    "maintenance_actions": 1158,
+    "detected_anomalies": 893,
+    "incident_reviews": 6,
+    "server_failure_risk": 430,
+    "facility_health_scores": 6,
+    "agg_facility_monthly_operations": 792,
+    "agg_event_code_monthly": 5065
   },
   "validation": {
     "integrity_check": "ok",
@@ -19,7 +28,16 @@
       "server_metrics": 1727740,
       "power_metrics": 24108,
       "network_metrics": 24108,
-      "uptime_incidents": 1158
+      "uptime_incidents": 1158,
+      "system_logs": 5790,
+      "alerts": 544,
+      "maintenance_actions": 1158,
+      "detected_anomalies": 893,
+      "incident_reviews": 6,
+      "server_failure_risk": 430,
+      "facility_health_scores": 6,
+      "agg_facility_monthly_operations": 792,
+      "agg_event_code_monthly": 5065
     },
     "views": [
       "vw_facility_daily_performance",
@@ -29,16 +47,38 @@
       "vw_server_utilization"
     ],
     "indexes": [
+      "idx_actions_facility_timestamp",
+      "idx_actions_incident_timestamp",
+      "idx_agg_events_code_month",
+      "idx_agg_events_component_month",
+      "idx_agg_ops_month",
+      "idx_alerts_facility_timestamp",
+      "idx_alerts_server_timestamp",
+      "idx_alerts_status_severity",
+      "idx_anomalies_facility_timestamp",
+      "idx_anomalies_metric_timestamp",
+      "idx_anomalies_severity_timestamp",
+      "idx_health_score",
       "idx_incidents_facility_start",
       "idx_incidents_root_cause",
       "idx_incidents_server_start",
       "idx_incidents_severity",
+      "idx_logs_component_timestamp",
+      "idx_logs_event_timestamp",
+      "idx_logs_facility_timestamp",
+      "idx_logs_level_timestamp",
+      "idx_logs_server_timestamp",
+      "idx_logs_timestamp",
       "idx_network_metrics_timestamp",
       "idx_power_metrics_timestamp",
+      "idx_reviews_incident_created",
+      "idx_reviews_status_knowledge",
+      "idx_risk_facility_score",
+      "idx_risk_level_score",
       "idx_server_metrics_timestamp",
       "idx_servers_facility",
       "idx_servers_facility_status"
     ]
   },
-  "database_bytes": 283336704
+  "database_bytes": 288718848
 }

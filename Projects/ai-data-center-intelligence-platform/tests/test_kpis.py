@@ -21,10 +21,14 @@ def test_kpi_catalog_references_defined_metrics() -> None:
 
 def test_every_metric_has_sql_validation() -> None:
     definitions = yaml.safe_load((PROJECT_ROOT / "analytics" / "metric_definitions.yaml").read_text())
-    assert set(definitions["metrics"]) == set(SQL)
+    names = set(definitions["metrics"])
+    assert set(SQL) <= names
+    assert names - set(SQL) == {
+        "modeled_energy_kwh", "modeled_energy_cost", "modeled_cooling_cost",
+        "modeled_carbon_tonnes", "efficiency_opportunity_score",
+    }
 
 
 def test_sql_and_python_kpis_reconcile() -> None:
     report = validate(PROJECT_ROOT / "database" / "datacenter.db", PROJECT_ROOT / "data" / "processed")
     assert report["all_passed"], json.dumps(report["metrics"], indent=2)
-

@@ -1,0 +1,126 @@
+incidents:
+  cooling_failure:
+    incident_type: Cooling system degradation
+    runbook: cooling_degradation
+    symptoms:
+      - Elevated rack inlet temperature
+      - Reduced coolant flow
+      - Elevated PUE or cooling power
+      - Service impact on an affected rack
+    affected_components: [cooling_controller, circulation_path, rack, server]
+    common_log_codes: [TEMP_HIGH, COOL_FLOW_LOW, COOLING_INCIDENT]
+    related_metrics: [pue, cooling_power_kw, power_draw_kw]
+    likely_causes:
+      - Cooling circulation or controller degradation
+      - Airflow obstruction or sensor fault
+    recommended_checks:
+      - Verify temperature sensors against a second source
+      - Inspect coolant flow, pressure, pump state, and valve position
+      - Compare PUE and cooling power with the facility baseline
+      - Check affected rack and server health before recovery work
+    historical_resolution: Inspect cooling circulation, controller state, and rack inlet conditions; verify service health after recovery.
+    limitation: The synthetic history confirms only the cooling-failure category, not a specific failed part.
+
+  network_outage:
+    incident_type: Network path outage
+    runbook: network_path_outage
+    symptoms:
+      - Increased network latency
+      - Packet-delivery degradation
+      - Link or service impact events
+    affected_components: [network_switch, interface, facility_path, server]
+    common_log_codes: [LATENCY_HIGH, PACKET_LOSS_HIGH, LINK_SERVICE_IMPACT]
+    related_metrics: [latency_ms, packet_loss_pct, network_availability_pct, throughput_mbps]
+    likely_causes:
+      - Switch, interface, or upstream path degradation
+      - Congestion or unstable connectivity
+    recommended_checks:
+      - Check switch and interface state
+      - Compare latency and packet loss with the facility baseline
+      - Review path availability and throughput
+      - Confirm recovery from both ends of the affected path
+    historical_resolution: Check switch path, interface state, and facility network telemetry; verify connectivity after recovery.
+    limitation: The synthetic history confirms only the network-outage category, not a specific device failure.
+
+  power_failure:
+    incident_type: Power path failure
+    runbook: power_path_failure
+    symptoms:
+      - Power-quality warning
+      - UPS transfer event
+      - Service impact on the affected server
+    affected_components: [ups, power_distribution, facility_feed, server]
+    common_log_codes: [VOLTAGE_UNSTABLE, UPS_TRANSFER, POWER_SERVICE_IMPACT]
+    related_metrics: [power_draw_kw, it_load_kw, pue]
+    likely_causes:
+      - Unstable facility feed or distribution path
+      - UPS transfer or downstream power interruption
+    recommended_checks:
+      - Review UPS state and transfer history
+      - Inspect the distribution path and affected feed
+      - Compare power draw and IT load with their baseline
+      - Verify stable power before restoring workload
+    historical_resolution: Check UPS state, distribution path, and recorded power telemetry; verify service after restoration.
+    limitation: The synthetic history confirms only the power-failure category.
+
+  hardware_failure:
+    incident_type: Server hardware failure
+    runbook: server_hardware_failure
+    symptoms:
+      - Hardware-health warning
+      - Device I/O error
+      - Server service impact
+    affected_components: [server, storage_device, hardware_controller]
+    common_log_codes: [HW_HEALTH_WARNING, DEVICE_IO_ERROR, SERVER_SERVICE_IMPACT]
+    related_metrics: [cpu_utilization_pct, memory_utilization_pct, disk_utilization_pct]
+    likely_causes:
+      - Server component degradation
+      - Storage or controller I/O fault
+    recommended_checks:
+      - Run vendor-neutral hardware diagnostics
+      - Inspect storage and controller health
+      - Compare utilization with the server baseline
+      - Preserve logs before replacing or reseating components
+    historical_resolution: Run hardware diagnostics, isolate the affected component, and verify server health after service restoration.
+    limitation: The synthetic history confirms only the hardware-failure category.
+
+  software_failure:
+    incident_type: Application or service failure
+    runbook: application_failure
+    symptoms:
+      - Increased application error rate
+      - Unresponsive service health check
+      - Software-related service impact
+    affected_components: [application, service, operating_system, server]
+    common_log_codes: [APP_ERROR_RATE_HIGH, SERVICE_UNRESPONSIVE, APPLICATION_SERVICE_IMPACT]
+    related_metrics: [cpu_utilization_pct, memory_utilization_pct]
+    likely_causes:
+      - Application process or dependency degradation
+      - Resource pressure or invalid service state
+    recommended_checks:
+      - Review application and service health logs
+      - Check recent changes and dependency state
+      - Compare CPU and memory use with the server baseline
+      - Verify functional health after controlled recovery
+    historical_resolution: Review application health, service state, and server telemetry; verify health checks after recovery.
+    limitation: The synthetic history confirms only the software-failure category.
+
+  scheduled_maintenance:
+    incident_type: Scheduled maintenance window
+    runbook: scheduled_maintenance
+    symptoms:
+      - Maintenance window notice
+      - Planned component drain
+      - Recorded maintenance activity
+    affected_components: [server, workload, maintenance_process]
+    common_log_codes: [MAINT_WINDOW_NOTICE, COMPONENT_DRAIN, MAINT_ACTIVITY]
+    related_metrics: [downtime_minutes, incident_count]
+    likely_causes:
+      - Approved planned maintenance activity
+    recommended_checks:
+      - Verify the approved window and scope
+      - Confirm workloads were drained safely
+      - Record completed work and validation evidence
+      - Close the window only after service health passes
+    historical_resolution: Complete the planned activity and post-maintenance health checks.
+    limitation: Scheduled maintenance is not treated as an unplanned failure.

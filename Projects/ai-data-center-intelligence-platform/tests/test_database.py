@@ -13,6 +13,13 @@ EXPECTED_COUNTS = {
     "power_metrics": 24_108,
     "network_metrics": 24_108,
     "uptime_incidents": 1_158,
+    "system_logs": 5_790,
+    "alerts": 544,
+    "maintenance_actions": 1_158,
+    "detected_anomalies": 893,
+    "incident_reviews": 6,
+    "server_failure_risk": 430,
+    "facility_health_scores": 6,
 }
 
 
@@ -65,4 +72,3 @@ def test_daily_facility_view_has_complete_grain(connection) -> None:
 def test_read_only_connection_blocks_writes(connection) -> None:
     with pytest.raises(sqlite3.OperationalError):
         connection.execute("DELETE FROM facilities")
-

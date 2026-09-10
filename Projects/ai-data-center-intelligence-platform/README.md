@@ -1,62 +1,109 @@
-# AI-Powered Data Center Operations Intelligence
+# AI-Powered Data Center Operations & Reliability Copilot
 
-A portfolio-grade analytics platform combining Python, SQLite, Power BI, retrieval-augmented generation, local Ollama text-to-SQL, SQL security guardrails, and Streamlit. The supplied data is **synthetic data modeling realistic data-center operations** from 2015–2025.
+A portfolio-grade operations intelligence platform combining Python, SQLite, Power BI, retrieval-augmented generation, local Ollama text-to-SQL, guarded forecasting and scenarios, and a Streamlit operations chat. The supplied 2015–2025 data and all operational evidence are **synthetic data modeling realistic data-center operations**.
 
-## What is implemented
+## Implemented capabilities
 
-- Reproducible raw-data profiling, cleaning, and canonical validation for six datasets.
-- SQLite analytical model with keys, indexes, views, and reconciled KPI definitions.
-- Source-controlled Power BI Project (PBIP), semantic model, DAX measures, three-page dashboard specification, and theme.
-- Generic column-alias and external-file adapter with deterministic generated metric IDs.
-- Allow-listed TF-IDF RAG over schemas, KPI definitions, glossary terms, relationships, and verified SQL patterns. Evaluation answers are excluded.
-- Question relevance, domain, facility, time, module-availability, ambiguity, and unsafe-intent analysis.
-- Local Ollama text-to-SQL with structured JSON-schema output (`qwen2.5-coder:7b` by default).
-- SQLGlot AST checks, fallback validation, schema allow-listing, one-statement read-only policy, row limits, read-only SQLite, and timeouts.
-- Grounded deterministic answers, numerical-claim checks, deterministic Plotly selection, structured logs, terminal CLI, and Streamlit chat UI.
-- Database-driven forecasting for 16 energy, cooling, utilization, network, downtime, and incident metrics, with prediction intervals and backtest evidence.
-- A 48-question evaluation corpus, 10 explicit SQL security cases, and an offline executable baseline.
+- Reproducible profiling, cleaning, canonical validation, and atomic SQLite rebuilds.
+- A governed analytical model with 18 reconciled KPIs, indexes, views, yearly/monthly aggregates, and read-only access.
+- Linked system logs, alerts, maintenance actions, anomalies, incident reviews, server-risk scores, and facility-health scores.
+- Timeline reconstruction, incident investigation, evidence review, first-signal detection, similar incidents, approved incident learning, cautious root-cause categorization, and runbook recommendations.
+- A hybrid router for deterministic analytics, definitions, forecasts, investigations, risks, health, briefings, decisions, scenarios, and flexible local-AI questions.
+- Compact eight-field conversational memory for facility, server, original/related incident, metric, dates, and analysis mode; multiple questions run sequentially.
+- Database-refitted forecasts for 16 time-varying metrics, with prediction intervals and backtest evidence. Missing dates trigger a counter-question.
+- Metric-aware what-if analysis for every supported forecast metric. Baseline facts or forecasts, assumptions, results, and differences remain separate.
+- Local Ollama structured text-to-SQL (`qwen2.5-coder:7b` by default) for flexible historical questions.
+- Allow-listed routed TF-IDF retrieval over schemas, KPIs, glossary, forecast definitions, SQL examples, incident knowledge, runbooks, and error codes. Evaluation truth is excluded.
+- SQLGlot checks, schema allow-listing, one-statement read-only policy, row/time limits, prompt-injection boundaries, numerical-answer validation, and a human approval gate for operational actions.
+- Native Streamlit chat with starter prompts, evidence and timing panels, incident cards, monthly operations briefing, facility health, and server-risk views.
+- Source-controlled Power BI executive dashboard with 17 semantic tables, 30 relationships, 56 DAX measures, 7 populated pages, 223 native visuals, Power Query, and a custom theme.
 
-## Quick start (Windows PowerShell)
+## Quick start on Windows
 
-Install Ollama from [ollama.com/download](https://ollama.com/download), then open a new PowerShell window and download the local SQL model:
+Install Ollama from [ollama.com/download](https://ollama.com/download), then:
 
 ```powershell
 ollama pull qwen2.5-coder:7b
 ollama list
 ```
 
-Future-year forecasts use the deterministic local forecasting engine and do not require Ollama. Ollama handles flexible historical natural-language questions.
-
-Then prepare and run the Python project:
+Prepare and run the project:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 Copy-Item .env.example .env
-python scripts\load_database.py
+python scripts\bootstrap_github.py
 python scripts\check_ollama.py
 python -m pytest -q
-python scripts\ask.py "Which facility had the highest average PUE in 2020?"
 streamlit run app\streamlit_app.py
 ```
 
-Install Ollama and run `ollama pull qwen2.5-coder:7b` for general natural-language questions. If Ollama is unavailable, three verified demonstration questions still work offline.
+`bootstrap_github.py` restores the bundled synthetic processed dataset when it
+is not already present and builds the ignored local SQLite database. Large raw,
+cleaned, generated, database, cache, and log files are intentionally excluded
+from Git.
 
-## Main artifacts
+Open `http://localhost:8501`. Forecasts, database analytics, briefings, risk/health views, incident workflows, and scenarios work deterministically without Ollama. Ollama expands flexible natural-language analytics.
 
-- Architecture: [docs/architecture.md](docs/architecture.md)
-- Data contract: [docs/data_contract.md](docs/data_contract.md)
-- RAG and AI design: [docs/rag_design.md](docs/rag_design.md)
-- Evaluation: [docs/evaluation.md](docs/evaluation.md)
-- Forecasting: [docs/forecasting.md](docs/forecasting.md)
-- Remaining-stage implementation guide: [docs/steps8_20_implementation.md](docs/steps8_20_implementation.md)
-- Power BI project: [powerbi/PBI/DataCenter Operations Foundation.pbip](powerbi/PBI/DataCenter%20Operations%20Foundation.pbip)
-- Dashboard layout: [powerbi/documentation/dashboard_pages.md](powerbi/documentation/dashboard_pages.md)
+Useful release checks:
+
+```powershell
+python scripts\benchmark_log_search.py
+python scripts\benchmark_rag_routing.py
+python evaluation\evaluate_root_cause.py
+python scripts\validate_advanced_release.py
+```
+
+## Try these conversations
+
+```text
+What happened in Frankfurt on July 14, 2025?
+Show the evidence
+What happened first?
+Have we seen this before?
+How was the closest one fixed?
+Could this happen again?
+What should we inspect?
+What if we upgrade the cooling system by 15%?
+```
+
+Other examples:
+
+```text
+What will cooling cost be in 2030?
+Compare PUE in 2015, 2020, and 2025
+What will network latency and packet loss be in 2040?
+Which facility should we prioritize for an efficiency upgrade?
+What if network throughput improves by 10% in 2030?
+```
+
+## Documentation and evidence
+
+- [Architecture](docs/architecture.md)
+- [Data contract](docs/data_contract.md)
+- [Evaluation](docs/evaluation.md)
+- [Forecasting](docs/forecasting.md)
+- [Final advanced release status](docs/advanced_release_status.md)
+- [Final chat behavior](docs/final_chat_phase34.md)
+- [Security and human control](docs/security_human_control_phases31_33.md)
+- [Performance phases 1–4](docs/performance_phase1.md), [phase 2](docs/performance_phase2.md), [phase 3](docs/performance_phase3.md), [phase 4](docs/performance_phase4.md)
+- [Operational evidence phases 5–7](docs/operational_evidence_phases5_7.md)
+- [Incident RAG phases 8–9](docs/incident_knowledge_phases8_9.md)
+- [Anomaly detection phase 10](docs/anomaly_detection_phase10.md)
+- [Incident intelligence phases 11–14](docs/incident_intelligence_phases11_14.md)
+- [Risk and health phases 15–16](docs/risk_health_phases15_16.md)
+- [Decision and scenarios phases 17–18](docs/decision_scenario_phases17_18.md)
+- [Chat intelligence phases 19–22](docs/chat_intelligence_phases19_22.md)
+- [Briefing and UI phases 23–25](docs/briefing_ui_phases23_25.md)
+- [Power BI and performance phases 26–29](docs/powerbi_performance_phases26_29.md)
+- [Power BI project](powerbi/PBI/DataCenter%20Executive%20Dashboard.pbip)
 
 ## Honest limitations
 
-- Full local-model result accuracy is not reported until the complete evaluation corpus is run on the user's machine.
-- Local generation speed and SQL quality depend on available CPU, GPU, memory, and selected model size.
-- The PBIP source is generated and test-validated, but final pixel-level review and `.pbix` export require Power BI Desktop.
-- SQLite, TF-IDF retrieval, and Streamlit are appropriate for this portfolio-scale workload; a production deployment would add identity, a server database, centralized observability, workload isolation, and governed model evaluation.
+- Full local-model corpus accuracy and latency depend on the user's installed Ollama model and hardware; offline deterministic evidence is reported separately.
+- Forecasts are linear-trend projections trained on synthetic 2015–2025 observations. Prediction intervals do not make them guarantees.
+- Risk, health, diagnosis, decisions, and scenario outputs are explainable triage aids. They do not authorize or execute infrastructure changes.
+- PBIP source is generated and statically test-validated. Final refresh, cross-filter, pixel review, and `.pbix` export require Power BI Desktop.
+- SQLite, TF-IDF, and Streamlit fit this portfolio workload. Production deployment would add identity, a server database, centralized observability, workload isolation, and governed model monitoring.

@@ -76,4 +76,3 @@ Expected: `all_passed: true` for all 18 metrics and three passing tests.
 **Why separate outcomes, drivers, and guardrails?** Outcomes show health, drivers explain movement, and guardrails prevent misleading optimization.
 
 **How do you validate DAX without fabricating success?** First reconcile equivalent SQL and Python. Then validate DAX inside Power BI once the model loads; absence of Desktop execution is disclosed.
-

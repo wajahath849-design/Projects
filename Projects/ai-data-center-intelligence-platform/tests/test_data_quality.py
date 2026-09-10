@@ -57,4 +57,3 @@ def test_daily_natural_grain_coverage_is_complete_after_deduplication() -> None:
 def test_incident_duration_is_consistent() -> None:
     assert REPORT["consistency"]["incident_end_before_start_rows"] == 0
     assert REPORT["consistency"]["incident_duration_mismatch_rows"] == 0
-

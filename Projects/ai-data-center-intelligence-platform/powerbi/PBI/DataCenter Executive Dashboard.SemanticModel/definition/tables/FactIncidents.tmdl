@@ -1,0 +1,97 @@
+table FactIncidents
+
+	column incident_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: incident_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column server_id
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: server_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_time
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: start_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_time
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: end_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column downtime_minutes
+		dataType: int64
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: downtime_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column root_cause
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: root_cause
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column incident_date
+		dataType: dateTime
+		isNullable: false
+		summarizeBy: none
+		sourceColumn: incident_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactIncidents = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:/Users/admin/Downloads/AI_Image_Classification_Final_Project_Import_Fixed/ai-data-center-intelligence/data/processed/uptime_incidents.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"incident_id", type text}, {"facility_id", type text}, {"server_id", type text},
+				        {"start_time", type datetime}, {"end_time", type datetime},
+				        {"downtime_minutes", Int64.Type}, {"severity", type text},
+				        {"root_cause", type text}, {"status", type text}
+				    }),
+				    IncidentDate = Table.AddColumn(Typed, "incident_date", each Date.From([start_time]), type date)
+				in
+				    IncidentDate

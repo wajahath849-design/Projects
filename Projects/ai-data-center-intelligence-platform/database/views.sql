@@ -90,4 +90,3 @@ FROM facilities AS f
 LEFT JOIN servers AS s ON s.facility_id = f.facility_id
 LEFT JOIN uptime_incidents AS i ON i.facility_id = f.facility_id AND i.server_id = s.server_id
 GROUP BY f.facility_id, f.facility_name, f.region;
-

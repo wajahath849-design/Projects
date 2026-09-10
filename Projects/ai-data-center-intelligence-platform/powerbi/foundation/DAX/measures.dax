@@ -81,3 +81,77 @@ MAXX(
     [DataDate]
 )
 
+// Incident intelligence
+Log Count = DISTINCTCOUNT(FactSystemLogs[log_id])
+
+Error Log Count =
+CALCULATE(
+    [Log Count],
+    KEEPFILTERS(FactSystemLogs[log_level] IN {"ERROR", "CRITICAL"})
+)
+
+Critical Log Count =
+CALCULATE([Log Count], KEEPFILTERS(FactSystemLogs[log_level] = "CRITICAL"))
+
+Alert Count = DISTINCTCOUNT(FactAlerts[alert_id])
+
+Critical Alert Count =
+CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[severity] = "critical"))
+
+Open Alert Count =
+CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[status] = "open"))
+
+Anomaly Count = DISTINCTCOUNT(FactAnomalies[anomaly_id])
+
+Critical Anomaly Count =
+CALCULATE([Anomaly Count], KEEPFILTERS(FactAnomalies[severity] = "critical"))
+
+Maintenance Action Count = DISTINCTCOUNT(FactMaintenanceActions[action_id])
+
+MTTR Minutes = AVERAGE(FactIncidents[downtime_minutes])
+
+// Predictive operations
+Average Server Risk Score = AVERAGE(FactServerRisk[risk_score])
+
+High Risk Server Count =
+CALCULATE(
+    DISTINCTCOUNT(FactServerRisk[server_id]),
+    KEEPFILTERS(FactServerRisk[risk_level] IN {"high", "critical"})
+)
+
+Average Facility Health Score = AVERAGE(FactFacilityHealth[health_score])
+
+Server Risk Observation Count = COUNTROWS(FactServerRisk)
+
+// Governed cost and carbon snapshot
+Modeled Energy = SUM(FactCostCarbon[modeled_energy_kwh])
+
+Modeled Energy Cost = SUM(FactCostCarbon[modeled_energy_cost_usd])
+
+Modeled Cooling Cost = SUM(FactCostCarbon[modeled_cooling_cost_usd])
+
+Modeled Carbon = SUM(FactCostCarbon[modeled_carbon_tonnes])
+
+Average Energy Price = AVERAGE(FactCostCarbon[price_per_kwh])
+
+Average Carbon Intensity = AVERAGE(FactCostCarbon[grams_co2e_per_kwh])
+
+Average Efficiency Opportunity Score =
+AVERAGE(FactCostCarbon[efficiency_opportunity_score])
+
+// Descriptive incident impact snapshot
+Incident Impact Count = DISTINCTCOUNT(FactIncidentImpact[incident_id])
+
+Average Incident PUE Change = AVERAGE(FactIncidentImpact[change_pue_pct])
+
+Average Incident Latency Change = AVERAGE(FactIncidentImpact[change_latency_ms_pct])
+
+Modeled Downtime Cost Exposure =
+SUM(FactIncidentImpact[modeled_downtime_cost_exposure_usd])
+
+// Latest bounded live-operations snapshot
+Live Facility Health Score = AVERAGE(FactLiveOperationsSnapshot[health_score])
+
+Live Active Alert Count = SUM(FactLiveOperationsSnapshot[active_alert_count])
+
+Live Data Completeness = AVERAGE(FactLiveOperationsSnapshot[data_completeness_pct])

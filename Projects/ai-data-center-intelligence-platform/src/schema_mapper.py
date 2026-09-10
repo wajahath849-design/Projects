@@ -42,4 +42,3 @@ class SchemaMapper:
             else:
                 proposals.append(MappingProposal(source, None, "unmapped"))
         return proposals
-

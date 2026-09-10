@@ -3,6 +3,8 @@ import pandas as pd
 from src.forecasting import (
     METRICS,
     MetricForecaster,
+    asks_trend_direction,
+    contextualize_question,
     detect_metric,
     detect_metrics,
     has_forecast_intent,
@@ -23,6 +25,7 @@ def test_metric_detection_covers_operational_domains():
     assert detect_metric("How many incidents will there be in 2030?").key == "incident_count"
     assert detect_metric("Estimate the price of cooling in 2030").key == "cooling_cost"
     assert detect_metric("Estimate the price of power in 2030") is None
+    assert detect_metric("compare the price between 2020 2015 and 2025").key == "cooling_cost"
     assert [item.key for item in detect_metrics("Forecast PUE, cooling cost, and latency in 2030")] == [
         "average_pue", "cooling_cost", "latency_ms"
     ]
@@ -34,6 +37,62 @@ def test_flexible_future_date_language():
     assert resolve_target_year("cooling five years from now", 2025) == 2030
     assert resolve_target_year("cooling 5 years from now", 2025) == 2030
     assert has_forecast_intent("What will cooling be?")
+    assert asks_trend_direction("Will the price increase or decrese?")
+
+
+def test_conversational_follow_up_uses_previous_metric():
+    assert contextualize_question("2040", metric("latency_ms")) == "Forecast Network Latency in 2040"
+    contextualized = contextualize_question("will it increase or decrease?", metric("cooling_cost"))
+    assert "Annual Cooling Cost" in contextualized
+
+    facility_follow_up = contextualize_question(
+        "what about Dublin?", metric("latency_ms"), 2030, ["Frankfurt Central"]
+    )
+    assert "Network Latency" in facility_follow_up
+    assert "Dublin" in facility_follow_up
+    assert "Frankfurt Central" not in facility_follow_up
+    assert "2030" in facility_follow_up
+
+    metric_follow_up = contextualize_question(
+        "and PUE?", metric("latency_ms"), 2030, ["Frankfurt Central"]
+    )
+    assert "PUE" in metric_follow_up
+    assert "Frankfurt Central" in metric_follow_up
+    assert "2030" in metric_follow_up
+
+
+def test_bare_future_year_asks_for_the_missing_metric():
+    result = AnalyticsPipeline(generator=VerifiedExampleSQLGenerator()).ask("2040")
+    assert result.status == "clarification"
+    assert "Which forecast metric" in result.answer
+
+
+def test_generic_price_historical_comparison_uses_cooling_cost():
+    result = AnalyticsPipeline(generator=VerifiedExampleSQLGenerator()).ask(
+        "compare the price between 2020 2015 and 2025"
+    )
+    assert result.status == "historical"
+    assert set(result.frame["year"]) == {2015, 2020, 2025}
+    assert set(result.frame["metric"]) == {"Annual Cooling Cost"}
+    assert "increased" in result.answer or "decreased" in result.answer
+
+
+def test_generic_price_direction_handles_misspelling():
+    result = AnalyticsPipeline(generator=VerifiedExampleSQLGenerator()).ask(
+        "the price will increase or decrese?"
+    )
+    assert result.status == "forecast_direction"
+    assert "Annual Cooling Cost" in result.answer
+    assert "increasing" in result.answer or "decreasing" in result.answer
+
+
+def test_definition_questions_use_grounded_project_knowledge():
+    pipeline = AnalyticsPipeline(generator=VerifiedExampleSQLGenerator())
+    for question in ["What is PUE?", "what is the powercooling?"]:
+        result = pipeline.ask(question)
+        assert result.status == "knowledge"
+        assert result.validation_status == "rag_grounded"
+        assert result.retrieved_context
 
 
 def test_pue_forecast_uses_current_database_and_bounds():

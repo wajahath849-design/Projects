@@ -7,12 +7,15 @@ primary_kpis:
   - operational_availability
   - total_downtime
   - network_availability
+  - modeled_energy_cost
+  - modeled_carbon_tonnes
 
 drivers:
   energy: [total_power_draw, total_cooling_cost, yoy_pue_change, yoy_cooling_cost_change]
   reliability: [incident_count, incident_rate, downtime_per_server, yoy_downtime_change]
   infrastructure: [active_server_count, average_cpu_utilization, average_memory_utilization]
   network: [average_network_latency, average_packet_loss]
+  sustainability: [modeled_energy_kwh, modeled_cooling_cost, efficiency_opportunity_score]
 
 guardrails:
   - id: denominator_consistency
@@ -25,9 +28,14 @@ guardrails:
     rule: Cooling cost must be labeled synthetic currency-equivalent and must not imply real-company impact.
   - id: no_unmeasured_targets
     rule: No KPI target is asserted until a target-setting exercise is completed with an explicit baseline and operational owner.
+  - id: modeled_energy_semantics
+    rule: Daily power rows are interpreted as average kW over 24 hours and all resulting energy must be labeled modeled kWh.
+  - id: assumption_provenance
+    rule: Every cost and carbon output must expose effective factor, source label, methodology or pricing basis, and synthetic status.
+  - id: cost_carbon_not_actuals
+    rule: Modeled cost and carbon outputs must never be presented as invoices, audited emissions, or real-company financial impact.
 
 dimensions:
   common: [date, facility, region]
   server: [server, rack, server_type, server_status]
   incident: [severity, root_cause]
-

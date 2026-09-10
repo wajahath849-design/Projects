@@ -25,6 +25,23 @@ Measures recalculate under active date, facility, region, server, severity, and 
 | Downtime per Server | downtime divided by visible servers | 0.00 | 171.067442 overall |
 | Incident Rate per 100 Servers | incidents divided by servers × 100 | 0.00 | 269.302326 overall over 11 years |
 | Operational Availability | potential server-minutes not recorded as downtime | 0.0000 | 99.997043 overall |
+| Log Count | distinct operational log events | #,##0 | 5,790 current synthetic evidence rows |
+| Critical Alert Count | distinct critical alerts | #,##0 | reconciles to `alerts` under filters |
+| Anomaly Count | distinct governed anomaly rows | #,##0 | 893 accepted Phase 10 rows |
+| Maintenance Action Count | distinct recorded actions | #,##0 | 1,158 current rows |
+| MTTR Minutes | mean recorded incident downtime | 0.00 | uses the same incident duration field as AI |
+| Average Server Risk Score | mean visible explainable risk score | 0.00 | versioned seven-day screening snapshot |
+| High Risk Server Count | distinct high or critical risk servers | #,##0 | fixed score bands |
+| Average Facility Health Score | mean visible governed health score | 0.00 | fixed versioned weights |
+| Modeled Energy Cost | monthly modeled energy cost from governed price assumptions | USD | synthetic assumption snapshot |
+| Modeled Cooling Cost | modeled cooling share of energy cost | USD | reconciles to modeled cooling energy × price |
+| Modeled Carbon | modeled location-based carbon estimate | tonnes CO2e | synthetic intensity snapshot |
+| Average Efficiency Opportunity Score | weighted cross-facility opportunity index | 0–100 | versioned weights, not a performance target |
+| Incident Impact Count | incidents represented in the descriptive impact snapshot | #,##0 | one row per canonical incident |
+| Average Incident PUE Change | seven-day after versus before change | percentage points shown numerically | descriptive association only |
+| Average Incident Latency Change | seven-day after versus before change | percentage points shown numerically | descriptive association only |
+| Modeled Downtime Cost Exposure | time-proportional modeled energy-cost exposure | USD | not a causal loss estimate |
+| Live Facility Health Score | latest bounded simulation health score | 0–100 | isolated simulation snapshot |
 
 Do not use Power BI's percentage format directly for values stored on a 0–100 scale; it multiplies by 100. Use a numeric format with a literal percent sign when desired, such as `0.00\%`.
 
@@ -39,4 +56,3 @@ Validated 2025-versus-2024 results:
 - Downtime change: +34.494510%.
 
 These are measured historical comparisons, not targets or forecasts.
-

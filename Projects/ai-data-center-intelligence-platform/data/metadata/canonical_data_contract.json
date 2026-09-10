@@ -24,6 +24,23 @@
     ],
     "reliability": [
       "uptime_incidents"
+    ],
+    "operational_evidence": [
+      "system_logs",
+      "alerts",
+      "maintenance_actions"
+    ],
+    "anomaly_detection": [
+      "detected_anomalies"
+    ],
+    "incident_learning": [
+      "incident_reviews"
+    ],
+    "predictive_maintenance": [
+      "server_failure_risk"
+    ],
+    "health_scoring": [
+      "facility_health_scores"
     ]
   }
 }

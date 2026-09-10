@@ -1,0 +1,12 @@
+version: 1.0.0
+use_case: Facility efficiency-upgrade prioritization
+weights:
+  average_pue: 0.25
+  total_cooling_cost: 0.20
+  downtime_per_server: 0.15
+  incident_rate_per_100_servers: 0.10
+  pue_trend_per_year: 0.10
+  anomaly_count: 0.10
+  pue_five_year_projection: 0.10
+direction: Higher normalized burden means higher review priority.
+caveat: This is transparent operational decision support and not an automatic capital-investment decision.

@@ -1,0 +1,7 @@
+facility_id,effective_from,effective_to,price_per_kwh,currency,pricing_basis,annual_escalation_pct,source_label,is_synthetic
+DC-DUB-01,2015-01-01,2040-12-31,0.132,USD,modeled_flat_energy_rate,2.1,portfolio_demo_assumption,true
+DC-FRA-01,2015-01-01,2040-12-31,0.158,USD,modeled_flat_energy_rate,2.3,portfolio_demo_assumption,true
+DC-IAD-01,2015-01-01,2040-12-31,0.119,USD,modeled_flat_energy_rate,1.9,portfolio_demo_assumption,true
+DC-PDX-01,2015-01-01,2040-12-31,0.108,USD,modeled_flat_energy_rate,1.8,portfolio_demo_assumption,true
+DC-SIN-01,2015-01-01,2040-12-31,0.146,USD,modeled_flat_energy_rate,2.2,portfolio_demo_assumption,true
+DC-SYD-01,2015-01-01,2040-12-31,0.171,USD,modeled_flat_energy_rate,2.4,portfolio_demo_assumption,true

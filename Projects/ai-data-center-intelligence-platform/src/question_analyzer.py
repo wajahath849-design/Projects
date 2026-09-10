@@ -9,7 +9,7 @@ FACILITIES = {
     "portland": "Portland West", "singapore": "Singapore South", "sydney": "Sydney Pacific",
 }
 DOMAIN_TERMS = {
-    "energy": {"pue", "power", "cooling", "energy", "cost"},
+    "energy": {"pue", "power", "cooling", "energy", "cost", "price", "expense", "spend", "bill"},
     "server_performance": {"server", "cpu", "memory", "disk", "utilization"},
     "network": {"network", "latency", "packet", "throughput", "bandwidth"},
     "reliability": {"incident", "downtime", "outage", "availability", "root cause"},
@@ -58,4 +58,3 @@ class QuestionAnalyzer:
             clarification = f"The required module is unavailable: {', '.join(unavailable)}."
         relevant = bool(domains) and not unavailable
         return QuestionAnalysis(relevant, domains, facilities, sorted(set(years)), ambiguous, clarification, unsafe, relative)
-

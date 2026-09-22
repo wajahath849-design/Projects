@@ -1,8 +1,10 @@
 table DimFacility
+	lineageTag: 28fb01d4-9601-45b5-a451-424f78a4f732
 
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: 1a5cdf56-34b5-4168-b411-381dfd0cf1fc
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -11,6 +13,7 @@ table DimFacility
 	column facility_name
 		dataType: string
 		isNullable: false
+		lineageTag: 2ba25317-288b-4f41-a671-2ca8e34a8ac1
 		summarizeBy: none
 		sourceColumn: facility_name
 
@@ -19,6 +22,7 @@ table DimFacility
 	column city
 		dataType: string
 		isNullable: false
+		lineageTag: fccbbf6b-a682-43d3-a6b0-d7ccdf1a39ff
 		summarizeBy: none
 		sourceColumn: city
 
@@ -27,6 +31,7 @@ table DimFacility
 	column country
 		dataType: string
 		isNullable: false
+		lineageTag: 1b3782e9-5529-4295-8e65-a3b9e438ca18
 		summarizeBy: none
 		sourceColumn: country
 
@@ -35,6 +40,7 @@ table DimFacility
 	column region
 		dataType: string
 		isNullable: false
+		lineageTag: ff9141e8-a17c-4077-8b42-06045e95f4f4
 		summarizeBy: none
 		sourceColumn: region
 
@@ -43,6 +49,7 @@ table DimFacility
 	column capacity_mw
 		dataType: double
 		isNullable: false
+		lineageTag: 122b9aab-d487-46b9-9f61-e22edc2083de
 		summarizeBy: none
 		sourceColumn: capacity_mw
 
@@ -51,6 +58,7 @@ table DimFacility
 	column rack_capacity
 		dataType: int64
 		isNullable: false
+		lineageTag: c656880d-2627-49c8-82cb-d6b95565a12b
 		summarizeBy: none
 		sourceColumn: rack_capacity
 
@@ -59,6 +67,7 @@ table DimFacility
 	column build_year
 		dataType: int64
 		isNullable: false
+		lineageTag: a9a11319-4c54-4160-9110-bb2272725f14
 		summarizeBy: none
 		sourceColumn: build_year
 
@@ -67,10 +76,14 @@ table DimFacility
 	column commission_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: b967757e-4d63-4636-b17e-8dade43cf235
 		summarizeBy: none
 		sourceColumn: commission_date
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition DimFacility = m
 		mode: import
@@ -85,3 +98,4 @@ table DimFacility
 				    })
 				in
 				    Typed
+

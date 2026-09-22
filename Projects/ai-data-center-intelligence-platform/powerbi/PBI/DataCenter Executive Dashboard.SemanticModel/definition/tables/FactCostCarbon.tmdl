@@ -1,16 +1,20 @@
 table FactCostCarbon
+	lineageTag: 0abde329-1d7c-4639-a628-38611c0df52c
 
 	column snapshot_date
 		dataType: dateTime
-		isNullable: true
+		formatString: Long Date
+		lineageTag: 217986d9-0a69-481c-8f19-69f045adaaf2
 		summarizeBy: none
 		sourceColumn: snapshot_date
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column year
 		dataType: int64
-		isNullable: true
+		lineageTag: 1d03fc08-4066-4e39-a5b7-f43bf890cec2
 		summarizeBy: none
 		sourceColumn: year
 
@@ -18,7 +22,7 @@ table FactCostCarbon
 
 	column month_label
 		dataType: string
-		isNullable: true
+		lineageTag: c1a109e9-7cd1-48c2-b914-feed52d4beab
 		summarizeBy: none
 		sourceColumn: month_label
 
@@ -26,7 +30,7 @@ table FactCostCarbon
 
 	column facility_id
 		dataType: string
-		isNullable: true
+		lineageTag: 3bdc8219-c9e1-417a-9f2a-ed02f881518e
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -34,7 +38,7 @@ table FactCostCarbon
 
 	column facility_name
 		dataType: string
-		isNullable: true
+		lineageTag: 74657efe-afb3-429e-ba0a-c4d0fbe7a47f
 		summarizeBy: none
 		sourceColumn: facility_name
 
@@ -42,7 +46,7 @@ table FactCostCarbon
 
 	column observation_days
 		dataType: int64
-		isNullable: true
+		lineageTag: f39cf023-b074-408a-acb0-f6a22687add7
 		summarizeBy: none
 		sourceColumn: observation_days
 
@@ -50,7 +54,7 @@ table FactCostCarbon
 
 	column modeled_energy_kwh
 		dataType: double
-		isNullable: true
+		lineageTag: c23410ea-10e9-4837-9570-3372c0639bf0
 		summarizeBy: none
 		sourceColumn: modeled_energy_kwh
 
@@ -58,7 +62,7 @@ table FactCostCarbon
 
 	column modeled_it_energy_kwh
 		dataType: double
-		isNullable: true
+		lineageTag: 36c67419-0ec2-4844-ac66-4a12fbe11466
 		summarizeBy: none
 		sourceColumn: modeled_it_energy_kwh
 
@@ -66,7 +70,7 @@ table FactCostCarbon
 
 	column modeled_cooling_energy_kwh
 		dataType: double
-		isNullable: true
+		lineageTag: 6d82a61c-ff70-4579-bda0-a24012c0a988
 		summarizeBy: none
 		sourceColumn: modeled_cooling_energy_kwh
 
@@ -74,7 +78,7 @@ table FactCostCarbon
 
 	column modeled_energy_cost_usd
 		dataType: double
-		isNullable: true
+		lineageTag: d7849057-95e9-40e6-a6fa-6e5c696eb495
 		summarizeBy: none
 		sourceColumn: modeled_energy_cost_usd
 
@@ -82,7 +86,7 @@ table FactCostCarbon
 
 	column modeled_it_cost_usd
 		dataType: double
-		isNullable: true
+		lineageTag: 0cb1951e-b94a-44c4-90cb-2ee693fed52a
 		summarizeBy: none
 		sourceColumn: modeled_it_cost_usd
 
@@ -90,7 +94,7 @@ table FactCostCarbon
 
 	column modeled_cooling_cost_usd
 		dataType: double
-		isNullable: true
+		lineageTag: 1714105d-ec59-4b77-a172-2a42e7e711d9
 		summarizeBy: none
 		sourceColumn: modeled_cooling_cost_usd
 
@@ -98,7 +102,7 @@ table FactCostCarbon
 
 	column modeled_carbon_tonnes
 		dataType: double
-		isNullable: true
+		lineageTag: aea22300-8f20-49f3-824c-889f526f924c
 		summarizeBy: none
 		sourceColumn: modeled_carbon_tonnes
 
@@ -106,7 +110,7 @@ table FactCostCarbon
 
 	column modeled_it_carbon_tonnes
 		dataType: double
-		isNullable: true
+		lineageTag: e1c931a7-8ecd-485e-aa19-9fccaab6876c
 		summarizeBy: none
 		sourceColumn: modeled_it_carbon_tonnes
 
@@ -114,7 +118,7 @@ table FactCostCarbon
 
 	column modeled_cooling_carbon_tonnes
 		dataType: double
-		isNullable: true
+		lineageTag: b3e2fa6d-5a5e-427c-af21-151f20590104
 		summarizeBy: none
 		sourceColumn: modeled_cooling_carbon_tonnes
 
@@ -122,7 +126,7 @@ table FactCostCarbon
 
 	column average_pue
 		dataType: double
-		isNullable: true
+		lineageTag: eea363ff-bb1c-4696-9313-ec7baf6388d0
 		summarizeBy: none
 		sourceColumn: average_pue
 
@@ -130,7 +134,7 @@ table FactCostCarbon
 
 	column price_per_kwh
 		dataType: double
-		isNullable: true
+		lineageTag: 911719c1-866a-4537-b4e7-6d2c3fe8e428
 		summarizeBy: none
 		sourceColumn: price_per_kwh
 
@@ -138,7 +142,7 @@ table FactCostCarbon
 
 	column grams_co2e_per_kwh
 		dataType: double
-		isNullable: true
+		lineageTag: 2cd6b37e-2170-4a02-9499-e21b36ff05f2
 		summarizeBy: none
 		sourceColumn: grams_co2e_per_kwh
 
@@ -146,7 +150,7 @@ table FactCostCarbon
 
 	column efficiency_opportunity_score
 		dataType: double
-		isNullable: true
+		lineageTag: fd4a0ccf-9605-4fbb-ba92-05dec29cf769
 		summarizeBy: none
 		sourceColumn: efficiency_opportunity_score
 
@@ -154,7 +158,7 @@ table FactCostCarbon
 
 	column currency
 		dataType: string
-		isNullable: true
+		lineageTag: 3d6ca4c3-d024-49c4-b15d-1ecf81cddace
 		summarizeBy: none
 		sourceColumn: currency
 
@@ -162,7 +166,7 @@ table FactCostCarbon
 
 	column pricing_basis
 		dataType: string
-		isNullable: true
+		lineageTag: b21869c2-da3f-49f9-adba-83af1953329c
 		summarizeBy: none
 		sourceColumn: pricing_basis
 
@@ -170,7 +174,7 @@ table FactCostCarbon
 
 	column price_source
 		dataType: string
-		isNullable: true
+		lineageTag: 880b5763-d357-4e2d-a87b-ea838c442acc
 		summarizeBy: none
 		sourceColumn: price_source
 
@@ -178,7 +182,7 @@ table FactCostCarbon
 
 	column carbon_methodology
 		dataType: string
-		isNullable: true
+		lineageTag: efe6fdce-cd91-4a37-85e1-bde12ff00fb1
 		summarizeBy: none
 		sourceColumn: carbon_methodology
 
@@ -186,7 +190,7 @@ table FactCostCarbon
 
 	column carbon_source
 		dataType: string
-		isNullable: true
+		lineageTag: aed3a861-9f37-49a7-80a4-7885c351eb83
 		summarizeBy: none
 		sourceColumn: carbon_source
 
@@ -194,7 +198,7 @@ table FactCostCarbon
 
 	column assumptions_are_synthetic
 		dataType: boolean
-		isNullable: true
+		lineageTag: 7300047a-2152-4337-80b9-1a5e8113159d
 		summarizeBy: none
 		sourceColumn: assumptions_are_synthetic
 
@@ -202,7 +206,7 @@ table FactCostCarbon
 
 	column snapshot_version
 		dataType: string
-		isNullable: true
+		lineageTag: d75e7090-f8d8-45a5-bb25-65e251f74f58
 		summarizeBy: none
 		sourceColumn: snapshot_version
 
@@ -210,7 +214,7 @@ table FactCostCarbon
 
 	column source_period
 		dataType: string
-		isNullable: true
+		lineageTag: bfcdda83-327b-46cd-93be-f22d9c446195
 		summarizeBy: none
 		sourceColumn: source_period
 
@@ -239,3 +243,4 @@ table FactCostCarbon
 				    })
 				in
 				    Typed
+

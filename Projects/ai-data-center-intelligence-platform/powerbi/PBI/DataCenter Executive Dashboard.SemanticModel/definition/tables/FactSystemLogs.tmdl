@@ -1,8 +1,10 @@
 table FactSystemLogs
+	lineageTag: f22f9aee-3425-42dc-9788-663364efd937
 
 	column log_id
 		dataType: string
 		isNullable: false
+		lineageTag: 9e375349-c3fc-49a6-b1ac-fffd06e00eed
 		summarizeBy: none
 		sourceColumn: log_id
 
@@ -11,6 +13,7 @@ table FactSystemLogs
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		lineageTag: d64dc5f0-891f-4d2c-b873-a9d3313392c4
 		summarizeBy: none
 		sourceColumn: timestamp
 
@@ -19,6 +22,7 @@ table FactSystemLogs
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: a3caa362-4f3a-47be-901a-44b8efe6c6a1
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -27,6 +31,7 @@ table FactSystemLogs
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: 449b451f-79d0-4d54-b763-0285aed25576
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -35,6 +40,7 @@ table FactSystemLogs
 	column rack_id
 		dataType: string
 		isNullable: false
+		lineageTag: 672d5a2a-fd08-4623-bfe1-7fdcf6da477e
 		summarizeBy: none
 		sourceColumn: rack_id
 
@@ -43,6 +49,7 @@ table FactSystemLogs
 	column source
 		dataType: string
 		isNullable: false
+		lineageTag: f950b579-0978-4e83-a98f-3ad0f50f38da
 		summarizeBy: none
 		sourceColumn: source
 
@@ -51,6 +58,7 @@ table FactSystemLogs
 	column component
 		dataType: string
 		isNullable: false
+		lineageTag: 74a1d891-ddfb-493f-9468-b3dde568d362
 		summarizeBy: none
 		sourceColumn: component
 
@@ -59,6 +67,7 @@ table FactSystemLogs
 	column log_level
 		dataType: string
 		isNullable: false
+		lineageTag: 9748260a-dff2-494d-b38d-4685e859c3ba
 		summarizeBy: none
 		sourceColumn: log_level
 
@@ -67,6 +76,7 @@ table FactSystemLogs
 	column event_code
 		dataType: string
 		isNullable: false
+		lineageTag: 0df0e593-ae3d-4cc8-9ee6-2f0e1774075e
 		summarizeBy: none
 		sourceColumn: event_code
 
@@ -75,6 +85,7 @@ table FactSystemLogs
 	column message
 		dataType: string
 		isNullable: false
+		lineageTag: 2f8464fb-cd0e-4c1d-a65c-491d1b7860f4
 		summarizeBy: none
 		sourceColumn: message
 
@@ -83,10 +94,14 @@ table FactSystemLogs
 	column log_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: a2493bbe-8cf1-4f22-8280-aa9674dbbcf2
 		summarizeBy: none
 		sourceColumn: log_date
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition FactSystemLogs = m
 		mode: import
@@ -102,3 +117,4 @@ table FactSystemLogs
 				    LogDate = Table.AddColumn(Typed, "log_date", each Date.From([timestamp]), type date)
 				in
 				    LogDate
+

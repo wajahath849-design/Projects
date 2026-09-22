@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <rect width="1200" height="360" fill="#f6f7f9"/>
+  <text x="600" y="38" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#1d1d1f">Apple Financial Data Platform Architecture</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+  <g font-family="Arial" font-size="15" fill="#1d1d1f">
+    <rect x="35" y="100" rx="14" ry="14" width="170" height="85" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="120" y="130" text-anchor="middle" font-weight="700">SEC EDGAR</text>
+    <text x="120" y="154" text-anchor="middle">Company Facts API</text>
+
+    <rect x="250" y="100" rx="14" ry="14" width="185" height="85" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="342" y="130" text-anchor="middle" font-weight="700">Python ETL</text>
+    <text x="342" y="154" text-anchor="middle">Extract and cache</text>
+
+    <rect x="480" y="100" rx="14" ry="14" width="190" height="85" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="575" y="130" text-anchor="middle" font-weight="700">Transformation</text>
+    <text x="575" y="154" text-anchor="middle">Normalize and validate</text>
+
+    <rect x="715" y="100" rx="14" ry="14" width="190" height="85" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="810" y="130" text-anchor="middle" font-weight="700">SQL Server</text>
+    <text x="810" y="154" text-anchor="middle">Finance and audit model</text>
+
+    <rect x="950" y="100" rx="14" ry="14" width="210" height="85" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="1055" y="130" text-anchor="middle" font-weight="700">Power BI</text>
+    <text x="1055" y="154" text-anchor="middle">Financial reporting</text>
+
+    <rect x="480" y="245" rx="14" ry="14" width="190" height="70" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="575" y="274" text-anchor="middle" font-weight="700">Quality Checks</text>
+    <text x="575" y="297" text-anchor="middle">Errors and warnings</text>
+
+    <rect x="715" y="245" rx="14" ry="14" width="190" height="70" fill="#ffffff" stroke="#8a8a8a"/>
+    <text x="810" y="274" text-anchor="middle" font-weight="700">Audit Tables</text>
+    <text x="810" y="297" text-anchor="middle">Run history and lineage</text>
+  </g>
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="205" y1="142" x2="245" y2="142"/>
+    <line x1="435" y1="142" x2="475" y2="142"/>
+    <line x1="670" y1="142" x2="710" y2="142"/>
+    <line x1="905" y1="142" x2="945" y2="142"/>
+    <line x1="575" y1="185" x2="575" y2="240"/>
+    <line x1="670" y1="280" x2="710" y2="280"/>
+    <line x1="810" y1="245" x2="810" y2="190"/>
+  </g>
+</svg>

@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "ea9613add600061bb3a0",
   "position": {
     "x": 1088,
     "y": 535,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "FactIncidentImpact.root_cause",
-              "nativeQueryRef": "root_cause"
+              "nativeQueryRef": "root_cause",
+              "active": true
             }
           ]
         },
@@ -303,7 +306,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "ea9613add600061bb3a0"
+  }
 }

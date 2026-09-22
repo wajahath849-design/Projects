@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "DataCenter Executive Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "62d267b7-d0f4-4b7b-ae5a-39984717c3f5"
+  }
+}

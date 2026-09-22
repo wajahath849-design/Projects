@@ -1,0 +1,123 @@
+-- Create these measures on a dedicated Measures table.
+
+Revenue =
+SUM(FinancialSummary[Revenue])
+
+Gross Profit =
+SUM(FinancialSummary[GrossProfit])
+
+Operating Income =
+SUM(FinancialSummary[OperatingIncome])
+
+Net Income =
+SUM(FinancialSummary[NetIncome])
+
+Operating Cash Flow =
+SUM(FinancialSummary[OperatingCashFlow])
+
+Capital Expenditure =
+SUM(FinancialSummary[CapitalExpenditure])
+
+Free Cash Flow =
+SUM(FinancialSummary[FreeCashFlow])
+
+Total Assets =
+SUM(FinancialSummary[TotalAssets])
+
+Total Liabilities =
+SUM(FinancialSummary[TotalLiabilities])
+
+Shareholders Equity =
+SUM(FinancialSummary[ShareholdersEquity])
+
+Cash and Equivalents =
+SUM(FinancialSummary[CashAndEquivalents])
+
+Research and Development =
+SUM(FinancialSummary[ResearchAndDevelopment])
+
+Share Repurchases =
+SUM(FinancialSummary[ShareRepurchases])
+
+Dividends Paid =
+SUM(FinancialSummary[DividendsPaid])
+
+Gross Margin % =
+DIVIDE([Gross Profit], [Revenue])
+
+Operating Margin % =
+DIVIDE([Operating Income], [Revenue])
+
+Net Margin % =
+DIVIDE([Net Income], [Revenue])
+
+R&D % of Revenue =
+DIVIDE([Research and Development], [Revenue])
+
+Current Ratio =
+DIVIDE(
+    SUM(FinancialSummary[CurrentAssets]),
+    SUM(FinancialSummary[CurrentLiabilities])
+)
+
+Liabilities to Assets % =
+DIVIDE([Total Liabilities], [Total Assets])
+
+Revenue Prior Year =
+VAR CurrentFY = MAX(FinancialSummary[FiscalYear])
+VAR CurrentFP = SELECTEDVALUE(FinancialSummary[FiscalPeriod])
+VAR CurrentType = SELECTEDVALUE(FinancialSummary[PeriodType])
+RETURN
+CALCULATE(
+    [Revenue],
+    REMOVEFILTERS(FinancialSummary[FiscalYear]),
+    FinancialSummary[FiscalYear] = CurrentFY - 1,
+    FinancialSummary[FiscalPeriod] = CurrentFP,
+    FinancialSummary[PeriodType] = CurrentType
+)
+
+Revenue YoY % =
+DIVIDE([Revenue] - [Revenue Prior Year], [Revenue Prior Year])
+
+Net Income Prior Year =
+VAR CurrentFY = MAX(FinancialSummary[FiscalYear])
+VAR CurrentFP = SELECTEDVALUE(FinancialSummary[FiscalPeriod])
+VAR CurrentType = SELECTEDVALUE(FinancialSummary[PeriodType])
+RETURN
+CALCULATE(
+    [Net Income],
+    REMOVEFILTERS(FinancialSummary[FiscalYear]),
+    FinancialSummary[FiscalYear] = CurrentFY - 1,
+    FinancialSummary[FiscalPeriod] = CurrentFP,
+    FinancialSummary[PeriodType] = CurrentType
+)
+
+Net Income YoY % =
+DIVIDE([Net Income] - [Net Income Prior Year], [Net Income Prior Year])
+
+Latest Refresh UTC =
+MAX(ETLRunHistory[FinishedAtUtc])
+
+Latest Loaded Records =
+VAR LatestRun =
+    TOPN(1, ETLRunHistory, ETLRunHistory[StartedAtUtc], DESC)
+RETURN
+MAXX(LatestRun, ETLRunHistory[LoadedRecordCount])
+
+Latest ETL Status =
+VAR LatestRun =
+    TOPN(1, ETLRunHistory, ETLRunHistory[StartedAtUtc], DESC)
+RETURN
+MAXX(LatestRun, ETLRunHistory[Status])
+
+Quality Error Count =
+CALCULATE(
+    COUNTROWS(DataQualityIssues),
+    DataQualityIssues[Severity] = "ERROR"
+)
+
+Quality Warning Count =
+CALCULATE(
+    COUNTROWS(DataQualityIssues),
+    DataQualityIssues[Severity] = "WARNING"
+)

@@ -1,8 +1,9 @@
 table FactIncidentImpact
+	lineageTag: 444ae96b-aa4e-49c1-bcac-60f4044504e5
 
 	column incident_id
 		dataType: string
-		isNullable: true
+		lineageTag: 974d421b-702c-4395-a5de-734e65af7c28
 		summarizeBy: none
 		sourceColumn: incident_id
 
@@ -10,15 +11,18 @@ table FactIncidentImpact
 
 	column incident_date
 		dataType: dateTime
-		isNullable: true
+		formatString: Long Date
+		lineageTag: 9ec0473e-55ff-43de-8107-22aa4e17e087
 		summarizeBy: none
 		sourceColumn: incident_date
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column facility_id
 		dataType: string
-		isNullable: true
+		lineageTag: 819bacd6-4878-4d8c-a5af-85f48e3d6eb5
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -26,7 +30,7 @@ table FactIncidentImpact
 
 	column facility_name
 		dataType: string
-		isNullable: true
+		lineageTag: 8bd27e28-7ca8-4315-9645-294fe69d7a96
 		summarizeBy: none
 		sourceColumn: facility_name
 
@@ -34,7 +38,7 @@ table FactIncidentImpact
 
 	column server_id
 		dataType: string
-		isNullable: true
+		lineageTag: c9b44d5c-1973-42e2-9920-baea3989aa5e
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -42,7 +46,7 @@ table FactIncidentImpact
 
 	column severity
 		dataType: string
-		isNullable: true
+		lineageTag: 3bc5ab68-39d2-4b26-a348-9ec8314ea157
 		summarizeBy: none
 		sourceColumn: severity
 
@@ -50,7 +54,7 @@ table FactIncidentImpact
 
 	column root_cause
 		dataType: string
-		isNullable: true
+		lineageTag: 49c571af-19dc-4797-a933-3286e751413b
 		summarizeBy: none
 		sourceColumn: root_cause
 
@@ -58,7 +62,7 @@ table FactIncidentImpact
 
 	column status
 		dataType: string
-		isNullable: true
+		lineageTag: fdcd5cbf-6e3d-46d5-aeb4-0a490d4ff52a
 		summarizeBy: none
 		sourceColumn: status
 
@@ -66,7 +70,7 @@ table FactIncidentImpact
 
 	column downtime_minutes
 		dataType: int64
-		isNullable: true
+		lineageTag: dc28045f-23fc-414f-b8d7-6fee6716e5af
 		summarizeBy: none
 		sourceColumn: downtime_minutes
 
@@ -74,7 +78,7 @@ table FactIncidentImpact
 
 	column during_pue
 		dataType: double
-		isNullable: true
+		lineageTag: 34da4078-01ef-4e36-b2a0-0c56431dd5ac
 		summarizeBy: none
 		sourceColumn: during_pue
 
@@ -82,7 +86,7 @@ table FactIncidentImpact
 
 	column during_latency_ms
 		dataType: double
-		isNullable: true
+		lineageTag: 60cc46b6-10cf-43d5-aa4e-59589f6aa35b
 		summarizeBy: none
 		sourceColumn: during_latency_ms
 
@@ -90,7 +94,7 @@ table FactIncidentImpact
 
 	column during_packet_loss_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 47fc4f00-b4dd-45c8-bc5d-8e407771cd0c
 		summarizeBy: none
 		sourceColumn: during_packet_loss_pct
 
@@ -98,7 +102,7 @@ table FactIncidentImpact
 
 	column during_network_availability_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 88ab14ea-1af8-4d19-bcb8-2df2c23118cd
 		summarizeBy: none
 		sourceColumn: during_network_availability_pct
 
@@ -106,7 +110,7 @@ table FactIncidentImpact
 
 	column before_pue
 		dataType: double
-		isNullable: true
+		lineageTag: 7ba67f77-7d80-470c-a6ea-ad1825674b00
 		summarizeBy: none
 		sourceColumn: before_pue
 
@@ -114,7 +118,7 @@ table FactIncidentImpact
 
 	column after_pue
 		dataType: double
-		isNullable: true
+		lineageTag: 8a16b3e7-bc0f-4c5c-9a0f-964aa1ff0bb8
 		summarizeBy: none
 		sourceColumn: after_pue
 
@@ -122,7 +126,7 @@ table FactIncidentImpact
 
 	column before_latency_ms
 		dataType: double
-		isNullable: true
+		lineageTag: 97158601-4549-41b6-8541-b52e7ae4cdd9
 		summarizeBy: none
 		sourceColumn: before_latency_ms
 
@@ -130,7 +134,7 @@ table FactIncidentImpact
 
 	column after_latency_ms
 		dataType: double
-		isNullable: true
+		lineageTag: 46f0f863-e2c9-44d0-9e2b-8a8e0c64ac41
 		summarizeBy: none
 		sourceColumn: after_latency_ms
 
@@ -138,7 +142,7 @@ table FactIncidentImpact
 
 	column before_packet_loss_pct
 		dataType: double
-		isNullable: true
+		lineageTag: bd1fd944-46b2-441c-824f-6e13e2fa3240
 		summarizeBy: none
 		sourceColumn: before_packet_loss_pct
 
@@ -146,7 +150,7 @@ table FactIncidentImpact
 
 	column after_packet_loss_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 46530734-a423-4d09-be50-4dca54ae5d00
 		summarizeBy: none
 		sourceColumn: after_packet_loss_pct
 
@@ -154,7 +158,7 @@ table FactIncidentImpact
 
 	column before_network_availability_pct
 		dataType: double
-		isNullable: true
+		lineageTag: f4ca9657-ac31-43cd-9e1e-002ce823e13d
 		summarizeBy: none
 		sourceColumn: before_network_availability_pct
 
@@ -162,7 +166,7 @@ table FactIncidentImpact
 
 	column after_network_availability_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 207c4c02-609f-4e7c-976e-ad59c8f3edc3
 		summarizeBy: none
 		sourceColumn: after_network_availability_pct
 
@@ -170,7 +174,7 @@ table FactIncidentImpact
 
 	column change_pue_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 16efe3f1-abb9-401c-9d8a-ca2922b82a95
 		summarizeBy: none
 		sourceColumn: change_pue_pct
 
@@ -178,7 +182,7 @@ table FactIncidentImpact
 
 	column change_latency_ms_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 7d1ff988-687c-485f-9924-e54af83dc775
 		summarizeBy: none
 		sourceColumn: change_latency_ms_pct
 
@@ -186,7 +190,7 @@ table FactIncidentImpact
 
 	column change_packet_loss_pct_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 13fe0eb9-86e4-4cc9-8b32-6af6dca767ab
 		summarizeBy: none
 		sourceColumn: change_packet_loss_pct_pct
 
@@ -194,7 +198,7 @@ table FactIncidentImpact
 
 	column change_network_availability_pct_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 79370bea-d94c-4e2d-a2da-9d8b4116d8e3
 		summarizeBy: none
 		sourceColumn: change_network_availability_pct_pct
 
@@ -202,7 +206,7 @@ table FactIncidentImpact
 
 	column modeled_downtime_cost_exposure_usd
 		dataType: double
-		isNullable: true
+		lineageTag: 1cca6fdf-d11e-4856-93b4-437dc6fd55e5
 		summarizeBy: none
 		sourceColumn: modeled_downtime_cost_exposure_usd
 
@@ -210,7 +214,7 @@ table FactIncidentImpact
 
 	column comparison_window_days
 		dataType: int64
-		isNullable: true
+		lineageTag: 20064ab5-f0a8-482f-a297-2493740f45ed
 		summarizeBy: none
 		sourceColumn: comparison_window_days
 
@@ -218,7 +222,7 @@ table FactIncidentImpact
 
 	column claim_level
 		dataType: string
-		isNullable: true
+		lineageTag: 0cf01f5b-8dfe-44fc-bd4d-f50df4c9fadf
 		summarizeBy: none
 		sourceColumn: claim_level
 
@@ -226,7 +230,7 @@ table FactIncidentImpact
 
 	column is_synthetic
 		dataType: boolean
-		isNullable: true
+		lineageTag: 8fee9cf2-9df6-4f64-8023-91953c2a2e37
 		summarizeBy: none
 		sourceColumn: is_synthetic
 
@@ -234,7 +238,7 @@ table FactIncidentImpact
 
 	column snapshot_version
 		dataType: string
-		isNullable: true
+		lineageTag: 4b1d2622-f960-4f98-8ed4-400d3ef08513
 		summarizeBy: none
 		sourceColumn: snapshot_version
 
@@ -263,3 +267,4 @@ table FactIncidentImpact
 				    })
 				in
 				    Typed
+

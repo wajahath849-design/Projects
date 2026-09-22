@@ -1,47 +1,58 @@
 table DimDate
+	lineageTag: b6532dd5-aae8-4bf3-98a1-9e1aed55c4f5
 
 	column Date
 		formatString: General Date
+		lineageTag: 99fd4d56-205b-4e7c-9ee3-5ebc5a81a3d2
 		summarizeBy: none
 		sourceColumn: [Date]
 
 	column Year
 		formatString: 0
+		lineageTag: 9e9b2731-6954-4155-a970-1e96570675fe
 		summarizeBy: none
 		sourceColumn: [Year]
 
 	column 'Quarter Number'
 		formatString: 0
+		lineageTag: b0660623-f17e-4837-860e-b7ffc9fb474a
 		summarizeBy: none
 		sourceColumn: [Quarter Number]
 
 	column Quarter
+		lineageTag: 2092378d-14a4-49b0-95f2-04c0f08c97d7
 		summarizeBy: none
 		sourceColumn: [Quarter]
 
 	column 'Month Number'
 		formatString: 0
+		lineageTag: 8c200e1f-fabc-4f06-afb4-ad4f04ae4459
 		summarizeBy: none
 		sourceColumn: [Month Number]
 
 	column Month
+		lineageTag: d64c561e-3fdc-4ec5-b627-0ab1422d49a0
 		summarizeBy: none
 		sourceColumn: [Month]
 
 	column 'Month Year'
+		lineageTag: f28d23a2-dd70-44fb-9240-e22836ab4ca3
 		summarizeBy: none
 		sourceColumn: [Month Year]
 
 	column 'Year Month'
+		lineageTag: 45d9b42d-cb36-42e1-8033-deac19774fa4
 		summarizeBy: none
 		sourceColumn: [Year Month]
 
 	column 'Weekday Number'
 		formatString: 0
+		lineageTag: 2f61719f-ec98-4358-8cbf-829966b4b92c
 		summarizeBy: none
 		sourceColumn: [Weekday Number]
 
 	column Weekday
+		lineageTag: 04d2aceb-8d4d-47e5-9447-4958ea7a3dab
 		summarizeBy: none
 		sourceColumn: [Weekday]
 
@@ -60,3 +71,4 @@ table DimDate
 				    "Weekday Number", WEEKDAY([Date], 2),
 				    "Weekday", FORMAT([Date], "ddd")
 				)
+

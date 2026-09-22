@@ -1,8 +1,10 @@
 table FactFacilityHealth
+	lineageTag: 7d31f095-4348-4a57-b1ff-0a021f18619e
 
 	column health_score_id
 		dataType: string
 		isNullable: false
+		lineageTag: 0ad1e5b1-4533-4bf7-9304-ac79d2570534
 		summarizeBy: none
 		sourceColumn: health_score_id
 
@@ -11,14 +13,19 @@ table FactFacilityHealth
 	column score_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: 2b877922-8c7f-4501-a3b5-aa7616ee8009
 		summarizeBy: none
 		sourceColumn: score_date
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column source_year
 		dataType: int64
 		isNullable: false
+		lineageTag: 23f55290-2cd0-496a-bc71-06bb5d5d0e65
 		summarizeBy: none
 		sourceColumn: source_year
 
@@ -27,6 +34,7 @@ table FactFacilityHealth
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: 046d4d3c-3a9d-4ec7-a401-350cddadf910
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -35,6 +43,7 @@ table FactFacilityHealth
 	column health_score
 		dataType: double
 		isNullable: false
+		lineageTag: 2f7780d2-6995-4f43-ada2-1634285856d5
 		summarizeBy: none
 		sourceColumn: health_score
 
@@ -43,6 +52,7 @@ table FactFacilityHealth
 	column energy_efficiency_score
 		dataType: double
 		isNullable: false
+		lineageTag: d34b9ef5-a3b1-445d-a08c-6fcced761d92
 		summarizeBy: none
 		sourceColumn: energy_efficiency_score
 
@@ -51,6 +61,7 @@ table FactFacilityHealth
 	column reliability_score
 		dataType: double
 		isNullable: false
+		lineageTag: f3b27503-c98f-48cd-a1bf-8428a1fc6766
 		summarizeBy: none
 		sourceColumn: reliability_score
 
@@ -59,6 +70,7 @@ table FactFacilityHealth
 	column network_health_score
 		dataType: double
 		isNullable: false
+		lineageTag: 188fdb8f-7f6c-489a-bbc8-493465d93712
 		summarizeBy: none
 		sourceColumn: network_health_score
 
@@ -67,6 +79,7 @@ table FactFacilityHealth
 	column infrastructure_utilization_score
 		dataType: double
 		isNullable: false
+		lineageTag: 8e101dc2-94f5-4be9-a975-cb4a73d7051a
 		summarizeBy: none
 		sourceColumn: infrastructure_utilization_score
 
@@ -75,6 +88,7 @@ table FactFacilityHealth
 	column incident_severity_score
 		dataType: double
 		isNullable: false
+		lineageTag: db559e7e-f451-4b13-bd20-d9f62bf82650
 		summarizeBy: none
 		sourceColumn: incident_severity_score
 
@@ -83,6 +97,7 @@ table FactFacilityHealth
 	column anomaly_frequency_score
 		dataType: double
 		isNullable: false
+		lineageTag: 39d70fb8-5232-4e21-ad28-4f73dd65568f
 		summarizeBy: none
 		sourceColumn: anomaly_frequency_score
 
@@ -91,6 +106,7 @@ table FactFacilityHealth
 	column weights_version
 		dataType: string
 		isNullable: false
+		lineageTag: 415f069a-2d9c-4fd9-8deb-7fe43466abb1
 		summarizeBy: none
 		sourceColumn: weights_version
 
@@ -99,6 +115,7 @@ table FactFacilityHealth
 	column weights_json
 		dataType: string
 		isNullable: false
+		lineageTag: 221a0913-7054-454a-995b-16b749de497c
 		summarizeBy: none
 		sourceColumn: weights_json
 
@@ -120,3 +137,4 @@ table FactFacilityHealth
 				    })
 				in
 				    Typed
+

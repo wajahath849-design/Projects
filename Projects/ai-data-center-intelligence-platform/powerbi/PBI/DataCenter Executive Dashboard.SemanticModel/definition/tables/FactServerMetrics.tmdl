@@ -1,8 +1,10 @@
 table FactServerMetrics
+	lineageTag: a6fa7e76-6655-4475-87a3-a96ed2aff4ba
 
 	column metric_id
 		dataType: string
 		isNullable: false
+		lineageTag: bfdae84c-99bc-44b3-af02-18e669caecce
 		summarizeBy: none
 		sourceColumn: metric_id
 
@@ -11,6 +13,7 @@ table FactServerMetrics
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: fa898739-b148-423c-9e08-9ada06b05429
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -19,14 +22,19 @@ table FactServerMetrics
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: b213a2c0-9483-43ef-a3b2-c25a17019934
 		summarizeBy: none
 		sourceColumn: timestamp
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column cpu_utilization_pct
 		dataType: double
 		isNullable: false
+		lineageTag: 0fd6d2d3-0f68-4c2d-aeef-110cb512aee7
 		summarizeBy: none
 		sourceColumn: cpu_utilization_pct
 
@@ -35,6 +43,7 @@ table FactServerMetrics
 	column memory_utilization_pct
 		dataType: double
 		isNullable: false
+		lineageTag: b032f48c-f9ad-4c7f-962f-c73478413518
 		summarizeBy: none
 		sourceColumn: memory_utilization_pct
 
@@ -43,6 +52,7 @@ table FactServerMetrics
 	column disk_utilization_pct
 		dataType: double
 		isNullable: false
+		lineageTag: ee8dfa73-1f35-4c9f-a25d-ea6ed83993af
 		summarizeBy: none
 		sourceColumn: disk_utilization_pct
 
@@ -51,6 +61,7 @@ table FactServerMetrics
 	column network_utilization_pct
 		dataType: double
 		isNullable: false
+		lineageTag: b93ba534-ae5b-4e07-a70a-89bf7f3d7ef7
 		summarizeBy: none
 		sourceColumn: network_utilization_pct
 
@@ -69,3 +80,4 @@ table FactServerMetrics
 				    })
 				in
 				    Typed
+

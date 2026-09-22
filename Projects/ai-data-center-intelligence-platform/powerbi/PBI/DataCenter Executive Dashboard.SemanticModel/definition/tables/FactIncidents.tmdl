@@ -1,8 +1,10 @@
 table FactIncidents
+	lineageTag: bfeb6263-bb43-445e-bf13-40b3048474cd
 
 	column incident_id
 		dataType: string
 		isNullable: false
+		lineageTag: 484bc524-325e-4480-88b7-c2146a643fc5
 		summarizeBy: none
 		sourceColumn: incident_id
 
@@ -11,6 +13,7 @@ table FactIncidents
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: 507261a2-27c8-4c34-8426-be9c1dc9dff0
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -19,6 +22,7 @@ table FactIncidents
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: 3b31abe2-ee60-4e79-883e-694a195491de
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -27,6 +31,7 @@ table FactIncidents
 	column start_time
 		dataType: dateTime
 		isNullable: false
+		lineageTag: bf4b8adc-5698-4203-a8bc-4e7606de4343
 		summarizeBy: none
 		sourceColumn: start_time
 
@@ -35,6 +40,7 @@ table FactIncidents
 	column end_time
 		dataType: dateTime
 		isNullable: false
+		lineageTag: 440a9732-0368-4251-a023-c559c3c5bad8
 		summarizeBy: none
 		sourceColumn: end_time
 
@@ -43,6 +49,7 @@ table FactIncidents
 	column downtime_minutes
 		dataType: int64
 		isNullable: false
+		lineageTag: c4cb7fc2-e755-4a1e-b7fd-a4d434ffb2d0
 		summarizeBy: none
 		sourceColumn: downtime_minutes
 
@@ -51,6 +58,7 @@ table FactIncidents
 	column severity
 		dataType: string
 		isNullable: false
+		lineageTag: 25bc286d-ae59-4e1d-9068-cfc14e0ce863
 		summarizeBy: none
 		sourceColumn: severity
 
@@ -59,6 +67,7 @@ table FactIncidents
 	column root_cause
 		dataType: string
 		isNullable: false
+		lineageTag: d51d65cc-3fda-46e1-aeb6-fb8724cd2d49
 		summarizeBy: none
 		sourceColumn: root_cause
 
@@ -67,6 +76,7 @@ table FactIncidents
 	column status
 		dataType: string
 		isNullable: false
+		lineageTag: 15d30349-0f16-4f4c-8791-599eac5ade0f
 		summarizeBy: none
 		sourceColumn: status
 
@@ -75,10 +85,14 @@ table FactIncidents
 	column incident_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: 91535fec-fdb3-477e-ba28-8d64551055d5
 		summarizeBy: none
 		sourceColumn: incident_date
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition FactIncidents = m
 		mode: import
@@ -95,3 +109,4 @@ table FactIncidents
 				    IncidentDate = Table.AddColumn(Typed, "incident_date", each Date.From([start_time]), type date)
 				in
 				    IncidentDate
+

@@ -1,0 +1,16 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: apple-finance-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: "${MSSQL_PASSWORD:-ChangeThis_StrongPassword123!}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - apple-finance-sql-data:/var/opt/mssql
+    restart: unless-stopped
+
+volumes:
+  apple-finance-sql-data:

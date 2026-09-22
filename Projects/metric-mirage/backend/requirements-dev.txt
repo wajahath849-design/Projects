@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest==8.4.2
+pytest-django==4.11.1
+ruff==0.13.2
+coverage==7.10.7
+

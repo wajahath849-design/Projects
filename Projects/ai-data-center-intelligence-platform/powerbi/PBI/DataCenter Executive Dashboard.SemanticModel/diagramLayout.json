@@ -1,0 +1,226 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2016.0575518915002,
+            "y": 1102.4866805750482
+          },
+          "nodeIndex": "_Measures",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 1438.7939188798057
+          },
+          "nodeIndex": "DimDate",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 582.558672628485,
+            "y": 725.76413151890529
+          },
+          "nodeIndex": "DimFacility",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1213.6745279724134,
+            "y": 1049.4901559331008
+          },
+          "nodeIndex": "DimServer",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 640.0544646433757,
+            "y": 2072.44856579676
+          },
+          "nodeIndex": "FactAlerts",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1501.6109026315517,
+            "y": 754.15237706037055
+          },
+          "nodeIndex": "FactAnomalies",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 316.3008891685983,
+            "y": 1081.0369582322521
+          },
+          "nodeIndex": "FactCostCarbon",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1103.4486823641162,
+            "y": 41.828031854828168
+          },
+          "nodeIndex": "FactFacilityHealth",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1659.2477631323197,
+            "y": 396.96392310891724
+          },
+          "nodeIndex": "FactIncidentImpact",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 262.22054015876068,
+            "y": 1798.6788528734219
+          },
+          "nodeIndex": "FactIncidents",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1393.9965548821954,
+            "y": -50
+          },
+          "nodeIndex": "FactLiveOperationsSnapshot",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 351.03317028708182,
+            "y": 2154.9733611500965
+          },
+          "nodeIndex": "FactMaintenanceActions",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1059.4193622622274,
+            "y": 725.13524610485319
+          },
+          "nodeIndex": "FactNetworkMetrics",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 811.68030563627417,
+            "y": 395.90007079775319
+          },
+          "nodeIndex": "FactPowerMetrics",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 606.76153065180938,
+            "y": 1144.6637065978391
+          },
+          "nodeIndex": "FactServerMetrics",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1782.0575518915,
+            "y": 1267.3682583495661
+          },
+          "nodeIndex": "FactServerRisk",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1314.2782262392818,
+            "y": 1381.4967346891767
+          },
+          "nodeIndex": "FactSystemLogs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

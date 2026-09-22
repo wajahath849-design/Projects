@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "d5c9bc8f8b95d2a0fbf6",
   "position": {
     "x": 12,
     "y": 752,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "FactServerRisk.risk_level",
-              "nativeQueryRef": "risk_level"
+              "nativeQueryRef": "risk_level",
+              "active": true
             }
           ]
         }
@@ -222,7 +225,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "d5c9bc8f8b95d2a0fbf6"
+  }
 }

@@ -1,235 +1,294 @@
 table _Measures
-
-	column Placeholder
-		dataType: string
-		isHidden
-		summarizeBy: none
-		sourceColumn: [Placeholder]
+	lineageTag: 6e521d56-9f60-45e0-997d-7027c9e15db5
 
 	measure 'Server Count' = DISTINCTCOUNT(DimServer[server_id])
 		formatString: #,0
 		displayFolder: Inventory
+		lineageTag: c9728891-7715-4712-bbd9-6b205758a069
 
 	measure 'Active Server Count' = CALCULATE(DISTINCTCOUNT(DimServer[server_id]), KEEPFILTERS(DimServer[status] = "active"))
 		formatString: #,0
 		displayFolder: Inventory
+		lineageTag: 698b3818-744b-4812-82ea-67cfda390381
 
 	measure 'Average PUE' = AVERAGE(FactPowerMetrics[pue])
 		formatString: 0.000
 		displayFolder: Energy
+		lineageTag: df0e71fe-4e3b-4b36-b4fc-b88e793b5f5a
 
 	measure 'Total Power Draw' = SUM(FactPowerMetrics[power_draw_kw])
 		formatString: #,0.00
 		displayFolder: Energy
+		lineageTag: b1ad5ed1-55e0-478f-baa0-d3b1eeb5ebaa
 
 	measure 'Total IT Load' = SUM(FactPowerMetrics[it_load_kw])
 		formatString: #,0.00
 		displayFolder: Energy
+		lineageTag: 53f3a252-e3a9-450d-8e85-bc45eba616e4
 
 	measure 'Total Cooling Power' = SUM(FactPowerMetrics[cooling_power_kw])
 		formatString: #,0.00
 		displayFolder: Energy
+		lineageTag: 868c67a6-ded1-4b64-9b3d-c1c7a26fdd92
 
 	measure 'Total Cooling Cost' = SUM(FactPowerMetrics[cooling_cost])
 		formatString: #,0.00
 		displayFolder: Energy
+		lineageTag: eaca943c-d3e5-4c55-b17e-6abca88c7ef8
 
 	measure 'Average CPU Utilization' = AVERAGE(FactServerMetrics[cpu_utilization_pct])
 		formatString: 0.00
 		displayFolder: Infrastructure
+		lineageTag: 150695b4-7d24-47af-a047-8fe23a1ad17b
 
 	measure 'Average Memory Utilization' = AVERAGE(FactServerMetrics[memory_utilization_pct])
 		formatString: 0.00
 		displayFolder: Infrastructure
+		lineageTag: f4a66da2-d4c3-41c0-8adc-d6961045b2e5
 
 	measure 'Average Disk Utilization' = AVERAGE(FactServerMetrics[disk_utilization_pct])
 		formatString: 0.00
 		displayFolder: Infrastructure
+		lineageTag: 5d4d4de3-0939-42ce-85fb-3f2ae9d51579
 
 	measure 'Average Server Network Utilization' = AVERAGE(FactServerMetrics[network_utilization_pct])
 		formatString: 0.00
 		displayFolder: Infrastructure
+		lineageTag: 7f575870-7b52-4d18-8f1c-367ecbb81c6f
 
 	measure 'Average Network Latency' = AVERAGE(FactNetworkMetrics[latency_ms])
 		formatString: 0.00
 		displayFolder: Network
+		lineageTag: e7b74495-0437-43c4-8e08-6486e536b013
 
 	measure 'Average Packet Loss' = AVERAGE(FactNetworkMetrics[packet_loss_pct])
 		formatString: 0.000
 		displayFolder: Network
+		lineageTag: b7881b71-72de-460b-a18d-d5acba3685b6
 
 	measure 'Average Throughput' = AVERAGE(FactNetworkMetrics[throughput_mbps])
 		formatString: #,0.00
 		displayFolder: Network
+		lineageTag: e3062722-df22-4e2d-b778-2200c44d260a
 
 	measure 'Network Availability' = AVERAGE(FactNetworkMetrics[network_availability_pct])
 		formatString: 0.0000
 		displayFolder: Network
+		lineageTag: 5c4c8408-246f-4064-b85d-914ffda1b7dc
 
 	measure 'Total Downtime' = SUM(FactIncidents[downtime_minutes])
 		formatString: #,0
 		displayFolder: Reliability
+		lineageTag: 4d4dc4c9-813c-47c9-b1cf-6b0fa27262a8
 
 	measure 'Incident Count' = DISTINCTCOUNT(FactIncidents[incident_id])
 		formatString: #,0
 		displayFolder: Reliability
+		lineageTag: 59c4c788-e286-4462-8c75-c4bc38321aa5
 
 	measure 'Downtime per Server' = DIVIDE([Total Downtime], [Server Count])
 		formatString: 0.00
 		displayFolder: Reliability
+		lineageTag: 5240c510-25f9-49e5-96f2-e2799c7605bb
 
 	measure 'Incident Rate per 100 Servers' = DIVIDE([Incident Count], [Server Count]) * 100
 		formatString: 0.00
 		displayFolder: Reliability
+		lineageTag: 8a28b138-51f6-436c-8e33-89424b3d83f3
 
 	measure 'Visible Days' = DISTINCTCOUNT(DimDate[Date])
 		formatString: #,0
 		displayFolder: Reliability
+		lineageTag: e01ea8d6-87da-4889-8184-dad40e4e31ce
 
 	measure 'Operational Availability' = VAR PotentialServerMinutes = [Server Count] * [Visible Days] * 1440 RETURN 100 * (1 - DIVIDE([Total Downtime], PotentialServerMinutes))
 		formatString: 0.0000
 		displayFolder: Reliability
+		lineageTag: e2d5dc0b-f60b-4186-9a56-ed6c2a81f368
 
 	measure 'Previous Year Average PUE' = CALCULATE([Average PUE], DATEADD(DimDate[Date], -1, YEAR))
 		formatString: 0.000
 		displayFolder: Time Intelligence
+		lineageTag: f411a552-0487-4b81-b1d6-a604d625a84a
 
 	measure 'Year-over-Year PUE Change' = DIVIDE([Average PUE] - [Previous Year Average PUE], [Previous Year Average PUE])
 		formatString: 0.00%
 		displayFolder: Time Intelligence
+		lineageTag: 392e3ee1-5227-448d-b66c-47315ad33fb0
 
 	measure 'Previous Year Cooling Cost' = CALCULATE([Total Cooling Cost], DATEADD(DimDate[Date], -1, YEAR))
 		formatString: #,0.00
 		displayFolder: Time Intelligence
+		lineageTag: 75251916-be0f-4f87-a2fc-f18b262e3462
 
 	measure 'Year-over-Year Cooling Cost Change' = DIVIDE([Total Cooling Cost] - [Previous Year Cooling Cost], [Previous Year Cooling Cost])
 		formatString: 0.00%
 		displayFolder: Time Intelligence
+		lineageTag: 0fdb8e90-e747-4a79-915d-528970aa554a
 
 	measure 'Previous Year Downtime' = CALCULATE([Total Downtime], DATEADD(DimDate[Date], -1, YEAR))
 		formatString: #,0
 		displayFolder: Time Intelligence
+		lineageTag: d99d7869-918b-442c-b6aa-6d82f7c3f53a
 
 	measure 'Year-over-Year Downtime Change' = DIVIDE([Total Downtime] - [Previous Year Downtime], [Previous Year Downtime])
 		formatString: 0.00%
 		displayFolder: Time Intelligence
+		lineageTag: ec7b4a5e-da4e-424f-92fc-39e8d092cb5f
 
 	measure 'Log Count' = DISTINCTCOUNT(FactSystemLogs[log_id])
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: b99f7399-1f1d-4330-8ae0-77df3fed714a
 
 	measure 'Error Log Count' = CALCULATE([Log Count], KEEPFILTERS(FactSystemLogs[log_level] IN {"ERROR", "CRITICAL"}))
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: 0a3168bd-3a02-49a8-ad8a-5fa59d00fba9
 
 	measure 'Critical Log Count' = CALCULATE([Log Count], KEEPFILTERS(FactSystemLogs[log_level] = "CRITICAL"))
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: 619cbf72-d824-48f1-815c-e180aeef9d23
 
 	measure 'Alert Count' = DISTINCTCOUNT(FactAlerts[alert_id])
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: fbea7e50-d6fa-4188-aceb-aee56198aac3
 
 	measure 'Critical Alert Count' = CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[severity] = "critical"))
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: ae8e458f-1713-49d2-aa8d-5f1dc69c95b2
 
 	measure 'Open Alert Count' = CALCULATE([Alert Count], KEEPFILTERS(FactAlerts[status] = "open"))
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: 99927b2c-d36a-4a96-be86-290e6059bffc
 
 	measure 'Anomaly Count' = DISTINCTCOUNT(FactAnomalies[anomaly_id])
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: 15092c63-a334-43f8-8b16-8619a53a63f2
 
 	measure 'Critical Anomaly Count' = CALCULATE([Anomaly Count], KEEPFILTERS(FactAnomalies[severity] = "critical"))
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: b8f52784-98e8-4bdb-8c0e-a93e1de8e3c0
 
 	measure 'Maintenance Action Count' = DISTINCTCOUNT(FactMaintenanceActions[action_id])
 		formatString: #,0
 		displayFolder: Incident Intelligence
+		lineageTag: 1b2a875e-092b-4bb1-bf10-100c964f043d
 
 	measure 'MTTR Minutes' = AVERAGE(FactIncidents[downtime_minutes])
 		formatString: 0.00
 		displayFolder: Reliability
+		lineageTag: ecc1536f-37d4-4f08-ba1b-7a92cda23eac
 
 	measure 'Average Server Risk Score' = AVERAGE(FactServerRisk[risk_score])
 		formatString: 0.00
 		displayFolder: Predictive Operations
+		lineageTag: 2de0fa6e-c080-44ce-9ed2-730c13a6c161
 
 	measure 'High Risk Server Count' = CALCULATE(DISTINCTCOUNT(FactServerRisk[server_id]), KEEPFILTERS(FactServerRisk[risk_level] IN {"high", "critical"}))
 		formatString: #,0
 		displayFolder: Predictive Operations
+		lineageTag: 1f27c74b-8694-4fba-913d-1130a7b6eab9
 
 	measure 'Average Facility Health Score' = AVERAGE(FactFacilityHealth[health_score])
 		formatString: 0.00
 		displayFolder: Predictive Operations
+		lineageTag: dbe03346-71eb-4345-b14c-d790ccad9f6b
 
 	measure 'Latest Data Date' = MAXX(UNION(SELECTCOLUMNS(FactPowerMetrics, "DataDate", FactPowerMetrics[timestamp]), SELECTCOLUMNS(FactNetworkMetrics, "DataDate", FactNetworkMetrics[timestamp]), SELECTCOLUMNS(FactServerMetrics, "DataDate", FactServerMetrics[timestamp])), [DataDate])
 		formatString: General Date
 		displayFolder: Data Quality
+		lineageTag: 30269597-c3f3-4232-8ba7-dfba4cc21858
 
 	measure 'Server Risk Observation Count' = COUNTROWS(FactServerRisk)
 		formatString: #,0
 		displayFolder: Predictive Operations
+		lineageTag: c1d4f4b4-e669-44fd-923a-f88e2cb49bf6
 
 	measure 'Modeled Energy' = SUM(FactCostCarbon[modeled_energy_kwh])
 		formatString: #,0
 		displayFolder: Cost and Carbon
+		lineageTag: 8dba093b-5624-4583-984e-3403e9279b52
 
 	measure 'Modeled Energy Cost' = SUM(FactCostCarbon[modeled_energy_cost_usd])
 		formatString: $#,0
 		displayFolder: Cost and Carbon
+		lineageTag: 6fba5051-6587-42e7-91f6-e316a7693f4e
 
 	measure 'Modeled Cooling Cost' = SUM(FactCostCarbon[modeled_cooling_cost_usd])
 		formatString: $#,0
 		displayFolder: Cost and Carbon
+		lineageTag: e36e9ee9-92a1-450b-ae3d-22c47c1f25e7
 
 	measure 'Modeled Carbon' = SUM(FactCostCarbon[modeled_carbon_tonnes])
 		formatString: #,0.00
 		displayFolder: Cost and Carbon
+		lineageTag: f18fd22e-d986-4568-ae38-364e1f8d48a4
 
 	measure 'Average Energy Price' = AVERAGE(FactCostCarbon[price_per_kwh])
 		formatString: $0.000
 		displayFolder: Cost and Carbon
+		lineageTag: d33e16e4-8a1b-4b33-954e-7d5f4ee81a00
 
 	measure 'Average Carbon Intensity' = AVERAGE(FactCostCarbon[grams_co2e_per_kwh])
 		formatString: #,0.0
 		displayFolder: Cost and Carbon
+		lineageTag: 1166c6ee-07d5-4c1e-8737-34a1d41468cf
 
 	measure 'Average Efficiency Opportunity Score' = AVERAGE(FactCostCarbon[efficiency_opportunity_score])
 		formatString: 0.0
 		displayFolder: Cost and Carbon
+		lineageTag: 690012df-61eb-49c9-b550-498bacd35797
 
 	measure 'Incident Impact Count' = DISTINCTCOUNT(FactIncidentImpact[incident_id])
 		formatString: #,0
 		displayFolder: Reliability Impact
+		lineageTag: f719b1af-dfab-4da5-bbff-85459d3c298c
 
 	measure 'Average Incident PUE Change' = AVERAGE(FactIncidentImpact[change_pue_pct])
 		formatString: 0.00
 		displayFolder: Reliability Impact
+		lineageTag: 6e78d357-9a90-4961-b92c-50fa87c7e288
 
 	measure 'Average Incident Latency Change' = AVERAGE(FactIncidentImpact[change_latency_ms_pct])
 		formatString: 0.00
 		displayFolder: Reliability Impact
+		lineageTag: a496b381-1402-4a10-b6bd-297578e3bf87
 
 	measure 'Modeled Downtime Cost Exposure' = SUM(FactIncidentImpact[modeled_downtime_cost_exposure_usd])
 		formatString: $#,0
 		displayFolder: Reliability Impact
+		lineageTag: 1364188e-e867-4056-9727-e97b1488840e
 
 	measure 'Live Facility Health Score' = AVERAGE(FactLiveOperationsSnapshot[health_score])
 		formatString: 0.0
 		displayFolder: Live Operations
+		lineageTag: d9c811a7-31b0-41d7-a97f-6a21d4c5c400
 
 	measure 'Live Active Alert Count' = SUM(FactLiveOperationsSnapshot[active_alert_count])
 		formatString: #,0
 		displayFolder: Live Operations
+		lineageTag: d88203ba-4799-4c2d-b592-0bf3039794e2
 
 	measure 'Live Data Completeness' = AVERAGE(FactLiveOperationsSnapshot[data_completeness_pct])
 		formatString: 0.0
 		displayFolder: Live Operations
+		lineageTag: ab23e39c-b6a8-4e64-b160-16b4d015cbe4
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: 27fd7a43-9772-4db5-85c3-bdf65608b8b8
+		summarizeBy: none
+		sourceColumn: [Placeholder]
 
 	partition _Measures = calculated
 		mode: import
 		source = DATATABLE("Placeholder", STRING, {{"Measures"}})
+

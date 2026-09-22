@@ -1,8 +1,10 @@
 table FactNetworkMetrics
+	lineageTag: 49346ec5-31eb-4ca5-a1b0-f7c0661d24c8
 
 	column metric_id
 		dataType: string
 		isNullable: false
+		lineageTag: 2d16e2ce-1cfc-45b7-9774-6ec7a7905c83
 		summarizeBy: none
 		sourceColumn: metric_id
 
@@ -11,6 +13,7 @@ table FactNetworkMetrics
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: c0ea16f1-5dcb-4aa5-bc77-911d3600aef6
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -19,14 +22,19 @@ table FactNetworkMetrics
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: a8233c31-e16c-4f5e-a9a3-763890cf4a23
 		summarizeBy: none
 		sourceColumn: timestamp
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column bandwidth_utilization_pct
 		dataType: double
 		isNullable: false
+		lineageTag: 98e24f47-f51e-477a-ba89-302c6a7271d0
 		summarizeBy: none
 		sourceColumn: bandwidth_utilization_pct
 
@@ -35,6 +43,7 @@ table FactNetworkMetrics
 	column latency_ms
 		dataType: double
 		isNullable: false
+		lineageTag: 6700a58e-c467-40b0-8b14-53c74eb6866f
 		summarizeBy: none
 		sourceColumn: latency_ms
 
@@ -43,6 +52,7 @@ table FactNetworkMetrics
 	column packet_loss_pct
 		dataType: double
 		isNullable: false
+		lineageTag: fb513001-6be6-4a00-a8ff-9556d29a137c
 		summarizeBy: none
 		sourceColumn: packet_loss_pct
 
@@ -51,6 +61,7 @@ table FactNetworkMetrics
 	column throughput_mbps
 		dataType: double
 		isNullable: false
+		lineageTag: bb4e37d7-5a68-444f-a99f-2fc79a18a999
 		summarizeBy: none
 		sourceColumn: throughput_mbps
 
@@ -59,6 +70,7 @@ table FactNetworkMetrics
 	column network_availability_pct
 		dataType: double
 		isNullable: false
+		lineageTag: 30a18458-b414-4c3a-9af2-1f9ad89fd149
 		summarizeBy: none
 		sourceColumn: network_availability_pct
 
@@ -78,3 +90,4 @@ table FactNetworkMetrics
 				    })
 				in
 				    Typed
+

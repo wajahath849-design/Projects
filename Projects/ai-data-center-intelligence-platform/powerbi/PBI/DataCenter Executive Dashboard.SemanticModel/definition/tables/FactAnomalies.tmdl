@@ -1,8 +1,10 @@
 table FactAnomalies
+	lineageTag: 65f57552-be28-4bcd-8062-c98e491c0bc0
 
 	column anomaly_id
 		dataType: string
 		isNullable: false
+		lineageTag: 2b82a9ae-1d71-4a94-8d6e-e5e8f33f72d4
 		summarizeBy: none
 		sourceColumn: anomaly_id
 
@@ -11,14 +13,19 @@ table FactAnomalies
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: 3c365093-81b8-41b0-ac07-2b72e5085d00
 		summarizeBy: none
 		sourceColumn: timestamp
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: 5a0037f9-8347-40b5-904c-371f6d91a2fb
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -27,6 +34,7 @@ table FactAnomalies
 	column metric_name
 		dataType: string
 		isNullable: false
+		lineageTag: 4b8cf60c-3f45-4444-9f2a-ddb7194dad58
 		summarizeBy: none
 		sourceColumn: metric_name
 
@@ -35,6 +43,7 @@ table FactAnomalies
 	column observed_value
 		dataType: double
 		isNullable: false
+		lineageTag: f310c781-4e2a-46bb-8770-5de34fbec9e9
 		summarizeBy: none
 		sourceColumn: observed_value
 
@@ -43,6 +52,7 @@ table FactAnomalies
 	column expected_value
 		dataType: double
 		isNullable: false
+		lineageTag: e3472d4a-e197-4c16-bec8-10db1bddd801
 		summarizeBy: none
 		sourceColumn: expected_value
 
@@ -51,6 +61,7 @@ table FactAnomalies
 	column lower_bound
 		dataType: double
 		isNullable: false
+		lineageTag: b00864ec-337d-437b-9e13-97874a0b0788
 		summarizeBy: none
 		sourceColumn: lower_bound
 
@@ -59,6 +70,7 @@ table FactAnomalies
 	column upper_bound
 		dataType: double
 		isNullable: false
+		lineageTag: 61691040-1913-49a7-a2ba-c10e9e0cefbb
 		summarizeBy: none
 		sourceColumn: upper_bound
 
@@ -67,6 +79,7 @@ table FactAnomalies
 	column deviation_pct
 		dataType: double
 		isNullable: false
+		lineageTag: 36d84994-6ade-42c0-8a37-942720571c2b
 		summarizeBy: none
 		sourceColumn: deviation_pct
 
@@ -75,6 +88,7 @@ table FactAnomalies
 	column direction
 		dataType: string
 		isNullable: false
+		lineageTag: ae71cd5e-4b39-4577-b246-e328e82efa26
 		summarizeBy: none
 		sourceColumn: direction
 
@@ -83,6 +97,7 @@ table FactAnomalies
 	column severity
 		dataType: string
 		isNullable: false
+		lineageTag: 35a969dd-3313-49f8-b1b2-5b161c42147d
 		summarizeBy: none
 		sourceColumn: severity
 
@@ -91,6 +106,7 @@ table FactAnomalies
 	column anomaly_score
 		dataType: double
 		isNullable: false
+		lineageTag: e8f9268e-dd77-4eef-83f5-e00092f86f39
 		summarizeBy: none
 		sourceColumn: anomaly_score
 
@@ -99,6 +115,7 @@ table FactAnomalies
 	column method
 		dataType: string
 		isNullable: false
+		lineageTag: fd95f7c0-c805-4f90-aa45-171ce9aa14b4
 		summarizeBy: none
 		sourceColumn: method
 
@@ -107,6 +124,7 @@ table FactAnomalies
 	column source_table
 		dataType: string
 		isNullable: false
+		lineageTag: 3ddb2d19-8021-474c-b389-434ec8f0b7d5
 		summarizeBy: none
 		sourceColumn: source_table
 
@@ -115,6 +133,7 @@ table FactAnomalies
 	column source_grain
 		dataType: string
 		isNullable: false
+		lineageTag: e32d80c2-de5d-4147-b530-cdfdee72d7c5
 		summarizeBy: none
 		sourceColumn: source_grain
 
@@ -123,6 +142,7 @@ table FactAnomalies
 	column source_record_count
 		dataType: int64
 		isNullable: false
+		lineageTag: f00c1b8b-4baa-428a-be4f-95752457a023
 		summarizeBy: none
 		sourceColumn: source_record_count
 
@@ -144,3 +164,4 @@ table FactAnomalies
 				    })
 				in
 				    Typed
+

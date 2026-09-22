@@ -121,3 +121,4 @@ relationship rel_date_incident_impact
 relationship rel_facility_live_snapshot
 	fromColumn: FactLiveOperationsSnapshot.facility_id
 	toColumn: DimFacility.facility_id
+

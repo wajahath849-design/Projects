@@ -1,8 +1,10 @@
 table DimServer
+	lineageTag: 1336c5eb-ab92-4f5e-a387-8b0da25a73a0
 
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: b824dcec-89e5-4e3f-8711-eb7cd4aa5b38
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -11,6 +13,7 @@ table DimServer
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: 3d990194-bf82-42c9-8d9b-9512ab981025
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -19,6 +22,7 @@ table DimServer
 	column rack_id
 		dataType: string
 		isNullable: false
+		lineageTag: a97979eb-2032-4923-81af-0a515de83811
 		summarizeBy: none
 		sourceColumn: rack_id
 
@@ -27,6 +31,7 @@ table DimServer
 	column server_type
 		dataType: string
 		isNullable: false
+		lineageTag: d581b931-b35a-467e-a897-37ffb1c74e31
 		summarizeBy: none
 		sourceColumn: server_type
 
@@ -35,6 +40,7 @@ table DimServer
 	column cpu_cores
 		dataType: int64
 		isNullable: false
+		lineageTag: 1e1bb53a-4e11-488a-858f-0b5a24bab1c9
 		summarizeBy: none
 		sourceColumn: cpu_cores
 
@@ -43,6 +49,7 @@ table DimServer
 	column memory_gb
 		dataType: int64
 		isNullable: false
+		lineageTag: a71b6e06-d7cd-4f6a-9e0b-51a65b34c74c
 		summarizeBy: none
 		sourceColumn: memory_gb
 
@@ -51,14 +58,19 @@ table DimServer
 	column install_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: a004a591-62fc-4434-acd6-7486f4fb9133
 		summarizeBy: none
 		sourceColumn: install_date
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column status
 		dataType: string
 		isNullable: false
+		lineageTag: 3600d0b8-386f-4711-a203-187d06f42649
 		summarizeBy: none
 		sourceColumn: status
 
@@ -77,3 +89,4 @@ table DimServer
 				    })
 				in
 				    Typed
+

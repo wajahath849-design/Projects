@@ -1,8 +1,10 @@
 table FactAlerts
+	lineageTag: ae9463cd-5d1c-410a-a4f3-00c00fc6fa53
 
 	column alert_id
 		dataType: string
 		isNullable: false
+		lineageTag: 696360d2-3a0e-4163-b57d-43dc71ba0a05
 		summarizeBy: none
 		sourceColumn: alert_id
 
@@ -11,6 +13,7 @@ table FactAlerts
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		lineageTag: 3ad4cf6b-f1f5-45d9-9ec0-14cfcc806a4c
 		summarizeBy: none
 		sourceColumn: timestamp
 
@@ -19,6 +22,7 @@ table FactAlerts
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: bea48872-836b-41b7-b6dd-1c57d1bd5321
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -27,6 +31,7 @@ table FactAlerts
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: 1d6a5bea-fa88-41ff-8ca2-cb091a68e31c
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -35,6 +40,7 @@ table FactAlerts
 	column component
 		dataType: string
 		isNullable: false
+		lineageTag: 94c47753-c464-4d7e-b445-3485f2a09b8f
 		summarizeBy: none
 		sourceColumn: component
 
@@ -43,6 +49,7 @@ table FactAlerts
 	column severity
 		dataType: string
 		isNullable: false
+		lineageTag: d59bb0b5-6267-4505-a350-6efe4bb44069
 		summarizeBy: none
 		sourceColumn: severity
 
@@ -51,6 +58,7 @@ table FactAlerts
 	column alert_type
 		dataType: string
 		isNullable: false
+		lineageTag: fffa0673-600e-4cc7-92fd-28d58347bbed
 		summarizeBy: none
 		sourceColumn: alert_type
 
@@ -59,6 +67,7 @@ table FactAlerts
 	column metric_name
 		dataType: string
 		isNullable: false
+		lineageTag: 5030f447-7f79-4d52-afd5-30d511a35ec1
 		summarizeBy: none
 		sourceColumn: metric_name
 
@@ -67,6 +76,7 @@ table FactAlerts
 	column observed_value
 		dataType: double
 		isNullable: false
+		lineageTag: 4ea2603e-f24e-4363-ad66-adcfa142a450
 		summarizeBy: none
 		sourceColumn: observed_value
 
@@ -75,6 +85,7 @@ table FactAlerts
 	column threshold_value
 		dataType: double
 		isNullable: false
+		lineageTag: 92c16710-7f95-4e40-844d-975f29f8b98b
 		summarizeBy: none
 		sourceColumn: threshold_value
 
@@ -83,6 +94,7 @@ table FactAlerts
 	column status
 		dataType: string
 		isNullable: false
+		lineageTag: 9b2fa6c8-6fcd-429b-9850-821fced60721
 		summarizeBy: none
 		sourceColumn: status
 
@@ -90,7 +102,7 @@ table FactAlerts
 
 	column resolved_at
 		dataType: dateTime
-		isNullable: true
+		lineageTag: 980c6e6f-2183-43c4-856f-c7b54faa5e7b
 		summarizeBy: none
 		sourceColumn: resolved_at
 
@@ -99,10 +111,14 @@ table FactAlerts
 	column alert_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: e4fce142-2743-467b-b9a1-412c247eecae
 		summarizeBy: none
 		sourceColumn: alert_date
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition FactAlerts = m
 		mode: import
@@ -119,3 +135,4 @@ table FactAlerts
 				    AlertDate = Table.AddColumn(Typed, "alert_date", each Date.From([timestamp]), type date)
 				in
 				    AlertDate
+

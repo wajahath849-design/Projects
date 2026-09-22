@@ -1,0 +1,22 @@
+MetricCode,MetricName,Statement,Category,PreferredTags,Units,Instant,DeriveQ4,NonNegativeCheck
+REVENUE,Revenue,Income Statement,Profitability,RevenueFromContractWithCustomerExcludingAssessedTax | SalesRevenueNet,USD,False,True,True
+COST_OF_REVENUE,Cost of Revenue,Income Statement,Profitability,CostOfGoodsAndServicesSold | CostOfRevenue,USD,False,True,True
+GROSS_PROFIT,Gross Profit,Income Statement,Profitability,GrossProfit,USD,False,True,False
+OPERATING_EXPENSE,Operating Expense,Income Statement,Profitability,OperatingExpenses,USD,False,True,True
+OPERATING_INCOME,Operating Income,Income Statement,Profitability,OperatingIncomeLoss,USD,False,True,False
+NET_INCOME,Net Income,Income Statement,Profitability,NetIncomeLoss | ProfitLoss,USD,False,True,False
+DILUTED_EPS,Diluted EPS,Income Statement,Per Share,EarningsPerShareDiluted,USD/shares,False,False,False
+R_AND_D,Research and Development,Income Statement,Operating Expense,ResearchAndDevelopmentExpense,USD,False,True,True
+SG_AND_A,"Selling, General and Administrative",Income Statement,Operating Expense,SellingGeneralAndAdministrativeExpense,USD,False,True,True
+TOTAL_ASSETS,Total Assets,Balance Sheet,Financial Position,Assets,USD,True,False,True
+TOTAL_LIABILITIES,Total Liabilities,Balance Sheet,Financial Position,Liabilities,USD,True,False,True
+EQUITY,Shareholders' Equity,Balance Sheet,Financial Position,StockholdersEquity,USD,True,False,False
+CASH,Cash and Cash Equivalents,Balance Sheet,Liquidity,CashAndCashEquivalentsAtCarryingValue,USD,True,False,True
+INVENTORY,Inventory,Balance Sheet,Working Capital,InventoryNet,USD,True,False,True
+ACCOUNTS_RECEIVABLE,Accounts Receivable,Balance Sheet,Working Capital,AccountsReceivableNetCurrent,USD,True,False,True
+CURRENT_ASSETS,Current Assets,Balance Sheet,Liquidity,AssetsCurrent,USD,True,False,True
+CURRENT_LIABILITIES,Current Liabilities,Balance Sheet,Liquidity,LiabilitiesCurrent,USD,True,False,True
+OPERATING_CASH_FLOW,Operating Cash Flow,Cash Flow Statement,Cash Flow,NetCashProvidedByUsedInOperatingActivities,USD,False,True,False
+CAPEX,Capital Expenditure,Cash Flow Statement,Cash Flow,PaymentsToAcquirePropertyPlantAndEquipment,USD,False,True,True
+DIVIDENDS_PAID,Dividends Paid,Cash Flow Statement,Financing,PaymentsOfDividends | PaymentsOfDividendsCommonStock,USD,False,True,True
+SHARE_REPURCHASES,Share Repurchases,Cash Flow Statement,Financing,PaymentsForRepurchaseOfCommonStock,USD,False,True,True

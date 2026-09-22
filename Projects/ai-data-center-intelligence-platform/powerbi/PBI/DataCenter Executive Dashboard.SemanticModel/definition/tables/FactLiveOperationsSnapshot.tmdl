@@ -1,8 +1,9 @@
 table FactLiveOperationsSnapshot
+	lineageTag: 159bc8ed-cec6-46e7-b351-f9213a945268
 
 	column simulation_session_id
 		dataType: string
-		isNullable: true
+		lineageTag: 54ccd371-1510-44f2-a5e5-7ae133aa1fcd
 		summarizeBy: none
 		sourceColumn: simulation_session_id
 
@@ -10,7 +11,7 @@ table FactLiveOperationsSnapshot
 
 	column scenario_name
 		dataType: string
-		isNullable: true
+		lineageTag: f503b009-12f9-404f-8f89-f93d4165745d
 		summarizeBy: none
 		sourceColumn: scenario_name
 
@@ -18,7 +19,7 @@ table FactLiveOperationsSnapshot
 
 	column session_status
 		dataType: string
-		isNullable: true
+		lineageTag: fe2a2295-9bdd-4aa7-9012-c068d1a2bd00
 		summarizeBy: none
 		sourceColumn: session_status
 
@@ -26,7 +27,7 @@ table FactLiveOperationsSnapshot
 
 	column snapshot_timestamp
 		dataType: dateTime
-		isNullable: true
+		lineageTag: ccec1609-de8e-40c3-8d11-1fe215b0dfcc
 		summarizeBy: none
 		sourceColumn: snapshot_timestamp
 
@@ -34,7 +35,7 @@ table FactLiveOperationsSnapshot
 
 	column facility_id
 		dataType: string
-		isNullable: true
+		lineageTag: ddec05b7-006d-46aa-91b0-6995316f836a
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -42,7 +43,7 @@ table FactLiveOperationsSnapshot
 
 	column facility_name
 		dataType: string
-		isNullable: true
+		lineageTag: 7dbdb580-fe21-4e01-9c71-acd347256f21
 		summarizeBy: none
 		sourceColumn: facility_name
 
@@ -50,7 +51,7 @@ table FactLiveOperationsSnapshot
 
 	column health_score
 		dataType: double
-		isNullable: true
+		lineageTag: 702d1612-6a60-4d94-86dd-492f55e64456
 		summarizeBy: none
 		sourceColumn: health_score
 
@@ -58,7 +59,7 @@ table FactLiveOperationsSnapshot
 
 	column energy_efficiency_score
 		dataType: double
-		isNullable: true
+		lineageTag: 4588f995-4073-4020-a25e-341d15fbcc7a
 		summarizeBy: none
 		sourceColumn: energy_efficiency_score
 
@@ -66,7 +67,7 @@ table FactLiveOperationsSnapshot
 
 	column reliability_score
 		dataType: double
-		isNullable: true
+		lineageTag: 01d40b97-3083-4182-b298-b0eedb1d4211
 		summarizeBy: none
 		sourceColumn: reliability_score
 
@@ -74,7 +75,7 @@ table FactLiveOperationsSnapshot
 
 	column network_health_score
 		dataType: double
-		isNullable: true
+		lineageTag: 8f364623-13ea-408b-be02-de4b5aa63eed
 		summarizeBy: none
 		sourceColumn: network_health_score
 
@@ -82,7 +83,7 @@ table FactLiveOperationsSnapshot
 
 	column infrastructure_score
 		dataType: double
-		isNullable: true
+		lineageTag: 43d2575c-a0a8-419c-b108-8a75eb995864
 		summarizeBy: none
 		sourceColumn: infrastructure_score
 
@@ -90,7 +91,7 @@ table FactLiveOperationsSnapshot
 
 	column alert_score
 		dataType: double
-		isNullable: true
+		lineageTag: 2a7fa8e0-4208-447d-8edb-eeb390e8c34b
 		summarizeBy: none
 		sourceColumn: alert_score
 
@@ -98,7 +99,7 @@ table FactLiveOperationsSnapshot
 
 	column anomaly_score
 		dataType: double
-		isNullable: true
+		lineageTag: 57a6e8b1-9aed-40bd-827a-2a315a9ef7e1
 		summarizeBy: none
 		sourceColumn: anomaly_score
 
@@ -106,7 +107,7 @@ table FactLiveOperationsSnapshot
 
 	column active_alert_count
 		dataType: int64
-		isNullable: true
+		lineageTag: d25c851f-5e48-4a02-afdc-40ee312a8e57
 		summarizeBy: none
 		sourceColumn: active_alert_count
 
@@ -114,7 +115,7 @@ table FactLiveOperationsSnapshot
 
 	column active_anomaly_count
 		dataType: int64
-		isNullable: true
+		lineageTag: 7854bcd9-1314-426b-b91e-e1b974fb7976
 		summarizeBy: none
 		sourceColumn: active_anomaly_count
 
@@ -122,7 +123,7 @@ table FactLiveOperationsSnapshot
 
 	column data_completeness_pct
 		dataType: double
-		isNullable: true
+		lineageTag: 613675b0-5289-44d6-b997-deee092edaef
 		summarizeBy: none
 		sourceColumn: data_completeness_pct
 
@@ -130,7 +131,7 @@ table FactLiveOperationsSnapshot
 
 	column method_version
 		dataType: string
-		isNullable: true
+		lineageTag: ac2d9f5f-aa67-4705-a387-d87daf3f49c5
 		summarizeBy: none
 		sourceColumn: method_version
 
@@ -138,7 +139,7 @@ table FactLiveOperationsSnapshot
 
 	column is_synthetic
 		dataType: boolean
-		isNullable: true
+		lineageTag: ab5bec69-bee5-4654-9e43-315f850eea55
 		summarizeBy: none
 		sourceColumn: is_synthetic
 
@@ -146,7 +147,7 @@ table FactLiveOperationsSnapshot
 
 	column snapshot_version
 		dataType: string
-		isNullable: true
+		lineageTag: f28e23be-3135-4c51-9735-c92e80d591a2
 		summarizeBy: none
 		sourceColumn: snapshot_version
 
@@ -171,3 +172,4 @@ table FactLiveOperationsSnapshot
 				    })
 				in
 				    Typed
+

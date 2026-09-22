@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "332bb147bd31fd5437a8",
   "position": {
     "x": 12,
     "y": 752,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "FactIncidents.severity",
-              "nativeQueryRef": "severity"
+              "nativeQueryRef": "severity",
+              "active": true
             }
           ]
         }
@@ -222,7 +225,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "332bb147bd31fd5437a8"
+  }
 }

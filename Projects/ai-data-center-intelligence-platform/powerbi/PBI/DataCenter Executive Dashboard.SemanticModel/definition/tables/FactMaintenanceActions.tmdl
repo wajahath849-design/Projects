@@ -1,8 +1,10 @@
 table FactMaintenanceActions
+	lineageTag: 89ea5c34-8e77-4ad5-9f41-247af65bab36
 
 	column action_id
 		dataType: string
 		isNullable: false
+		lineageTag: fd0650ee-f706-40ee-9ec7-f2a0defeb00e
 		summarizeBy: none
 		sourceColumn: action_id
 
@@ -11,6 +13,7 @@ table FactMaintenanceActions
 	column incident_id
 		dataType: string
 		isNullable: false
+		lineageTag: 3d183edd-3f6e-46bc-81b5-c1827f13466f
 		summarizeBy: none
 		sourceColumn: incident_id
 
@@ -19,6 +22,7 @@ table FactMaintenanceActions
 	column facility_id
 		dataType: string
 		isNullable: false
+		lineageTag: fb08d6d3-92d2-436e-a4ba-e62d4bb4a90d
 		summarizeBy: none
 		sourceColumn: facility_id
 
@@ -27,6 +31,7 @@ table FactMaintenanceActions
 	column server_id
 		dataType: string
 		isNullable: false
+		lineageTag: ced57b39-84e2-42b5-9d47-f508d58f12e7
 		summarizeBy: none
 		sourceColumn: server_id
 
@@ -35,6 +40,7 @@ table FactMaintenanceActions
 	column timestamp
 		dataType: dateTime
 		isNullable: false
+		lineageTag: 7a8fa0ea-c0d1-4f4a-9571-b668ea122607
 		summarizeBy: none
 		sourceColumn: timestamp
 
@@ -43,6 +49,7 @@ table FactMaintenanceActions
 	column action_type
 		dataType: string
 		isNullable: false
+		lineageTag: 1253e6f0-adc4-45b2-9f3b-44af17ef5d3a
 		summarizeBy: none
 		sourceColumn: action_type
 
@@ -51,6 +58,7 @@ table FactMaintenanceActions
 	column description
 		dataType: string
 		isNullable: false
+		lineageTag: f0069b4e-585a-4fea-8ba6-632f8b702439
 		summarizeBy: none
 		sourceColumn: description
 
@@ -59,6 +67,7 @@ table FactMaintenanceActions
 	column result
 		dataType: string
 		isNullable: false
+		lineageTag: 34382b73-a44b-491e-aae6-6b8cfc591fcf
 		summarizeBy: none
 		sourceColumn: result
 
@@ -67,6 +76,7 @@ table FactMaintenanceActions
 	column performed_by_role
 		dataType: string
 		isNullable: false
+		lineageTag: b121bc41-abf7-4644-bee1-170c84b93f63
 		summarizeBy: none
 		sourceColumn: performed_by_role
 
@@ -75,10 +85,14 @@ table FactMaintenanceActions
 	column action_date
 		dataType: dateTime
 		isNullable: false
+		formatString: Long Date
+		lineageTag: d353a559-d49e-41ec-96c1-b56bf0962083
 		summarizeBy: none
 		sourceColumn: action_date
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition FactMaintenanceActions = m
 		mode: import
@@ -94,3 +108,4 @@ table FactMaintenanceActions
 				    ActionDate = Table.AddColumn(Typed, "action_date", each Date.From([timestamp]), type date)
 				in
 				    ActionDate
+

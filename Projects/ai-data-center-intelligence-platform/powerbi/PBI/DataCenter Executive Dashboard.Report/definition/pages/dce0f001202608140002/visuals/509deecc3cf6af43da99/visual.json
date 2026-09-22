@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "509deecc3cf6af43da99",
   "position": {
     "x": 12,
     "y": 752,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "DimServer.server_type",
-              "nativeQueryRef": "server_type"
+              "nativeQueryRef": "server_type",
+              "active": true
             }
           ]
         }
@@ -222,7 +225,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "509deecc3cf6af43da99"
+  }
 }

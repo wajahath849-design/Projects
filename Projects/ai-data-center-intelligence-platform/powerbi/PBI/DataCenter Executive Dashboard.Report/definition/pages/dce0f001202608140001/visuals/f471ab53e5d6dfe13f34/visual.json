@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f471ab53e5d6dfe13f34",
   "position": {
     "x": 890,
     "y": 250,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "DimFacility.facility_name",
-              "nativeQueryRef": "facility_name"
+              "nativeQueryRef": "facility_name",
+              "active": true
             }
           ]
         },
@@ -289,7 +292,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f471ab53e5d6dfe13f34"
+  }
 }

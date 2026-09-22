@@ -1,4 +1,6 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "035d3e6156e1cedd888e",
   "position": {
     "x": 12,
     "y": 752,
@@ -25,7 +27,8 @@
                 }
               },
               "queryRef": "DimDate.Year",
-              "nativeQueryRef": "Year"
+              "nativeQueryRef": "Year",
+              "active": true
             }
           ]
         }
@@ -222,7 +225,5 @@
         }
       ]
     }
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "035d3e6156e1cedd888e"
+  }
 }

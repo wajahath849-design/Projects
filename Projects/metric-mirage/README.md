@@ -27,14 +27,14 @@ Most analytics portfolios visualize a result. Metric Mirage asks whether the res
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React, TypeScript, Vite, custom SVG visualization |
-| Backend | Django, Django REST Framework |
-| Analytics | Pandas, NumPy, deterministic statistical checks |
-| Storage | PostgreSQL in Docker; SQLite for local setup |
-| Delivery | Docker Compose, Nginx, Gunicorn, GitHub Actions |
-| Quality | Pytest, Django system checks, Vitest, TypeScript build |
+| Layer     | Technology                                             |
+| --------- | ------------------------------------------------------ |
+| Frontend  | React, TypeScript, Vite, custom SVG visualization      |
+| Backend   | Django, Django REST Framework                          |
+| Analytics | Pandas, NumPy, deterministic statistical checks        |
+| Storage   | PostgreSQL in Docker; SQLite for local setup           |
+| Delivery  | Docker Compose, Nginx, Gunicorn, GitHub Actions        |
+| Quality   | Pytest, Django system checks, Vitest, TypeScript build |
 
 ## Fastest start: Docker
 
@@ -96,15 +96,15 @@ If the API is unavailable, the interface shows a bundled, clearly labeled sample
 
 ## API
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| `GET` | `/api/health/` | Service health |
-| `GET` | `/api/demo/` | Reproducible demo audit |
-| `POST` | `/api/analyze/` | One-shot CSV audit |
-| `POST` | `/api/auth/login/` | Obtain an API token |
-| CRUD | `/api/datasets/` | Persistent datasets |
-| CRUD | `/api/metrics/` | Metric contracts |
-| `GET/POST` | `/api/audits/` | Stored decision audits |
+| Method     | Endpoint           | Purpose                 |
+| ---------- | ------------------ | ----------------------- |
+| `GET`      | `/api/health/`     | Service health          |
+| `GET`      | `/api/demo/`       | Reproducible demo audit |
+| `POST`     | `/api/analyze/`    | One-shot CSV audit      |
+| `POST`     | `/api/auth/login/` | Obtain an API token     |
+| CRUD       | `/api/datasets/`   | Persistent datasets     |
+| CRUD       | `/api/metrics/`    | Metric contracts        |
+| `GET/POST` | `/api/audits/`     | Stored decision audits  |
 
 ## Verification
 
@@ -124,16 +124,6 @@ npm run build
 - [Audit methodology](docs/METHODOLOGY.md)
 - [Demo data dictionary](docs/DATA_DICTIONARY.md)
 - [Portfolio case study](docs/CASE_STUDY.md)
-
-## Two-minute interview explanation
-
-> Metric Mirage addresses a problem I noticed in analytics products: they make it easy to visualize KPI movement but do not test whether the implied conclusion is reliable. I built a Django and React application where an analyst submits a business claim and metric contract. A deterministic Pandas engine checks data integrity, segment reversals, composition drift, sampling reliability and outlier sensitivity. In the demo, aggregate checkout conversion increases, but both device segments decline. Reweighting the new period using the old traffic mix reverses the result, so the product recommends against attributing the improvement to the release. I separated the analytics engine from the API so the methodology is independently testable, exposed every finding as structured evidence, and packaged the product with PostgreSQL, Docker, CI and a printable decision report.
-
-## CV bullets
-
-- Built a full-stack analytics-integrity platform with Django, React, TypeScript and PostgreSQL that audits business KPI claims rather than only visualizing them.
-- Designed deterministic statistical checks for Simpson's paradox, population-mix drift, outlier sensitivity, input-quality failures and proportion reliability.
-- Implemented a decision report with JSON export and browser PDF printing, CSV analysis, authenticated REST resources, automated tests, Docker configuration and CI.
 
 ## Limitations
 

@@ -1,0 +1,9 @@
+company: Lumen Commerce Cloud
+currency: EUR
+timezone: UTC
+history_months: 24
+seed: 42
+baseline_days: 56
+approval_ttl_hours: 24
+impact_window_days: 7
+minimum_history_days: 28

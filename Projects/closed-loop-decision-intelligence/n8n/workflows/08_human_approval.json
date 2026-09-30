@@ -1,0 +1,217 @@
+{
+  "id": "cldi08",
+  "name": "CLDI 08 - human_approval",
+  "nodes": [
+    {
+      "id": "10efd7b0-3113-5807-bfff-e352e3393957",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "f39afb20-1652-515e-a458-ae32164de1b9",
+      "name": "Authenticated stage webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cldi-approvals",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "3563ca92-bd11-51f5-a4dc-d82caf1f04f7",
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CLDI Workflow Header"
+        }
+      }
+    },
+    {
+      "id": "83cd4beb-a906-5d11-a760-4b78935cd093",
+      "name": "Run approvals",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/orchestration/approvals' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "45f8cc97-9991-540f-8c9b-d3b66a57b2ca",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "4bf5811c-497e-5668-bf86-38e12eb6af27",
+      "name": "Approved by human",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "approved",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "APPROVED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "c273d99e-7a5f-52db-a57c-c7d6eaee3e8d",
+      "name": "Trigger actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://n8n:5678/webhook/cldi-actions' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Run approvals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated stage webhook": {
+      "main": [
+        [
+          {
+            "node": "Run approvals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Run approvals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run approvals": {
+      "main": [
+        [
+          {
+            "node": "Approved by human",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved by human": {
+      "main": [
+        [
+          {
+            "node": "Trigger actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "UTC"
+  },
+  "pinData": {},
+  "tags": []
+}

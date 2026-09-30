@@ -1,0 +1,142 @@
+{
+  "id": "cldi05",
+  "name": "CLDI 05 - investigation_engine",
+  "nodes": [
+    {
+      "id": "10efd7b0-3113-5807-bfff-e352e3393957",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "f39afb20-1652-515e-a458-ae32164de1b9",
+      "name": "Authenticated stage webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cldi-investigation",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "f7e70cc7-52da-52cd-b036-2e44a2fbce20",
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CLDI Workflow Header"
+        }
+      }
+    },
+    {
+      "id": "7adff9cc-3820-5b4e-8f7a-d973343f8d9f",
+      "name": "Run investigation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/orchestration/investigation' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "30d38c1f-23e3-5215-8820-70b82e2616c8",
+      "name": "Trigger forecast",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://n8n:5678/webhook/cldi-forecast' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Run investigation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated stage webhook": {
+      "main": [
+        [
+          {
+            "node": "Run investigation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run investigation": {
+      "main": [
+        [
+          {
+            "node": "Trigger forecast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "UTC"
+  },
+  "pinData": {},
+  "tags": []
+}

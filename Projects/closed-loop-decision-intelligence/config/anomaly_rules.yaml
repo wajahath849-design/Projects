@@ -1,0 +1,19 @@
+minimum_history: 28
+minimum_score: 0.58
+minimum_deviation: 0.20
+z_threshold: 3.0
+mad_threshold: 3.5
+isolation_contamination: 0.02
+count_tail_probability: 0.0001
+baseline_uncertainty_sd: 2.0
+alert_metrics: [revenue, conversion, cac, orders, payment_failure_rate, support_volume, churn, traffic]
+incident_scopes:
+  country_device: {metrics: [revenue, conversion], minimum_score: 0.75}
+  product_category: {metrics: [revenue, orders], minimum_score: 0.65}
+  channel: {metrics: [cac], minimum_score: 0.75}
+  country: {metrics: [support_volume, churn], minimum_score: 0.75}
+relationships:
+  revenue: [traffic, conversion, aov]
+  conversion: [payment_failure_rate, checkout_error_rate]
+  cac: [spend, new_customers]
+  churn: [support_volume, support_ticket_rate]

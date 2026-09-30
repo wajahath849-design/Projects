@@ -1,0 +1,142 @@
+{
+  "id": "cldi07",
+  "name": "CLDI 07 - decision_engine",
+  "nodes": [
+    {
+      "id": "10efd7b0-3113-5807-bfff-e352e3393957",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "f39afb20-1652-515e-a458-ae32164de1b9",
+      "name": "Authenticated stage webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cldi-decisions",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "70f3bca8-d5d9-5582-83ad-27eb3053d4f5",
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CLDI Workflow Header"
+        }
+      }
+    },
+    {
+      "id": "e647bedc-44bc-54c9-ba52-23a658df4094",
+      "name": "Run decisions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/orchestration/decisions' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "7a42786d-fefb-5302-9372-27198ce4d489",
+      "name": "Trigger approvals",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://n8n:5678/webhook/cldi-approvals' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Run decisions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated stage webhook": {
+      "main": [
+        [
+          {
+            "node": "Run decisions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run decisions": {
+      "main": [
+        [
+          {
+            "node": "Trigger approvals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "UTC"
+  },
+  "pinData": {},
+  "tags": []
+}

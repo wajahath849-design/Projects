@@ -1,0 +1,77 @@
+version: 2
+sources:
+- name: operational
+  schema: raw
+  tables:
+  - name: customers
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: products
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: web_sessions
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: orders
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: payments
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: refunds
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: marketing_campaigns
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: support_tickets
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: subscriptions
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: application_events
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: deployments
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null
+  - name: operational_incidents
+    columns:
+    - name: id
+      data_tests:
+      - unique
+      - not_null

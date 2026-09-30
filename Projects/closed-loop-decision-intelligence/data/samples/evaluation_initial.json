@@ -1,0 +1,68 @@
+{
+  "evaluation_unit": "precision/FPR: global metric-day alerts; recall: episodes across all monitored scopes",
+  "total_simulated_incidents": 6,
+  "detected_incidents": 6,
+  "true_positive_alerts": 50,
+  "false_positive_alerts": 34,
+  "precision": 0.5952380952380952,
+  "all_scope_alert_precision": 0.08666256914566688,
+  "all_scope_true_positive_alerts": 1128,
+  "all_scope_false_positive_alerts": 11888,
+  "recall": 1.0,
+  "false_positive_rate": 0.006190823015294974,
+  "negative_metric_days": 5492,
+  "mean_detection_delay_hours": 0.0,
+  "driver_identification_accuracy": 1.0,
+  "severity_exact_match_accuracy": 1.0,
+  "episodes": [
+    {
+      "incident_id": "001",
+      "driver": "deployment",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-08-25 00:00:00"
+    },
+    {
+      "incident_id": "002",
+      "driver": "campaign_efficiency",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-02-02 00:00:00"
+    },
+    {
+      "incident_id": "003",
+      "driver": "inventory",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-03-14 00:00:00"
+    },
+    {
+      "incident_id": "004",
+      "driver": "support",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-04-23 00:00:00"
+    },
+    {
+      "incident_id": "005",
+      "driver": "payment_provider",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-05-28 00:00:00"
+    },
+    {
+      "incident_id": "006",
+      "driver": "tracking",
+      "detected": true,
+      "driver_identified": true,
+      "first_alert": "2026-07-12 00:00:00"
+    }
+  ],
+  "limitations": [
+    "Single synthetic seed is a smoke evaluation, not external validation.",
+    "Daily aggregation cannot resolve minute-level detection delay.",
+    "Global alert precision counts repeated days; all-scope recall counts distinct hidden episodes.",
+    "Development-seed evaluation; scope policy was revised after inspecting missed inventory coverage.",
+    "Observational evidence supports hypotheses, not causal identification."
+  ]
+}

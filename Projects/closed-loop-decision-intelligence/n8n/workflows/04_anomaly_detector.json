@@ -1,0 +1,142 @@
+{
+  "id": "cldi04",
+  "name": "CLDI 04 - anomaly_detector",
+  "nodes": [
+    {
+      "id": "10efd7b0-3113-5807-bfff-e352e3393957",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "f39afb20-1652-515e-a458-ae32164de1b9",
+      "name": "Authenticated stage webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cldi-anomalies",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "a35a4dfc-4faf-56be-8946-22735d8f2a17",
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CLDI Workflow Header"
+        }
+      }
+    },
+    {
+      "id": "2c85de63-35aa-568e-b372-d2880b4937c9",
+      "name": "Run anomalies",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/orchestration/anomalies' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "1ec301b4-f2a4-5064-a027-c26b40eae535",
+      "name": "Trigger investigation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://n8n:5678/webhook/cldi-investigation' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Run anomalies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated stage webhook": {
+      "main": [
+        [
+          {
+            "node": "Run anomalies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run anomalies": {
+      "main": [
+        [
+          {
+            "node": "Trigger investigation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "UTC"
+  },
+  "pinData": {},
+  "tags": []
+}

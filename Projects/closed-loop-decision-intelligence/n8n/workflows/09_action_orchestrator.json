@@ -1,0 +1,232 @@
+{
+  "id": "cldi09",
+  "name": "CLDI 09 - action_orchestrator",
+  "nodes": [
+    {
+      "id": "10efd7b0-3113-5807-bfff-e352e3393957",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "f39afb20-1652-515e-a458-ae32164de1b9",
+      "name": "Authenticated stage webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cldi-actions",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "9b0e94b6-3081-51dc-9c6f-339638e41242",
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CLDI Workflow Header"
+        }
+      }
+    },
+    {
+      "id": "70a849a0-8e61-508a-8909-9fccd490f6f7",
+      "name": "Run actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/orchestration/actions' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "ed01996f-562b-5036-abc0-9b1389b41de3",
+      "name": "Split actions",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "fieldToSplitOut": "action_ids",
+        "options": {}
+      }
+    },
+    {
+      "id": "58bb90d1-3b2f-5307-bea6-360159242bfa",
+      "name": "Advance simulated source",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        750,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ANALYTICS_API_URL + '/simulation/advance/' + $json.action_ids }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "id": "53aaaae3-2d48-5465-aac7-f6d6c9890176",
+      "name": "Observation wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1000,
+        300
+      ],
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      }
+    },
+    {
+      "id": "64b6ee88-a1ac-56d5-918d-97b505db9ea2",
+      "name": "Trigger impact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'http://n8n:5678/webhook/cldi-impact' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Key",
+              "value": "={{ $env.ANALYTICS_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Run actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticated stage webhook": {
+      "main": [
+        [
+          {
+            "node": "Run actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run actions": {
+      "main": [
+        [
+          {
+            "node": "Split actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split actions": {
+      "main": [
+        [
+          {
+            "node": "Advance simulated source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Advance simulated source": {
+      "main": [
+        [
+          {
+            "node": "Observation wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Observation wait": {
+      "main": [
+        [
+          {
+            "node": "Trigger impact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "UTC"
+  },
+  "pinData": {},
+  "tags": []
+}

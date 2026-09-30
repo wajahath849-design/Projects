@@ -1,0 +1,8 @@
+rules:
+  - {driver: deployment, minimum_confidence: 0.8, type: ROLLBACK, action: rollback_release, risk: HIGH, expected_impact: 1.0}
+  - {driver: tracking, minimum_confidence: 0.8, type: FIX_TRACKING, action: request_tracking_fix, risk: MEDIUM, expected_impact: 0.0}
+  - {driver: campaign_efficiency, minimum_confidence: 0.7, type: REDUCE_BUDGET, action: reduce_campaign_budget, risk: MEDIUM, expected_impact: 0.2}
+  - {driver: payment_provider, minimum_confidence: 0.7, type: CONTACT_PROVIDER, action: escalate_provider, risk: LOW, expected_impact: 0.0}
+  - {driver: support, minimum_confidence: 0.7, type: ESCALATE_SUPPORT, action: open_incident, risk: LOW, expected_impact: 0.0}
+  - {driver: inventory, minimum_confidence: 0.7, type: INVESTIGATE, action: open_incident, risk: LOW, expected_impact: 0.0}
+fallback: {type: INVESTIGATE, action: open_incident, risk: LOW, expected_impact: 0.0}

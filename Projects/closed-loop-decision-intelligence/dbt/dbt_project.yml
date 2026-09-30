@@ -1,0 +1,19 @@
+name: closed_loop
+version: '1.0.0'
+config-version: 2
+profile: closed_loop
+model-paths: [models]
+test-paths: [tests]
+macro-paths: [macros]
+clean-targets: [target, dbt_packages]
+models:
+  closed_loop:
+    staging:
+      +schema: staging
+      +materialized: view
+    intermediate:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: analytics
+      +materialized: table

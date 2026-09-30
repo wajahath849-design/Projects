@@ -1,0 +1,23 @@
+{
+  "mean_time_to_investigate_minutes": 0.3347826086956522,
+  "mean_time_to_decision_minutes": 0.7695652173913043,
+  "mean_time_to_action_minutes": 0.029739333333333333,
+  "mean_time_to_verify_minutes": 0.12026066666666665,
+  "approval_rate": 1.0,
+  "recommendation_success_rate": 1.0,
+  "average_actual_impact": 1.7873158714453736,
+  "expected_vs_actual_mean_absolute_error": 0.7873158714453736,
+  "incidents_automatically_investigated": 23,
+  "data_quality_failure_rate": 0.0,
+  "workflow_success_rate": 1.0,
+  "mean_time_to_detect_minutes": null,
+  "anomaly_precision": null,
+  "false_positive_rate": null,
+  "revenue_protected": null,
+  "unavailable_reasons": {
+    "mean_time_to_detect_minutes": "Daily replay lacks a minute-resolution detection clock; see evaluation for bucket-level delay.",
+    "anomaly_precision": "Only evaluation may access hidden labels; see the offline evaluation report.",
+    "false_positive_rate": "Only evaluation may access hidden labels; see the offline evaluation report.",
+    "revenue_protected": "Conversion recovery alone does not identify attributable monetary protection; no invented EUR estimate."
+  }
+}

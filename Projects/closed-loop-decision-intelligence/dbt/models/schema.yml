@@ -1,0 +1,155 @@
+version: 2
+models:
+- name: stg_customers
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_products
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_web_sessions
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_orders
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: product_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_products')
+          field: id
+  - name: customer_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_customers')
+          field: id
+  - name: cohort_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_web_sessions')
+          field: id
+- name: stg_payments
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: order_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_orders')
+          field: id
+- name: stg_refunds
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: order_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_orders')
+          field: id
+- name: stg_marketing_campaigns
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: cohort_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_web_sessions')
+          field: id
+- name: stg_support_tickets
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: cohort_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_web_sessions')
+          field: id
+- name: stg_subscriptions
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: cohort_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_web_sessions')
+          field: id
+- name: stg_application_events
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: cohort_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_web_sessions')
+          field: id
+- name: stg_deployments
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_operational_incidents
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+- name: cohort_mart
+  columns:
+  - name: id
+    data_tests:
+    - unique
+    - not_null
+  - name: timestamp
+    data_tests:
+    - not_null
+  - name: revenue
+    data_tests:
+    - not_null
+- name: daily_company_metrics
+  columns:
+  - name: date
+    data_tests:
+    - unique
+    - not_null

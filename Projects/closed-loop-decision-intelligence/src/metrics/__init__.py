@@ -1,0 +1,1 @@
+"""Registry-driven KPI computation."""

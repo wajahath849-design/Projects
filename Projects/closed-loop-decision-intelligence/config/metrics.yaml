@@ -1,0 +1,20 @@
+metrics:
+  - {metric_id: revenue, name: Revenue, description: Paid order gross revenue in EUR before refunds and tax, owner: Finance, aggregation: sum, numerator: revenue, direction: up}
+  - {metric_id: orders, name: Orders, description: Successfully paid orders, owner: Commerce, aggregation: sum, numerator: orders, direction: up}
+  - {metric_id: conversion, name: Conversion Rate, description: Paid orders divided by tracked sessions, owner: Growth, aggregation: ratio, numerator: orders, denominator: sessions, direction: up}
+  - {metric_id: aov, name: Average Order Value, description: Gross revenue per paid order, owner: Finance, aggregation: ratio, numerator: revenue, denominator: orders, direction: up}
+  - {metric_id: cac, name: Customer Acquisition Cost, description: Allocated marketing spend per first-time purchaser, owner: Growth, aggregation: ratio, numerator: spend, denominator: new_customers, direction: down}
+  - {metric_id: roas, name: ROAS, description: Attributed gross revenue per euro of allocated spend, owner: Growth, aggregation: ratio, numerator: revenue, denominator: spend, direction: up}
+  - {metric_id: refund_rate, name: Refund Rate, description: Same-day refunded orders per paid order, owner: Commerce, aggregation: ratio, numerator: refund_count, denominator: orders, direction: down}
+  - {metric_id: payment_failure_rate, name: Payment Failure Rate, description: Failed payments per attempt, owner: Payments, aggregation: ratio, numerator: payment_failures, denominator: payment_attempts, direction: down}
+  - {metric_id: churn, name: Churn Rate, description: Subscription exits per subscriber-day at risk, owner: Customer Success, aggregation: ratio, numerator: churned, denominator: active_start, direction: down}
+  - {metric_id: retention, name: Retention Rate, description: One minus subscription exit rate per subscriber-day; not cohort retention, owner: Customer Success, aggregation: ratio, numerator: churned, denominator: active_start, complement: true, direction: up}
+  - {metric_id: support_ticket_rate, name: Support Ticket Rate, description: Support tickets per paid order, owner: Support, aggregation: ratio, numerator: tickets, denominator: orders, direction: down}
+  - {metric_id: gross_margin, name: Gross Margin, description: One minus merchandise cost divided by gross revenue before refunds, owner: Finance, aggregation: ratio, numerator: cost, denominator: revenue, complement: true, direction: up}
+  - {metric_id: active_customers, name: Active Customers, description: Distinct paying customers in the selected period and scope, owner: Growth, aggregation: distinct_count, numerator: active_customers, direction: up}
+  - {metric_id: new_customers, name: New Customers, description: First observed purchasers; one acquisition globally per customer, owner: Growth, aggregation: sum, numerator: new_customers, direction: up}
+  - {metric_id: repeat_purchase_rate, name: Repeat Purchase Rate, description: Orders after a customer's first purchase divided by paid orders, owner: Growth, aggregation: ratio, numerator: repeat_orders, denominator: orders, direction: up}
+  - {metric_id: traffic, name: Traffic, description: Tracked web sessions, owner: Growth, aggregation: sum, numerator: sessions, direction: up}
+  - {metric_id: support_volume, name: Support Volume, description: Support tickets opened, owner: Support, aggregation: sum, numerator: tickets, direction: down}
+  - {metric_id: checkout_error_rate, name: Checkout Error Rate, description: Application checkout errors per attempt, owner: Engineering, aggregation: ratio, numerator: checkout_errors, denominator: attempts, direction: down}
+  - {metric_id: spend, name: Marketing Spend, description: Allocated campaign spend in EUR, owner: Growth, aggregation: sum, numerator: spend, direction: down}

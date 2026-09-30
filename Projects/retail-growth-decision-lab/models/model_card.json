@@ -1,0 +1,48 @@
+{
+  "target": "At least one valid positive purchase in the next 30 days",
+  "selected_model": "Gradient boosting",
+  "selection_metric": "September average precision",
+  "train_cutoffs": [
+    "2011-04-01",
+    "2011-05-01",
+    "2011-06-01",
+    "2011-07-01",
+    "2011-08-01"
+  ],
+  "validation_cutoff": "2011-09-01",
+  "calibration_cutoff": "2011-10-01",
+  "test_cutoff": "2011-11-01",
+  "test_end_exclusive": "2011-12-01",
+  "train_rows": 13383,
+  "train_customers": 3145,
+  "test_customers": 3970,
+  "order_value_cap": 935.15,
+  "features": [
+    "recency_days",
+    "orders_90d",
+    "spend_90d",
+    "orders_30d",
+    "orders_prior_30d",
+    "tenure_days",
+    "purchase_days_90d",
+    "order_value",
+    "is_uk"
+  ],
+  "seed": 42,
+  "bootstrap_resamples": 400,
+  "default_scenario": {
+    "selected_customers": 1000,
+    "spend": 1000.0,
+    "assumed_incremental_orders": 30.000000000000014,
+    "assumed_incremental_contribution": 5921.186175306818,
+    "gross_contribution": 6921.186175306818
+  },
+  "limitations": [
+    "One historical retailer with wholesalers; no modern-market generalization is established.",
+    "Customer IDs excluded from predictors; known customers may recur across temporal windows.",
+    "November seasonality may shift purchase rates. Bootstrap intervals exclude time-period uncertainty.",
+    "Purchase propensity is not treatment uplift. No campaign assignment, cost or margin is observed.",
+    "Priority is a value-times-nonpurchase heuristic, not an experimentally validated optimal policy.",
+    "Order value is historical gross positive invoice value, capped at training P95; returns and margin are not learned."
+  ]
+}

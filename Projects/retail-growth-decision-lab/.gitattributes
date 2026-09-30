@@ -1,0 +1,20 @@
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.sql text eol=lf
+*.csv text eol=lf
+*.png binary
+*.html -text
+# Integrity manifests and FX checksums require exact bytes on every platform.
+dashboard/** -text whitespace=cr-at-eol
+data/fx/** -text whitespace=cr-at-eol
+dashboard/src/** linguist-vendored=true
+dashboard/src/content/** linguist-vendored=false
+dashboard/docs/** linguist-documentation=true
+docs/demo/index.html linguist-generated=true -diff

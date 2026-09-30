@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-28T15:07:26.130Z",
+  "checks": [
+    "Desktop performance: rendered",
+    "Desktop retention: rendered",
+    "Desktop model: rendered",
+    "Desktop campaign: rendered",
+    "Standalone menu and edit/cancel: no assistant actions; local controls preserved",
+    "Scenario: zero budget, zero uplift, cost changes, reload persistence, reset",
+    "Country filter + reload + CSV: 25 Spain customers, assumptions included",
+    "Source inspection opens with provenance",
+    "Mobile performance: no page-wide overflow",
+    "Mobile retention: no page-wide overflow",
+    "Mobile model: no page-wide overflow",
+    "Mobile campaign: no page-wide overflow"
+  ],
+  "consoleErrors": []
+}

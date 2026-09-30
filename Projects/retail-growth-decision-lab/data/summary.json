@@ -1,0 +1,17 @@
+{
+  "gross_sales": 9632333.24,
+  "returns_value": 301809.8,
+  "net_sales": 9330523.44,
+  "orders": 18957.0,
+  "customers": 4293.0,
+  "identified_sales_share": 0.853895,
+  "period_start": "2010-12-01",
+  "period_end_exclusive": "2011-12-01",
+  "currency": "GBP",
+  "generated_at_utc": "2026-09-21T05:06:37.498043+00:00",
+  "latest_complete_month": "2011-11",
+  "partial_month_excluded": "2011-12",
+  "return_rate_of_gross": 0.031333,
+  "average_order_value": 508.11,
+  "cohort_definition": "Month of first observed valid positive purchase by an identified customer."
+}

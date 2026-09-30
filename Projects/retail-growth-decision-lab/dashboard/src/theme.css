@@ -1,0 +1,50 @@
+/* Pine & Paper: an editorial palette for retail growth and finance reporting. */
+:root {
+  color-scheme: light dark;
+  --adaptive-theme: 0;
+  --font-sans-default: Inter, "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-sans-default);
+  --background: light-dark(#f6f7f3, #141b18);
+  --surface: light-dark(#ffffff, #1c2520);
+  --surface-raised: light-dark(#ffffff, #232d27);
+  --muted: light-dark(#eef1eb, #202922);
+  --control: light-dark(#ffffff, #1c2520);
+  --control-hover: light-dark(#f2f5ef, #27312b);
+  --interaction-hover: var(--muted);
+  --interaction-active: var(--control-hover);
+  --text: light-dark(#17231f, #edf3ed);
+  --secondary: light-dark(#5e6d65, #abb9af);
+  --border: light-dark(#e1e8e1, #344139);
+  --border-strong: light-dark(#cad5cc, #4b5b50);
+  --accent: light-dark(#176b52, #a1cdb6);
+  --positive: light-dark(#157451, #84c9a4);
+  --negative: light-dark(#a64537, #f28d83);
+  --chart-1: light-dark(#176b52, #80c4a2);
+  --chart-2: light-dark(#c08232, #e4b66c);
+  --chart-3: light-dark(#4f7794, #8fb8d1);
+  --chart-4: light-dark(#9d675b, #d89a89);
+  --chart-5: light-dark(#718a6b, #a9c49d);
+  --chart-6: light-dark(#9a8747, #d1bd77);
+  --chart-7: light-dark(#ae4c42, #e28a7e);
+  --chart-8: light-dark(#79857f, #aebbb3);
+  --chart-neutral-fill: color-mix(in srgb, var(--text) 3%, var(--surface));
+  --ranked-list-fill: color-mix(in srgb, var(--chart-1) 16%, var(--surface));
+  --ranked-list-fill-hover: color-mix(in srgb, var(--chart-1) 24%, var(--surface));
+  --movement-positive: color-mix(in srgb, var(--positive) 75%, var(--text));
+  --movement-negative: color-mix(in srgb, var(--negative) 75%, var(--text));
+  --movement-total: var(--secondary);
+  --card-radius: 12px;
+  --data-card-radius: 16px;
+  --data-card-background: var(--surface);
+  --control-radius: 10px;
+  --mark-radius: 8;
+  --card-shadow: 0 2px 8px rgb(24 44 33 / 5%);
+  --shadow: 0 10px 24px -8px rgb(20 38 28 / 16%);
+  --data-app-chrome-background: var(--background);
+  --data-app-chrome-text: var(--text);
+}
+
+:root:not([data-app-theme]),
+:root:is([data-app-theme="original"], [data-app-theme="codex-classic"]) {
+  --dashboard-background: light-dark(color-mix(in srgb, var(--background) 98.6%, var(--text)), var(--background));
+}

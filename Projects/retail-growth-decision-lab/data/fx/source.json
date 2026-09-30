@@ -1,0 +1,14 @@
+{
+  "provider": "European Central Bank",
+  "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+  "download_url": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip",
+  "retrieved_at_utc": "2026-09-28T03:09:18.251006+00:00",
+  "archive_sha256": "dfe9ab070c0679d42a174981e07b240131d2db19d20108a5d0e4653d9f61fc9f",
+  "subset_sha256": "7b0661abf126505c2464589897f29818837eb5235073f8c278406c66cad80a18",
+  "quote": "GBP per 1 EUR",
+  "conversion": "EUR = GBP / gbp_per_eur",
+  "non_publication_dates": "Use latest published reference date on or before transaction calendar date",
+  "purpose": "Historical reporting translation; not a transaction execution rate",
+  "first_rate_date": "2010-11-24",
+  "last_rate_date": "2011-12-09"
+}

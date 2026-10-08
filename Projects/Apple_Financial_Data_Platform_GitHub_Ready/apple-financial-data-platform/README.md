@@ -1,6 +1,6 @@
 # Apple Financial Data Migration and SQL Reporting Platform
 
-A portfolio-ready data engineering and business intelligence project that extracts structured Apple Inc. financial facts from the U.S. SEC EDGAR XBRL API, transforms and validates the data in Python, loads it into a normalized SQL Server model, and exposes curated reporting views for Power BI.
+A  data engineering and business intelligence project that extracts structured Apple Inc. financial facts from the U.S. SEC EDGAR XBRL API, transforms and validates the data in Python, loads it into a normalized SQL Server model, and exposes curated reporting views for Power BI.
 
 ## Business problem
 

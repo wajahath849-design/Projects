@@ -1,0 +1,5 @@
+source,source_row,record_id,reason
+costs,6633,T-P001-00-00,duplicate_identifier
+costs,6634,T-BAD-MISSING,missing_project_identifier
+costs,6635,T-BAD-CATEGORY,invalid_category
+costs,6636,T-BAD-DATE,date_before_project_start

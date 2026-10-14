@@ -1,0 +1,48 @@
+table AuditSummary
+	lineageTag: 7f9629f7-207a-5bf1-a9e5-b77f46321450
+
+	column rejected_rows
+		dataType: int64
+		lineageTag: ad994e6d-f7c2-51b6-8029-bb8cdf64f659
+		summarizeBy: sum
+		sourceColumn: rejected_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_rows
+		dataType: int64
+		lineageTag: 139b66d2-6152-54f4-a6b6-ac9304711228
+		summarizeBy: sum
+		sourceColumn: source_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column reconciliation_delta_usd
+		dataType: double
+		lineageTag: 67451c47-9887-5ce5-bf7d-a2fe08f5e24c
+		summarizeBy: sum
+		sourceColumn: reconciliation_delta_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column holdout_mae_usd
+		dataType: double
+		lineageTag: 75f03d8e-2fbc-5423-b433-f22bb06ce222
+		summarizeBy: sum
+		sourceColumn: holdout_mae_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AuditSummary = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("cmVqZWN0ZWRfcm93cyxzb3VyY2Vfcm93cyxyZWNvbmNpbGlhdGlvbl9kZWx0YV91c2QsaG9sZG91dF9tYWVfdXNkDQo0LDc0NjQsMC4wLDEwNTMwLjINCg==", BinaryEncoding.Base64),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"rejected_rows", Int64.Type}, {"source_rows", Int64.Type}, {"reconciliation_delta_usd", type number}, {"holdout_mae_usd", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

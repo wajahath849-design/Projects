@@ -1,0 +1,26 @@
+# Python and test byproducts
+__pycache__/
+.pytest_cache/
+.pytest_tmp/
+.venv/
+.testdeps/
+node_modules/
+*.inspect.ndjson
+*.pyc
+.coverage
+htmlcov/
+
+# Regenerated analytical outputs; the compact PBIP snapshot is embedded in TMDL.
+data/staging/
+data/curated/
+*.db
+
+# Power BI Desktop machine-local state and binary exports.
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+*.pbix
+
+# OS and download artifacts
+.DS_Store
+Thumbs.db
+*.zip

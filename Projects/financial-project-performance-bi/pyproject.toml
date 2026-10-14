@@ -1,0 +1,10 @@
+[project]
+name = "financial-project-performance-bi"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = ["pandas>=2.2,<4", "numpy>=2.0,<3", "openpyxl>=3.1,<4"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+

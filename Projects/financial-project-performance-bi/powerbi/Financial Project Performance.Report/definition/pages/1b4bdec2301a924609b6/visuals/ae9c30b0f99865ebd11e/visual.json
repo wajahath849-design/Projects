@@ -1,0 +1,236 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "ae9c30b0f99865ebd11e",
+  "position": {
+    "x": 52,
+    "y": 277,
+    "z": 20,
+    "height": 392,
+    "width": 465,
+    "tabOrder": 20
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ProjectMetrics"
+                    }
+                  },
+                  "Property": "project_name"
+                }
+              },
+              "queryRef": "ProjectMetrics.project_name",
+              "nativeQueryRef": "project_name",
+              "displayName": "Project",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "approved_budget_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.approved_budget_usd)",
+              "nativeQueryRef": "Sum of approved_budget_usd",
+              "displayName": "Approved budget"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "actual_cost_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.actual_cost_usd)",
+              "nativeQueryRef": "Sum of actual_cost_usd",
+              "displayName": "Actual cost"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "estimate_at_completion_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.estimate_at_completion_usd)",
+              "nativeQueryRef": "Sum of estimate_at_completion_usd",
+              "displayName": "EAC"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Budget, cost and completion estimate'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#17324D'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

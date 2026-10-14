@@ -1,0 +1,49 @@
+table ForecastMonthly
+	lineageTag: 61468aaa-96e4-5774-8460-67f51dd15456
+
+	column month
+		dataType: string
+		lineageTag: 88012010-2065-52cb-aa59-55bc35a61fd2
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column base_cost_usd
+		dataType: double
+		lineageTag: ab3c644f-33dc-506e-979e-d09214b805f2
+		summarizeBy: sum
+		sourceColumn: base_cost_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column optimistic_cost_usd
+		dataType: double
+		lineageTag: 620b58c2-02a2-548a-922f-0b4e75a79286
+		summarizeBy: sum
+		sourceColumn: optimistic_cost_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column downside_cost_usd
+		dataType: double
+		lineageTag: 5cfb04c3-e3c7-5815-a1f9-036de8aaecfb
+		summarizeBy: sum
+		sourceColumn: downside_cost_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ForecastMonthly = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("bW9udGgsYmFzZV9jb3N0X3VzZCxvcHRpbWlzdGljX2Nvc3RfdXNkLGRvd25zaWRlX2Nvc3RfdXNkDQoyMDI2LTEwLDExMjM1ODAuOCw5NTUwNDMuNjcsMTM0ODI5Ni45Nw0KMjAyNi0xMSwxMDQ1NDkyLjg2LDg4ODY2OC45MiwxMjU0NTkxLjQ1DQoyMDI2LTEyLDk5MjE4MS43Nyw4NDMzNTQuNDksMTE5MDYxOC4xNA0KMjAyNy0wMSw4NzE5NTMuNTUsNzQxMTYwLjUxLDEwNDYzNDQuMjgNCjIwMjctMDIsODM5OTU3LjA3LDcxMzk2My41LDEwMDc5NDguNTENCjIwMjctMDMsODM5OTU3LjA3LDcxMzk2My41LDEwMDc5NDguNTENCjIwMjctMDQsNjk0Mjk2LjIsNTkwMTUxLjc2LDgzMzE1NS40NQ0KMjAyNy0wNSw0NzA3NzIuMzYsNDAwMTU2LjUsNTY0OTI2Ljg1DQoyMDI3LTA2LDM2MjM2My40NSwzMDgwMDguOTMsNDM0ODM2LjE2DQoyMDI3LTA3LDMwOTc5OS4yMiwyNjMzMjkuMzQsMzcxNzU5LjA4DQoyMDI3LTA4LDMwOTc5OS4yMiwyNjMzMjkuMzQsMzcxNzU5LjA4DQoyMDI3LTA5LDE2ODQwNC45NSwxNDMxNDQuMiwyMDIwODUuOTUNCjIwMjctMTAsMTY4NDA0Ljk1LDE0MzE0NC4yLDIwMjA4NS45NQ0KMjAyNy0xMSwxNDg3NjMuMDIsMTI2NDQ4LjU2LDE3ODUxNS42Mw0KMjAyNy0xMiwxNDg3NjMuMDIsMTI2NDQ4LjU2LDE3ODUxNS42Mw0KMjAyOC0wMSw4NjkwOS4xLDczODcyLjczLDEwNDI5MC45Mg0KMjAyOC0wMiwyOTU5MS4yNSwyNTE1Mi41NiwzNTUwOS41DQo=", BinaryEncoding.Base64),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"month", type text}, {"base_cost_usd", type number}, {"optimistic_cost_usd", type number}, {"downside_cost_usd", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

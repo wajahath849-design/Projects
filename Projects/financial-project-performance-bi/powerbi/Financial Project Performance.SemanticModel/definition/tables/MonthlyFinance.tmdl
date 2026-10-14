@@ -1,0 +1,49 @@
+table MonthlyFinance
+	lineageTag: 365901d1-bad1-56d3-9279-8ae578dacc47
+
+	column month
+		dataType: string
+		lineageTag: 9cc5d697-6629-58ea-bcfe-54f653510223
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_cost_usd
+		dataType: double
+		lineageTag: 92dbfb20-5222-5c1a-bc66-84da9f5656e4
+		summarizeBy: sum
+		sourceColumn: actual_cost_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column recognized_revenue_usd
+		dataType: double
+		lineageTag: 52812538-6052-57ae-9fc5-551f7308a877
+		summarizeBy: sum
+		sourceColumn: recognized_revenue_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_profit_usd
+		dataType: double
+		lineageTag: d637e18c-99f3-5f85-916c-6b068866adf7
+		summarizeBy: sum
+		sourceColumn: gross_profit_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MonthlyFinance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("bW9udGgsYWN0dWFsX2Nvc3RfdXNkLHJlY29nbml6ZWRfcmV2ZW51ZV91c2QsZ3Jvc3NfcHJvZml0X3VzZA0KMjAyNC0wMSwxMDI5MzQuNzksMTI1ODU2LjY4LDIyOTIxLjg5DQoyMDI0LTAyLDE3NzgwMi4xNiwyOTQ1NTQuNjQsMTE2NzUyLjQ4DQoyMDI0LTAzLDI0OTcyNi4yLDQwMzgwMS40MSwxNTQwNzUuMjENCjIwMjQtMDQsMjc5NjgxLjk1LDQ1OTIwNC4zMSwxNzk1MjIuMzYNCjIwMjQtMDUsMzEwODU5Ljg1LDQ1OTIwNC4zMSwxNDgzNDQuNDYNCjIwMjQtMDYsMzg3NjcwLjk3LDU2NTkzMS4wMSwxNzgyNjAuMDQNCjIwMjQtMDcsMzkwNzAzLjA4LDU2NTkzMS4wMSwxNzUyMjcuOTMNCjIwMjQtMDgsMzczNTY2LjEzLDU2NTkzMS4wMSwxOTIzNjQuODgNCjIwMjQtMDksNDU1Mzk4LjU4LDYxMjU4OS40NSwxNTcxOTAuODcNCjIwMjQtMTAsNDQ3NTMwLjUyLDYzNDE5Ni4zOCwxODY2NjUuODYNCjIwMjQtMTEsNjM4NDk2Ljc5LDg2NDY5Ny4wMSwyMjYyMDAuMjINCjIwMjQtMTIsNjYxNjAxLjU5LDg2NDY5Ny4wMSwyMDMwOTUuNDINCjIwMjUtMDEsODE4MzE4LjQ4LDExMjA3MjguMCwzMDI0MDkuNTINCjIwMjUtMDIsODM3NzIwLjE5LDExMzY4MTguNzUsMjk5MDk4LjU2DQoyMDI1LTAzLDkzMDQ3OS4xMSwxMjEwNDY2LjI3LDI3OTk4Ny4xNg0KMjAyNS0wNCw5MjkyOTUuNywxMjYzNTI3LjU0LDMzNDIzMS44NA0KMjAyNS0wNSwxMDc4OTY2Ljc5LDE0MDY2OTguOSwzMjc3MzIuMTENCjIwMjUtMDYsMTE2NTE1NC45MiwxNTcxNjkwLjE5LDQwNjUzNS4yNw0KMjAyNS0wNywxMjk5Njc4LjUzLDE2ODY2ODYuMjgsMzg3MDA3Ljc1DQoyMDI1LTA4LDEyNDExMzUuMDUsMTY4NjY4Ni4yOCw0NDU1NTEuMjMNCjIwMjUtMDksMTI3NDYxOS40NSwxNjg2Njg2LjI4LDQxMjA2Ni44Mw0KMjAyNS0xMCwxMjA0NzQ4LjUzLDE2MzQ4ODMuOSw0MzAxMzUuMzcNCjIwMjUtMTEsMTQ4NTE2OS43NSwxOTUwNzE1LjE3LDQ2NTU0NS40Mg0KMjAyNS0xMiwxNTY4Nzk4LjM0LDIwMDQxMjYuNSw0MzUzMjguMTYNCjIwMjYtMDEsMTU1Mjk1OS4yNCwyMDI0MjU1LjI3LDQ3MTI5Ni4wMw0KMjAyNi0wMiwxNjM0NTgwLjY0LDIwMjQyNTUuMjcsMzg5Njc0LjYzDQoyMDI2LTAzLDE0ODU4NjIuNzQsMTg4NjYwOS4xMiw0MDA3NDYuMzgNCjIwMjYtMDQsMTQ0MDQ3OS45LDE3NDk4MzIuMDYsMzA5MzUyLjE2DQoyMDI2LTA1LDE0NTE2NDcuNDYsMTc0OTgzMi4wNiwyOTgxODQuNg0KMjAyNi0wNiwxMzg5NTE5LjEsMTcwMzE3My42MiwzMTM2NTQuNTINCjIwMjYtMDcsMTM2OTg5MC43NywxNzAzMTczLjYyLDMzMzI4Mi44NQ0KMjAyNi0wOCwxMjgwODg0LjIxLDE1NTE3NDQuMzYsMjcwODYwLjE1DQoyMDI2LTA5LDEyMTIyNzcuNDgsMTQ2ODk1MS42MSwyNTY2NzQuMTMNCg==", BinaryEncoding.Base64),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"month", type text}, {"actual_cost_usd", type number}, {"recognized_revenue_usd", type number}, {"gross_profit_usd", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

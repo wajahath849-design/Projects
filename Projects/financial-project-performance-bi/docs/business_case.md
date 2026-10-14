@@ -1,0 +1,9 @@
+# Business case and requirements
+
+**Synthetic demonstration data.** The fictional organization manages 40 client technology and engineering projects across six departments. Finance needs a single, auditable view of approved lifetime budgets, dated cost and recognized revenue, project margins, and projected final expenditure. The intended readers are finance leadership, project managers, and BI reviewers. The reporting as-of date is 30 September 2026.
+
+The core decisions are which active projects need corrective action, whether spending is caused by labor or nonlabor categories, whether recognized revenue supports the current cost structure, and which projects are likely to exceed approved budgets before they do so. The executive view shows the portfolio; the included project selector shows individual project totals. The full-model blueprint would extend this to transaction and budget-version drill-through. The data-quality view explains exclusions and refresh limits.
+
+All monetary amounts are fictional USD. Cost is net of valid negative accounting corrections. Recognized revenue is accrual revenue, not invoicing or cash receipts. Budget is the latest approved project version as of the configured reporting date, with department allocations summed exactly once. Forecast is an estimate from observed spending, not a commitment or approved revision. A positive budget variance (`budget − actual`) is favorable; a positive forecast overrun (`max(0, EAC − budget)`) is unfavorable.
+
+Acceptance checks: deterministic generation, source schema validation, quarantine of malformed rows, distinct fact grains, zero-dollar reconciliations, holdout forecast error, repeatable output hashes, and a seven-page Power BI report. The included editable PBIP was opened and checked in Power BI Desktop. Its compact presentation model uses reconciled extracts; the full star-schema blueprint remains a separate production extension.

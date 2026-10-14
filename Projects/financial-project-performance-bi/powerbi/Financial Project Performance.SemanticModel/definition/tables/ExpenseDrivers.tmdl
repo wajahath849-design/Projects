@@ -1,0 +1,55 @@
+table ExpenseDrivers
+	lineageTag: f7e77ddb-d0de-5eb3-a8a7-ac67b96b124a
+
+	column department_name
+		dataType: string
+		lineageTag: 21f08220-ff53-5e28-9927-f6d957adf1d1
+		summarizeBy: none
+		sourceColumn: department_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_name
+		dataType: string
+		lineageTag: 3aaa0df9-8e95-5e3e-84cf-2fa83f9e0870
+		summarizeBy: none
+		sourceColumn: category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_group
+		dataType: string
+		lineageTag: fd930443-6b8d-55b9-af87-619e835f49e5
+		summarizeBy: none
+		sourceColumn: cost_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_cost_usd
+		dataType: double
+		lineageTag: 6e19d521-7776-53ef-8409-b80d0b9953bf
+		summarizeBy: sum
+		sourceColumn: actual_cost_usd
+		formatString: $#,0.00;($#,0.00)
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_count
+		dataType: int64
+		lineageTag: 83f038d5-a82f-5091-bef1-71115af181cb
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ExpenseDrivers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("ZGVwYXJ0bWVudF9uYW1lLGNhdGVnb3J5X25hbWUsY29zdF9ncm91cCxhY3R1YWxfY29zdF91c2QsdHJhbnNhY3Rpb25fY291bnQNCkNvbnN1bHRpbmcsQ2xvdWQsTm9ubGFib3IsMjczNTM1LjUxLDYzDQpDb25zdWx0aW5nLENvbnRyYWN0b3JzLExhYm9yLDc1MjY2OS45MywxOTkNCkNvbnN1bHRpbmcsRW1wbG95ZWVzLExhYm9yLDE1NTc0MDAuMCw0MDkNCkNvbnN1bHRpbmcsT3BlcmF0aW9ucyxOb25sYWJvciw1NjEyNy42MiwxNw0KQ29uc3VsdGluZyxQcm9jdXJlbWVudCxOb25sYWJvciw0MTAzNzQuMDMsMTA1DQpDb25zdWx0aW5nLFRyYXZlbCxOb25sYWJvciwxMTg1ODEuNTUsMzENCkRhdGEsQ2xvdWQsTm9ubGFib3IsMzk5MDI3LjEyLDk4DQpEYXRhLENvbnRyYWN0b3JzLExhYm9yLDEwMzgwMjUuMywyNjENCkRhdGEsRW1wbG95ZWVzLExhYm9yLDIzODU5NTEuOCw1NzENCkRhdGEsT3BlcmF0aW9ucyxOb25sYWJvciwxMDk5ODcuMDMsMjQNCkRhdGEsUHJvY3VyZW1lbnQsTm9ubGFib3IsNTY5MTYyLjQ5LDEzMg0KRGF0YSxUcmF2ZWwsTm9ubGFib3IsMTA4NzgxLjksMjYNCkVuZ2luZWVyaW5nLENsb3VkLE5vbmxhYm9yLDM0MTU0OS40Myw3NQ0KRW5naW5lZXJpbmcsQ29udHJhY3RvcnMsTGFib3IsMTIwMTQzMy4wNiwyNDQNCkVuZ2luZWVyaW5nLEVtcGxveWVlcyxMYWJvciwyNjQxNjYyLjM3LDUzNw0KRW5naW5lZXJpbmcsT3BlcmF0aW9ucyxOb25sYWJvciwxMTAyMDAuMjMsMjINCkVuZ2luZWVyaW5nLFByb2N1cmVtZW50LE5vbmxhYm9yLDYzOTYyNS4xNCwxMTQNCkVuZ2luZWVyaW5nLFRyYXZlbCxOb25sYWJvciwxMzEwOTIuNCwzMQ0KSW5mcmFzdHJ1Y3R1cmUsQ2xvdWQsTm9ubGFib3IsNjg5NzAyLjAzLDExNA0KSW5mcmFzdHJ1Y3R1cmUsQ29udHJhY3RvcnMsTGFib3IsMTg0NDcyMS44NiwzMTANCkluZnJhc3RydWN0dXJlLEVtcGxveWVlcyxMYWJvciw0NTYxMjEyLjAyLDc5Mg0KSW5mcmFzdHJ1Y3R1cmUsT3BlcmF0aW9ucyxOb25sYWJvciwyNjU0ODMuOTUsNDQNCkluZnJhc3RydWN0dXJlLFByb2N1cmVtZW50LE5vbmxhYm9yLDEwMTI0NzUuNzksMTY5DQpJbmZyYXN0cnVjdHVyZSxUcmF2ZWwsTm9ubGFib3IsMjYyMjE2Ljc2LDQxDQpPcGVyYXRpb25zLENsb3VkLE5vbmxhYm9yLDQzNjQ3OS42MywxMDMNCk9wZXJhdGlvbnMsQ29udHJhY3RvcnMsTGFib3IsMTIxMTc5NC41NywzMTQNCk9wZXJhdGlvbnMsRW1wbG95ZWVzLExhYm9yLDI3OTc1MjYuMDEsNjkyDQpPcGVyYXRpb25zLE9wZXJhdGlvbnMsTm9ubGFib3IsMTkxODc4LjI0LDUwDQpPcGVyYXRpb25zLFByb2N1cmVtZW50LE5vbmxhYm9yLDY4NzM3OS40MiwxNjYNCk9wZXJhdGlvbnMsVHJhdmVsLE5vbmxhYm9yLDEzMDc2Ni4xMywzNg0KU29mdHdhcmUsQ2xvdWQsTm9ubGFib3IsMzI3NTk0LjQ4LDY3DQpTb2Z0d2FyZSxDb250cmFjdG9ycyxMYWJvciwxMDQ0NTIxLjY5LDIwMQ0KU29mdHdhcmUsRW1wbG95ZWVzLExhYm9yLDIxMjA4MjkuNDYsNDM5DQpTb2Z0d2FyZSxPcGVyYXRpb25zLE5vbmxhYm9yLDEzNDcxMy40LDI3DQpTb2Z0d2FyZSxQcm9jdXJlbWVudCxOb25sYWJvciw0NDcwODUuMTksODENClNvZnR3YXJlLFRyYXZlbCxOb25sYWJvciwxMTY1OTEuNDUsMjYNCg==", BinaryEncoding.Base64),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"department_name", type text}, {"category_name", type text}, {"cost_group", type text}, {"actual_cost_usd", type number}, {"transaction_count", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

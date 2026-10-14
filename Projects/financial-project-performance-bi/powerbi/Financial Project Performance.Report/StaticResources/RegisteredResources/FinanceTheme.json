@@ -1,0 +1,16 @@
+{
+  "name": "Financial Project Performance",
+  "dataColors": ["#167D8D", "#E0A43B", "#315B86", "#B84E56", "#6E8191", "#6B9A77"],
+  "background": "#F5F7FA",
+  "foreground": "#17324D",
+  "tableAccent": "#167D8D",
+  "good": "#168052",
+  "neutral": "#E0A43B",
+  "bad": "#BA3C46",
+  "minimum": "#F8E7E8",
+  "center": "#F2F5F7",
+  "maximum": "#DCF2E8",
+  "visualStyles": {
+    "*": {"*": {"title": [{"show": true, "fontColor": {"solid": {"color": "#17324D"}}, "fontSize": 12}]}}
+  }
+}

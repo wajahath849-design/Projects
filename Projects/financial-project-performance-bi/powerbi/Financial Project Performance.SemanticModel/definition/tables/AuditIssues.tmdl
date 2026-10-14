@@ -1,0 +1,38 @@
+table AuditIssues
+	lineageTag: d55c9e78-4ca3-5501-944d-65cfbf452e4d
+
+	column source
+		dataType: string
+		lineageTag: 6f44191c-0c74-502d-9e77-91171b9c8974
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column reason
+		dataType: string
+		lineageTag: db247ebb-031a-5b05-8761-d8539f266cb0
+		summarizeBy: none
+		sourceColumn: reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column rejected_rows
+		dataType: int64
+		lineageTag: 1e76f14a-03ae-5cba-bc99-21992913e253
+		summarizeBy: sum
+		sourceColumn: rejected_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AuditIssues = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("c291cmNlLHJlYXNvbixyZWplY3RlZF9yb3dzDQpjb3N0cyxEYXRlIGJlZm9yZSBwcm9qZWN0IHN0YXJ0LDENCmNvc3RzLER1cGxpY2F0ZSBpZGVudGlmaWVyLDENCmNvc3RzLEludmFsaWQgY2F0ZWdvcnksMQ0KY29zdHMsTWlzc2luZyBwcm9qZWN0IGlkZW50aWZpZXIsMQ0K", BinaryEncoding.Base64),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"source", type text}, {"reason", type text}, {"rejected_rows", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,7 @@
+category_id,category_name,cost_group
+C01,Employees,Labor
+C02,Contractors,Labor
+C03,Procurement,Nonlabor
+C04,Cloud,Nonlabor
+C05,Travel,Nonlabor
+C06,Operations,Nonlabor

@@ -1,0 +1,241 @@
+cultureInfo en-GB
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "projectmetrics.status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ProjectMetrics",
+			          "ConceptualProperty": "status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "projectmetrics.project_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ProjectMetrics",
+			          "ConceptualProperty": "project_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Project": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "projectmetrics.financial_health": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ProjectMetrics",
+			          "ConceptualProperty": "financial_health"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Health": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "projectmetrics.gross_margin_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ProjectMetrics",
+			          "ConceptualProperty": "gross_margin_pct"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Margin": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "expensedrivers.category_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ExpenseDrivers",
+			          "ConceptualProperty": "category_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Category": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "expensedrivers.department_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ExpenseDrivers",
+			          "ConceptualProperty": "department_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Department": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "monthlyfinance.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MonthlyFinance",
+			          "ConceptualProperty": "month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "forecastmonthly.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ForecastMonthly",
+			          "ConceptualProperty": "month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "auditissues.reason": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "AuditIssues",
+			          "ConceptualProperty": "reason"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "auditsources.source": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "AuditSources",
+			          "ConceptualProperty": "source"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Source": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "auditsources.modified_utc": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "AuditSources",
+			          "ConceptualProperty": "modified_utc"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Modified UTC": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json

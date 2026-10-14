@@ -1,0 +1,321 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "6072aa3d9e2a18b15f40",
+  "position": {
+    "x": 535,
+    "y": 277,
+    "z": 30,
+    "height": 392,
+    "width": 693,
+    "tabOrder": 30
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ProjectMetrics"
+                    }
+                  },
+                  "Property": "project_name"
+                }
+              },
+              "queryRef": "ProjectMetrics.project_name",
+              "nativeQueryRef": "project_name",
+              "displayName": "Project"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ProjectMetrics"
+                    }
+                  },
+                  "Property": "status"
+                }
+              },
+              "queryRef": "ProjectMetrics.status",
+              "nativeQueryRef": "status",
+              "displayName": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ProjectMetrics"
+                    }
+                  },
+                  "Property": "financial_health"
+                }
+              },
+              "queryRef": "ProjectMetrics.financial_health",
+              "nativeQueryRef": "financial_health",
+              "displayName": "Health"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "approved_budget_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.approved_budget_usd)",
+              "nativeQueryRef": "Sum of approved_budget_usd",
+              "displayName": "Budget"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "actual_cost_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.actual_cost_usd)",
+              "nativeQueryRef": "Sum of actual_cost_usd",
+              "displayName": "Cost"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "recognized_revenue_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.recognized_revenue_usd)",
+              "nativeQueryRef": "Sum of recognized_revenue_usd",
+              "displayName": "Revenue"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "gross_profit_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.gross_profit_usd)",
+              "nativeQueryRef": "Sum of gross_profit_usd",
+              "displayName": "Profit"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "estimate_to_complete_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.estimate_to_complete_usd)",
+              "nativeQueryRef": "Sum of estimate_to_complete_usd",
+              "displayName": "ETC"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ProjectMetrics"
+                        }
+                      },
+                      "Property": "estimate_at_completion_usd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(ProjectMetrics.estimate_at_completion_usd)",
+              "nativeQueryRef": "Sum of estimate_at_completion_usd",
+              "displayName": "EAC"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Project record'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#17324D'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

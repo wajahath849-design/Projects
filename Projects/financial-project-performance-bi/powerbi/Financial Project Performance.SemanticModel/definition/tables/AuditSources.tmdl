@@ -1,0 +1,38 @@
+table AuditSources
+	lineageTag: 4d613c3e-a168-5f6c-a5b8-3ee4bbccb2e4
+
+	column source
+		dataType: string
+		lineageTag: eeab65c0-1a43-5ed7-a476-c3d6d8c03d6b
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column rows
+		dataType: int64
+		lineageTag: 8fe1ff23-e27d-523c-b332-8a089d26c56a
+		summarizeBy: sum
+		sourceColumn: rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column modified_utc
+		dataType: string
+		lineageTag: 22cb64ed-d5e6-5ce5-8cc4-70d969fb4ea4
+		summarizeBy: none
+		sourceColumn: modified_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AuditSources = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.FromText("c291cmNlLHJvd3MsbW9kaWZpZWRfdXRjDQpwcm9qZWN0cyw0MCwyMDI2LTEwLTE0DQpkZXBhcnRtZW50cyw2LDIwMjYtMTAtMTQNCmNhdGVnb3JpZXMsNiwyMDI2LTEwLTE0DQpjbGllbnRzLDEyLDIwMjYtMTAtMTQNCm1hbmFnZXJzLDksMjAyNi0xMC0xNA0KYnVkZ2V0cywxMDAsMjAyNi0xMC0wOQ0KY29zdHMsNjYzNSwyMDI2LTEwLTE0DQpyZXZlbnVlLDY1NiwyMDI2LTEwLTE0DQo=", BinaryEncoding.Base64),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"source", type text}, {"rows", Int64.Type}, {"modified_utc", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

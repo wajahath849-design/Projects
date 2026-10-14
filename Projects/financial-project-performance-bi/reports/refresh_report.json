@@ -1,0 +1,43 @@
+{
+  "status": "success",
+  "refreshed_at_utc": "2026-10-14T18:11:58.373598+00:00",
+  "data_classification": "synthetic demonstration data",
+  "as_of_date": "2026-09-30",
+  "source_rows": {
+    "projects": 40,
+    "departments": 6,
+    "categories": 6,
+    "clients": 12,
+    "managers": 9,
+    "budgets": 100,
+    "costs": 6635,
+    "revenue": 656
+  },
+  "curated_rows": {
+    "DimProject": 40,
+    "DimDate": 2100,
+    "DimDepartment": 6,
+    "DimCostCategory": 6,
+    "DimClient": 12,
+    "DimProjectManager": 9,
+    "DimBudgetVersion": 50,
+    "FactBudget": 100,
+    "FactActualCost": 6631,
+    "FactRevenue": 656,
+    "FactForecast": 1431
+  },
+  "rejected_rows": 4,
+  "rejection_reasons": {
+    "duplicate_identifier": 1,
+    "missing_project_identifier": 1,
+    "invalid_category": 1,
+    "date_before_project_start": 1
+  },
+  "reconciliation": {
+    "budget_delta_usd": 0.0,
+    "actual_delta_usd": 0.0,
+    "revenue_delta_usd": 0.0,
+    "orphan_count": 0
+  },
+  "forecast_holdout_mae_usd": 10530.2
+}

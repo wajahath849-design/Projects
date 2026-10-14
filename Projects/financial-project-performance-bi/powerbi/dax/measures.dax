@@ -1,0 +1,156 @@
+// All amounts USD. Lifetime measures ignore DimDate; period measures honor it.
+// Create these as measures on a dedicated Measures table in Power BI Desktop.
+
+Approved Project Budget Lifetime =
+CALCULATE (
+    SUM ( FactBudget[allocated_budget_usd] ),
+    DimBudgetVersion[is_selected_approved] = TRUE (),
+    REMOVEFILTERS ( DimDate )
+)
+
+Actual Cost Period = SUM ( FactActualCost[amount] )
+
+Actual Project Cost Lifetime =
+CALCULATE ( [Actual Cost Period], REMOVEFILTERS ( DimDate ) )
+
+Budget Variance Lifetime =
+[Approved Project Budget Lifetime] - [Actual Project Cost Lifetime]
+
+Budget Variance % Lifetime =
+DIVIDE ( [Budget Variance Lifetime], [Approved Project Budget Lifetime] )
+
+Budget Utilization % Lifetime =
+DIVIDE ( [Actual Project Cost Lifetime], [Approved Project Budget Lifetime] )
+
+Recognized Revenue Period = SUM ( FactRevenue[recognized_revenue_usd] )
+
+Recognized Revenue Lifetime =
+CALCULATE ( [Recognized Revenue Period], REMOVEFILTERS ( DimDate ) )
+
+Gross Project Profit Period = [Recognized Revenue Period] - [Actual Cost Period]
+
+Gross Project Profit Lifetime =
+[Recognized Revenue Lifetime] - [Actual Project Cost Lifetime]
+
+Gross Profit Margin % Period =
+DIVIDE ( [Gross Project Profit Period], [Recognized Revenue Period] )
+
+Gross Profit Margin % Lifetime =
+DIVIDE ( [Gross Project Profit Lifetime], [Recognized Revenue Lifetime] )
+
+Total Forecast Cost Base =
+CALCULATE (
+    SUM ( FactForecast[forecast_cost_usd] ),
+    FactForecast[is_latest_valid] = TRUE (),
+    FactForecast[scenario] = "base",
+    REMOVEFILTERS ( DimDate )
+)
+
+Estimate to Complete Base = COALESCE ( [Total Forecast Cost Base], 0 )
+
+Estimate at Completion Base =
+[Actual Project Cost Lifetime] + [Estimate to Complete Base]
+
+Forecast Cost Overrun Base =
+SUMX (
+    VALUES ( DimProject[project_id] ),
+    MAX ( 0, [Estimate at Completion Base] - [Approved Project Budget Lifetime] )
+)
+
+Remaining Approved Budget =
+[Approved Project Budget Lifetime] - [Actual Project Cost Lifetime]
+
+Project Financial Health =
+IF (
+    NOT HASONEVALUE ( DimProject[project_id] ),
+    BLANK (),
+    SWITCH (
+        TRUE (),
+        [Actual Project Cost Lifetime] > [Approved Project Budget Lifetime], "Over budget",
+        [Estimate at Completion Base] > [Approved Project Budget Lifetime], "At risk",
+        [Gross Profit Margin % Lifetime] < 0.15, "Low margin",
+        "On track"
+    )
+)
+
+Monthly Cost Growth % =
+VAR PriorMonth = CALCULATE ( [Actual Cost Period], DATEADD ( DimDate[date], -1, MONTH ) )
+RETURN DIVIDE ( [Actual Cost Period] - PriorMonth, PriorMonth )
+
+Year-over-Year Revenue Growth % =
+VAR PriorYear = CALCULATE ( [Recognized Revenue Period], DATEADD ( DimDate[date], -1, YEAR ) )
+RETURN DIVIDE ( [Recognized Revenue Period] - PriorYear, PriorYear )
+
+Average Project Margin % =
+AVERAGEX ( VALUES ( DimProject[project_id] ), [Gross Profit Margin % Lifetime] )
+
+Cost by Department = [Actual Cost Period]
+
+Cost by Category = [Actual Cost Period]
+
+Project Completion % =
+IF ( HASONEVALUE ( DimProject[project_id] ), SELECTEDVALUE ( DimProject[completion_pct] ), BLANK () )
+
+At-Risk Project Count =
+COUNTROWS (
+    FILTER (
+        VALUES ( DimProject[project_id] ),
+        [Actual Project Cost Lifetime] < [Approved Project Budget Lifetime]
+            && [Estimate at Completion Base] > [Approved Project Budget Lifetime]
+    )
+)
+
+Over-Budget Project Count =
+COUNTROWS (
+    FILTER (
+        VALUES ( DimProject[project_id] ),
+        [Actual Project Cost Lifetime] > [Approved Project Budget Lifetime]
+    )
+)
+
+Scenario Forecast Cost =
+VAR ChosenScenario = SELECTEDVALUE ( FactForecast[scenario], "base" )
+RETURN
+CALCULATE (
+    SUM ( FactForecast[forecast_cost_usd] ),
+    FactForecast[is_latest_valid] = TRUE (),
+    FactForecast[scenario] = ChosenScenario,
+    REMOVEFILTERS ( DimDate )
+)
+
+Scenario EAC = [Actual Project Cost Lifetime] + [Scenario Forecast Cost]
+
+Approved Budget As of Date =
+VAR AxisDate = MAX ( DimDate[date] )
+RETURN
+SUMX (
+    VALUES ( DimProject[project_id] ),
+    VAR ProjectID = DimProject[project_id]
+    VAR LatestVersion =
+        TOPN (
+            1,
+            FILTER (
+                ALL ( DimBudgetVersion ),
+                DimBudgetVersion[project_id] = ProjectID
+                    && DimBudgetVersion[approval_status] = "Approved"
+                    && DimBudgetVersion[approved_date] <= AxisDate
+            ),
+            DimBudgetVersion[approved_date], DESC,
+            DimBudgetVersion[version_number], DESC
+        )
+    RETURN
+        CALCULATE (
+            SUM ( FactBudget[allocated_budget_usd] ),
+            REMOVEFILTERS ( DimDate ),
+            LatestVersion
+        )
+)
+
+Rejected Source Rows = COUNTROWS ( DataQualityExceptions )
+
+Latest Forecast Snapshot =
+CALCULATE (
+    MAX ( FactForecast[snapshot_date] ),
+    FactForecast[is_latest_valid] = TRUE (),
+    FactForecast[scenario] = "base"
+)

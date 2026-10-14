@@ -86,16 +86,4 @@ The deeper [Power Query](powerbi/powerquery/queries.md), [star-schema model](doc
 
 The dataset is fictional, one-currency, and not governed by an external finance system. The simple forecast does not know committed purchase orders, change orders, future staffing decisions, or confidence intervals. The holdout covers one historical window. The embedded report snapshot is fixed until the pipeline and PBIR builder are rerun. A production next step would add governed source contracts, multi-currency conversion, approval workflow, forecast uncertainty, incremental refresh, row-level security, and the full star-schema semantic model.
 
-## Completion checklist
 
-| Item | State |
-|---|---|
-| Deterministic sources and Excel/CSV extraction | Implemented |
-| Validation, quarantine, idempotent curated outputs | Implemented |
-| Star-schema facts/dimensions and optional SQL view | Implemented |
-| Reconciled KPIs, scenarios, forecast snapshots and holdout | Implemented |
-| Automated pytest suite and run evidence | Implemented |
-| Power Query, DAX, theme, seven-page specifications | Implemented |
-| Actual seven-page Power BI report file and Desktop visual QA | Implemented; see validation report for checks and limits |
-
-For interview practice, use [docs/interview_guide.md](docs/interview_guide.md).

@@ -1,6 +1,6 @@
 # Apple Financial Data Migration and SQL Reporting Platform
 
-A portfolio-ready data engineering and business intelligence project that extracts structured Apple Inc. financial facts from the U.S. SEC EDGAR XBRL API, transforms and validates the data in Python, loads it into a normalized SQL Server model, and exposes curated reporting views for Power BI.
+A  data engineering and business intelligence project that extracts structured Apple Inc. financial facts from the U.S. SEC EDGAR XBRL API, transforms and validates the data in Python, loads it into a normalized SQL Server model, and exposes curated reporting views for Power BI.
 
 ## Business problem
 
@@ -240,9 +240,7 @@ The offline fixture and tests verify:
 - The SEC source is authoritative for filed data, but the project does not replace professional accounting review.
 - A `.pbix` file is intentionally not committed because it is a binary, machine-specific artifact. The repository contains the exact model, theme, measures and page build specification; add your final `.pbix` and screenshots to a GitHub Release or portfolio demo if desired.
 
-## Resume description
 
-> Built an end-to-end Python, SQL Server and Power BI financial data platform that migrated Apple SEC EDGAR/XBRL filings into a validated relational reporting model, implemented idempotent ETL and audit controls, and delivered profitability, cash-flow, balance-sheet and data-quality analytics.
 
 ## License
 

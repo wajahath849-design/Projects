@@ -233,12 +233,7 @@ The offline fixture and tests verify:
 - critical-metric and accounting-equation validation;
 - deterministic output without live SEC dependency in CI.
 
-## Important limitations
 
-- XBRL taxonomy tags can change. The metric catalog should be reviewed when a source metric disappears.
-- Q4 is derived only for flow metrics when annual and Q1–Q3 values are available.
-- The SEC source is authoritative for filed data, but the project does not replace professional accounting review.
-- A `.pbix` file is intentionally not committed because it is a binary, machine-specific artifact. The repository contains the exact model, theme, measures and page build specification; add your final `.pbix` and screenshots to a GitHub Release or portfolio demo if desired.
 
 
 
